@@ -1,0 +1,605 @@
+%% This is file `elsarticle-template-2-harv.tex',
+%%
+%% Copyright 2009 Elsevier Ltd
+%%
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%%
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%%
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%%
+%% Template article for Elsevier's document class `elsarticle'
+%% with harvard style bibliographic references
+%%
+%% $Id: elsarticle-template-2-harv.tex 155 2009-10-08 05:35:05Z rishi $
+%% $URL: http://lenova.river-valley.com/svn/elsbst/trunk/elsarticle-template-2-harv.tex $
+%%
+
+%%\documentclass[preprint,authoryear,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+
+%% Astronomy & Computing uses 5p
+%% \documentclass[final,authoryear,5p,times]{elsarticle}
+\documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
+
+%% if you use PostScript figures in your article
+%% use the graphics package for simple commands
+%% \usepackage{graphics}
+%% or use the graphicx package for more complicated commands
+\usepackage{graphicx}
+%% or use the epsfig package if you prefer to use the old commands
+%% \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+\usepackage[pdftex,pdfpagemode={UseOutlines},bookmarks,bookmarksopen,colorlinks,linkcolor={blue},citecolor={green},urlcolor={red}]{hyperref}
+\usepackage{hypernat}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+%% \usepackage{lineno}
+
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon (default)
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   authoryear - selects author-year citations (default)
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%   longnamesfirst  -  makes first citation full author list
+%%
+%% \biboptions{longnamesfirst,comma}
+
+% \biboptions{}
+
+\journal{Astronomy \& Computing}
+
+%% Make single quotes look right in verbatim mode
+\usepackage{upquote}
+
+\begin{document}
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for the associated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for the associated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for the associated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%%
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{The Future of Astronomical Data Formats II. Learning from 25
+  years of the $N$-Dimensional Data Format}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{<author name>}
+%% \address[label1]{<address>}
+%% \address[label2]{<address>}
+
+\author[cornell]{Tim Jenness\corref{cor1}}
+\ead{tjenness@cornell.edu}
+\author[jac]{David S. Berry}
+\author[jac]{Malcolm J.\ Currie}
+\author[noao]{Frossie Economou}
+\author[aao]{Keith Shortridge}
+
+\cortext[cor1]{Corresponding author}
+
+\address[cornell]{Department of Astronomy, Cornell University, Ithaca,
+  NY 14853, USA}
+\address[jac]{Joint Astronomy Centre, 660 N.\ A`oh\=ok\=u Place, Hilo, HI
+  96720, USA}
+\address[noao]{National Optical Astronomy
+  Observatory, 950 N Cherry Ave, Tucson, AZ 85719, USA}
+\address[aao]{Australian Astronomical Observatory, 105 Delhi Rd, North
+Ryde, NSW 2113, Australia}
+
+
+\begin{abstract}
+%% Text of abstract
+
+The extensible $N$-dimensional Data Format (NDF) was designed and
+developed in the late 1980s to provide a data model suitable for use
+in a variety of astronomy data processing applications supported by
+Starlink. This paper provides an overview of the historical drivers
+for the development of NDF and the lessons learned from using the
+format for many years in the Starlink software collection and in data
+acquisition systems.
+
+\end{abstract}
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+data formats \sep
+Starlink
+
+\end{keyword}
+
+\end{frontmatter}
+
+% \linenumbers
+
+%% Journal abbreviations
+\newcommand{\mnras}{Mon Not R Astron Soc}
+\newcommand{\aap}{Astron Astrophys}
+\newcommand{\aaps}{Astron Astrophys Supp}
+\newcommand{\pasp}{Pub Astron Soc Pacific}
+\newcommand{\apj}{Astrophys J}
+\newcommand{\apjs}{Astrophys J Supp}
+\newcommand{\qjras}{Quart J R Astron Soc}
+\newcommand{\an}{Astron.\ Nach.}
+\newcommand{\ijimw}{Int.\ J.\ Infrared \& Millimeter Waves}
+\newcommand{\procspie}{Proc.\ SPIE}
+\newcommand{\aspconf}{ASP Conf. Ser.}
+
+%% Applications
+
+
+%% main text
+\section{Introduction}
+\label{sec:intro}
+
+Author list not finalised. Should invite PTW, PWD, NXG and RFWS and others.
+
+Set the scene of the 1980s. FITS \citep{1979ipia.coll..445W,1981A&AS...44..363W} tapes are
+the transport medium of choice.
+
+Distinguish data transport from data processing format.
+
+FITS initially adopted by Starlink but data processing demands led to HDS.
+
+Bulk Data Frame (BDF) format used by the Starlink INTERIM environment
+\citep[see e.g.][]{1980SPIE..264...70P}. The BDF format was heavily
+influenced by FITS and had a special ``IMAGE'' variant standardised
+for astronomical images and spectra.
+
+
+\section{Hierarchical Data System}
+
+First mention I can find of hierarchical file format is in Enterprise
+\#4 from June 1981. \citep{1981STARENT4}
+
+Then Disney \& Wallace 1982 \citep{1982QJRAS..23..485D} mention the
+system more explicitly.
+
+Lawden 1986 \citep{1986BICDS..30...13L}
+ says HDS is great but the Starlink Software Environment is
+pain and suffering.
+
+Basic overview of HDS. Presumably no need to talk about internals.
+
+Initial language was BLISS. C investigated but issues with compiler on
+VAX when doing system calls prevented its use.
+Ported to Unix early 1990s.
+
+Starlink chronology says initial HDS design was August 1981. V1 ready
+for testing in June 1982. Version 2 in August 1983. 1981 Confirmed by
+Lawden 1991 Bulletin 8, Page 2.
+
+Note in passing that SSN/27 was the HDS reference manual but these
+days SSN/27 is staradmin. There is a version of SSN/27 in the obsolete
+Starlink document directory from 1989. An interesting document.
+
+Initially called Starlink Data System (changed in October 1983 to
+HDS). Presumably \texttt{.sdf} comes from Starlink Data Format?
+
+1991 RFWS ports HDS to Sun. Was this version 3 of the format?
+
+
+Now supports 64-bit LARGEFILE file offsets (but not 64-bit data arrays
+yet -- code is mostly there but has a bug). This was HDS v4. Recently
+added 64-bit integer data types.
+
+Automatically detects byte order and does byte swapping in the library.
+
+First couple of pages of SUN/92.
+
+\begin{table}
+\caption{HDS basic data types}
+\label{tab:hdstypes}
+\begin{center}
+\begin{tabular}{lll}
+\hline
+\_BYTE & b & Signed 8-bit integer \\
+\_UBYTE & ub & Unsigned 8-bit integer \\
+\_WORD & w & Signed 16-bit integer \\
+\_UWORD & uw & Unsigned 16-bit integer \\
+\_INTEGER & i & Signed 32-bit integer \\
+\_INT64 & k &Signed 64-bit integer \\
+\_REAL & r & 32-bit float \\
+\_DOUBLE & d & 64-bit float \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\section{Early Years}
+
+The Starlink INTERIM software environment was delivered with BDF format.
+
+IRAS CRDD data (SUN/91) was in .BDF format. Used STARIN to convert
+from BDF to HDS file suitable for kappa (SUN/96). STARIN phased out in
+1990. Replaced with CONVERT (SUN/55).
+
+Unconstrained use of structures leads to anarchy.
+
+Wright \& Giddings 1983 influence seemed to end up with the
+IMAGE data format as described in Appendix H of SUN/95.
+
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\begin{quote}
+\small
+\begin{verbatim}
+HORSEHEAD  <IMAGE>
+
+   DATA_ARRAY(384,512)  <_REAL>   100.5,102.6,110.1,109.8,105.3,107.6,
+                                  ... 123.1,117.3,119,120.5,127.3,108.4
+   TITLE          <_CHAR*72>      'KAPPA - Flip'
+   DATA_MIN       <_REAL>         28.513
+   DATA_MAX       <_REAL>         255.94
+\end{verbatim}
+\end{quote}
+\caption{Example IMAGE structure developed by Wright \& Giddings 1983.}
+\end{minipage}
+\end{figure*}
+
+
+Data STructures (DST) format. \citep{1993ASPC...52..219S} see Fig.\
+\ref{fig:dst}
+
+The \textsc{Asterix} X-Ray data reduction package \citep{SUN98} used the HDS
+format exclusively until the introduction of an abstract data access
+interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
+and FITS format files. \textsc{Asterix} defined its
+own data models and layered those on top of HDS. The \texttt{SPECTRA}
+layout was closest to that found in NDF and an example is shown in
+Fig.\ \ref{fig:asterix} with a trace from a file created in 1992. The
+use of \texttt{HISTORY}, \texttt{AXIS} and \texttt{DATA\_ARRAY}
+structures provides some similarity to NDF.
+
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\begin{quote}
+\small
+\begin{verbatim}
+OUT  <FIGARO>
+   Z              <IMAGE>         {structure}
+      DATA(310,19)   <_REAL>         1655.552,1376.111,1385.559,1746.966,
+                                     ... 1513.654,1465.343,1446.902,*,*,*,*,*
+      UNITS          <_CHAR*32>      'A/D numbers per exposure'
+      LABEL          <_CHAR*32>      'OBJECT - DARK'
+      ERRORS(310,19)  <_REAL>        9.330093,4.624712,1.043125,3.801913,
+                                     ... 16.92331,11.49692,10.9114,*,*,*,*,*
+
+   OBS            <OBS>           {structure}
+      OBJECT         <_CHAR*32>      'krypton singlet'
+
+   X              <AXIS>          {structure}
+      DATA(310)      <_REAL>         1.85115,1.852412,1.853675,1.854938,
+                                     ... 2.237606,2.238869,2.240132,2.241395
+      LABEL          <_CHAR*32>      'Estimated wavelength'
+      UNITS          <_CHAR*32>      'microns'
+
+   Y              <AXIS>          {structure}
+      DATA(19)       <_REAL>         0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,
+                                     ... 12.5,13.5,14.5,15.5,16.5,17.5,18.5
+
+   FITS           <FITS>          {structure}
+      INSTRUME       <_CHAR*8>       'CGS4'
+      TELESCOP       <_CHAR*8>       'UKIRT'
+      SOFTWARE       <_CHAR*8>       'CF v1.0'
+\end{verbatim}
+\end{quote}
+\caption{Partial dump of the structure of a DST file. This example is from a CGS4
+  observation from January 1991.}
+\label{fig:dst}
+\end{minipage}
+\end{figure*}
+
+\begin{figure*}
+\begin{minipage}{\textwidth}
+\begin{quote}
+\small
+\begin{verbatim}
+RZ_PSPC_Z00000  <SPECTRA>
+
+   AXIS(3)        <AXIS>          {array of structures}
+
+   Contents of AXIS(1)
+      DATA_ARRAY(729)  <_REAL>       0.07115,0.07154,0.07162001,0.07166,
+                                     ... 2.97,2.975,2.98,2.985,2.99,2.995,3
+
+   EMBOL_UNITS    <_CHAR*16>      'keV/cm**3/s'
+   HISTORY        <HISTORY>       {structure}
+      CREATED        <_CHAR*18>      '16-JUN-92 01:07:08'
+      RECORDS(10)    <HIST_REC>      {array of structures}
+
+      Contents of RECORDS(1)
+         DATE           <_CHAR*30>      '   16-JUN-92 01:07:08'
+         COMMAND        <_CHAR*35>      'RS_CREATE V1.3        [1 Jun 92]'
+
+      EXTEND_SIZE    <_INTEGER>      10
+      CURRENT_RECORD  <_INTEGER>     2
+
+   DATA_ARRAY(729,2,162)  <_REAL>   10183284,2089223,1044320,1044320,
+                                    ... 18350.33,18349.45,18275.11,36474.31
+   TMIN           <_REAL>         0.017558
+   TMAX           <_REAL>         29.13903
+   TLSTEP         <_REAL>         0.02
+   ENERGY_BOUNDS(730)  <_REAL>    0.07115,0.07154,0.07162001,0.07166,
+                                  ... 2.97,2.975,2.98,2.985,2.99,2.995,3,3.01
+   REDSHIFT       <_REAL>         0
+   EMBOL(2,162)   <_REAL>         1.2466619E9,3.2856078E10,1.1444687E9,
+                                  ... 2.8344144E8,2.3983852E9,2.8333168E8
+\end{verbatim}
+\end{quote}
+\caption{Partial dump of the structure of an ASTERIX HDS
+  \texttt{spectra} file. This example comes from the ASTERIX source
+  distribution from 1992.}
+\label{fig:asterix}
+\end{minipage}
+\end{figure*}
+
+Were there any other structures used with HDS other than DST and IMAGE prior to NDF?
+
+\section{\emph{N}-Dimensional Data Format}
+
+There is text in SGP/38 that can probably be brought over verbatim.
+
+Funnily enough this seems to be a data model and not a data format.
+
+Interestingly \citet{1993ASPC...52..199B} talks of how useful NDF was in designing the
+2dF data reduction system using object-oriented fortran with NDF as
+the object backing store.
+
+Not trying to be comprehensive covering all possible astronomy
+data. Trying to be generically useful whilst providing an extension facility.
+
+Earliest reference to NDF I have found is Starlink bulletin 1988,
+number 2. \citep{1988STARB...2...11C}
+
+Anatomy of an NDF file
+
+Proper block diagram of the hierarchy for each structure type? That
+was part of the ADASS poster that could not be squeezed into the ADASS
+paper and it needs to be made explicit.
+
+\subsection{Data Arrays}
+
+Data, Variance, Quality
+
+Quality labels.
+
+\subsubsection{Data compression}
+
+Short description of options \citep{2008ASPC..394..650C}
+
+\subsection{Character Attributes}
+
+Title, Label and units
+
+\subsection{Axes and WCS}
+
+First there was \texttt{AXIS} and then there was AST. \citep{1998ASPC..145...41W,2001ASPC..238..129B}
+
+\subsection{History}
+
+Structured with a supporting API.
+
+\subsection{Extensions}
+
+\texttt{MORE}
+
+FITS headers as single character block.
+
+\subsubsection{Provenance}
+
+Technically an extension rather than part of NDF. Or talk in context
+of history?
+
+Describe how we store the provenance and how this evolved from ascii
+format for performance reasons. We also have scaling difficulties.
+
+\section{Data Acquisition}
+
+UKIRT and JCMT. AAO?
+
+\section{Lessons Learned}
+
+Covered somewhat in ADASS paper so need some more content as this is
+the justification for the existence of this paper.
+
+Successes:
+
+\begin{itemize}
+\item demonstrated usability in many wavelength regimes
+\item can round-trip to and from FITS \citep[see e.g.][]{1997STARB..19...14C}
+\item Pragmatic adoption of FITS header structure did make the format
+  more transparent with the downside being that libraries had to be
+  used to parse the character array and keep up with changes to the
+  FITS convention.
+\item Addition of data compression, WCS objects and provenance has
+  proven the flexibility of the early design.
+\end{itemize}
+
+Things to be improved upon:
+
+\begin{itemize}
+\item Quality array should support more than a byte mask
+\item Tables are important
+\item Flexible variance definitions. Covariance: See Meyerdierks 1991,
+  Starlink Bulletin 8, 19
+\item Be vigilant with too much complexity in extensions when reusing
+  an NDF structure in an extension can simplify tool access.
+\item Checksumming. The FITS DATASUM facility is very useful and NDF
+  should support it. Ideally it should be possible to generate a
+  reference checksum for a structure. It may be that this has to be
+  done in conjunction with HDS.
+\end{itemize}
+
+
+\section{Conclusions}
+
+From its beginnings in the mid-1980s the NDF data model has been used
+throughout the Starlink software collection within diverse
+applications such as SMURF \citep{2013MNRAS.430.2545C}, CCDPACK, GAIA
+and KAPPA. It has also been used as a raw data acquisition format at the
+James Clerk Maxwell Telescope and the United Kingdom Infrared
+Telescope (was it used at ING and AAO?) and available in that form
+from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
+\citep{2008ASPC..394..450E,P01_adassxxiii}. The shift from arbitrary
+use of hierarchical structures to a data model enforced by a library
+and API is extremely important.
+
+Mention HDX \citep{2003ASPC..295..221G}.
+
+Consider reimplementing NDF on top of HDF5. \texttt{MORE} extension
+requires that initially this is done by reimplementing HDS itself as a
+layer on top of HDF5. Then all the Starlink software would still work
+and even tools like \textsc{hdstrace}. Would allow for an easy way to
+add table support to NDF.
+
+The main impediment to further NDF take up is that it's in
+Fortran. Rewriting NDF and ARY in C would take some effort.
+
+\section{Acknowledgments}
+
+This research has made use of NASA's Astrophysics Data System.
+The Starlink software is currently maintained by the Joint Astronomy
+Centre, Hawaii with support from the UK Science and Technology
+Facilities Council.
+
+The source code for the NDF library and the Starlink software
+(ascl:1110.012) is open-source and is available on github at
+\htmladdnormallink{https://github.com/Starlink}.
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% References
+%%
+%% Following citation commands can be used in the body text:
+%%
+%%  \citet{key}  ==>>  Jones et al. (1990)
+%%  \citep{key}  ==>>  (Jones et al., 1990)
+%%
+%% Multiple citations as normal:
+%% \citep{key1,key2}         ==>> (Jones et al., 1990; Smith, 1989)
+%%                            or  (Jones et al., 1990, 1991)
+%%                            or  (Jones et al., 1990a,b)
+%% \cite{key} is the equivalent of \citet{key} in author-year mode
+%%
+%% Full author lists may be forced with \citet* or \citep*, e.g.
+%%   \citep*{key}            ==>> (Jones, Baker, and Williams, 1990)
+%%
+%% Optional notes as:
+%%   \citep[chap. 2]{key}    ==>> (Jones et al., 1990, chap. 2)
+%%   \citep[e.g.,][]{key}    ==>> (e.g., Jones et al., 1990)
+%%   \citep[see][pg. 34]{key}==>> (see Jones et al., 1990, pg. 34)
+%%  (Note: in standard LaTeX, only one note is allowed, after the ref.
+%%   Here, one note is like the standard, two make pre- and post-notes.)
+%%
+%%   \citealt{key}          ==>> Jones et al. 1990
+%%   \citealt*{key}         ==>> Jones, Baker, and Williams 1990
+%%   \citealp{key}          ==>> Jones et al., 1990
+%%   \citealp*{key}         ==>> Jones, Baker, and Williams, 1990
+%%
+%% Additional citation possibilities
+%%   \citeauthor{key}       ==>> Jones et al.
+%%   \citeauthor*{key}      ==>> Jones, Baker, and Williams
+%%   \citeyear{key}         ==>> 1990
+%%   \citeyearpar{key}      ==>> (1990)
+%%   \citetext{priv. comm.} ==>> (priv. comm.)
+%%   \citenum{key}          ==>> 11 [non-superscripted]
+%% Note: full author lists depends on whether the bib style supports them;
+%%       if not, the abbreviated list is printed even when full requested.
+%%
+%% For names like della Robbia at the start of a sentence, use
+%%   \Citet{dRob98}         ==>> Della Robbia (1998)
+%%   \Citep{dRob98}         ==>> (Della Robbia, 1998)
+%%   \Citeauthor{dRob98}    ==>> Della Robbia
+
+
+%% References with bibTeX database:
+
+\bibliographystyle{model2-names-astronomy}
+\bibliography{acndf}
+
+%% Authors are advised to submit their bibtex database files. They are
+%% requested to list a bibtex style file in the manuscript if they do
+%% not want to use model2-names.bst.
+
+%% References without bibTeX database:
+
+% \begin{thebibliography}{00}
+
+%% \bibitem must have one of the following forms:
+%%   \bibitem[Jones et al.(1990)]{key}...
+%%   \bibitem[Jones et al.(1990)Jones, Baker, and Williams]{key}...
+%%   \bibitem[Jones et al., 1990]{key}...
+%%   \bibitem[\protect\citeauthoryear{Jones, Baker, and Williams}{Jones
+%%       et al.}{1990}]{key}...
+%%   \bibitem[\protect\citeauthoryear{Jones et al.}{1990}]{key}...
+%%   \bibitem[\protect\astroncite{Jones et al.}{1990}]{key}...
+%%   \bibitem[\protect\citename{Jones et al., }1990]{key}...
+%%   \harvarditem[Jones et al.]{Jones, Baker, and Williams}{1990}{key}...
+%%
+
+% \bibitem[ ()]{}
+
+% \end{thebibliography}
+
+\end{document}
+
+%%
+%% End of file `elsarticle-template-2-harv.tex'.
