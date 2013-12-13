@@ -122,6 +122,8 @@
 \author[jac]{Malcolm J.\ Currie}
 \author[noao]{Frossie Economou}
 \author[aao]{Keith Shortridge}
+\author[bristol]{Mark B.\ Taylor}
+\author[ral]{Patrick T.\ Wallace}
 
 \cortext[cor1]{Corresponding author}
 
@@ -133,7 +135,8 @@
   Observatory, 950 N Cherry Ave, Tucson, AZ 85719, USA}
 \address[aao]{Australian Astronomical Observatory, 105 Delhi Rd, North
 Ryde, NSW 2113, Australia}
-
+\address[bristol]{H.\ H.\ Wills Physics Laboratory, Bristol University, Tyndall Avenue, Bristol, UK}
+\address[ral]{Space Science and Technology Department, STFC Rutherford Appleton Laboratory, Harwell Oxford, Didcot, Oxfordshire, OX11 0QX, UK}
 
 \begin{abstract}
 %% Text of abstract
@@ -185,61 +188,81 @@ Starlink
 
 Author list not finalised. Should invite PTW, PWD, NXG and RFWS and others.
 
-Set the scene of the 1980s. FITS \citep{1979ipia.coll..445W,1981A&AS...44..363W} tapes are
-the transport medium of choice.
+There is a renewed interest in file format choices for astronomy
+including discussions on the future of FITS (Thomas et al 2014) and
+with some projects adopting HDF5 and investigating JPEG2000. The
+Starlink project \citep{2000ASSL..250...93W,2002A&G....43a..25P},
+which began in 1980 \citep{1982MmSAI..53...55T}, was interested in
+using a single file format for all their data reduction software. The
+shift from a FITS-based format to a hierarchical self-describing
+format was driven by data reduction efficiency requirements and the
+desire to reuse software. A file format without a corresponding data
+model caused chaos and it took sometime until order could be restored
+with the definition of the $N$-Dimensional Data Format (NDF).
 
-Distinguish data transport from data processing format.
+When the Starlink Project was created it soon became apparent that a
+unified file format should be adopted for all the Starlink
+applications. FITS \citep{1979ipia.coll..445W,1981A&AS...44..363W} had
+recently been developed and was adopted as a tape interchange
+format. A file format was required that was explicitly optimized for
+data reduction applications and the choice of format involved much
+debate (reference to FITS adoption). The initial Starlink software
+environment, known as the INTERIM environment, proposed the use of the
+Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}. The BDF format
+was heavily influenced by FITS and used a FITS header block with
+standard FITS keywords. Whilst it had a flexible design a special
+``IMAGE'' variant was standardised for astronomical images and
+spectra.
 
-FITS initially adopted by Starlink but data processing demands led to HDS.
-
-Bulk Data Frame (BDF) format used by the Starlink INTERIM environment
-\citep[see e.g.][]{1980SPIE..264...70P}. The BDF format was heavily
-influenced by FITS and had a special ``IMAGE'' variant standardised
-for astronomical images and spectra.
+A data reduction file format should be efficient when generating
+intermediate files and be able to address and modify individual items.
+Additionally, it is import to be able to copy individual
+self-contained structures from one file to another. At the time FITS
+was not capable of doing this and it was realised that the finalised
+Starlink software environment would benefit from a more advanced file
+format capable of addressing hierarchical structures
+\citep{1981STARENT4}.
 
 
 \section{Hierarchical Data System}
 
-First mention I can find of hierarchical file format is in Enterprise
-\#4 from June 1981. \citep{1981STARENT4}
+The Starlink Data System\footnote{from which the file extension of
+  \texttt{.sdf}, for Starlink Data File, was chosen.} was first
+proposed in 1981 and the first version was released in 1982 \citep[see
+e.g.][]{1982QJRAS..23..485D,1991STARB...8....2L}. In 1983 the name was
+changed to the Hierarchical Data System (HDS) to make the file format
+benefits more explicit. It was originally written in the BLISS
+programming language on a VAX/VMS system and later rewritten in C and
+ported to Unix.  HDS was in common usage in 1986 although it was
+hampered by the next generation Starlink Software Environment
+\citep{1986BICDS..30...13L}.  There are many parallels between the
+hierarchical way HDS stores data within files and the way that a
+filing system organises the files themselves.
 
-Then Disney \& Wallace 1982 \citep{1982QJRAS..23..485D} mention the
-system more explicitly.
+Some key features of the HDS design are:
 
-Lawden 1986 \citep{1986BICDS..30...13L}
- says HDS is great but the Starlink Software Environment is
-pain and suffering.
+\begin{itemize}
+\item Hierarchical organization of arbitrary structures, including the
+  ability to store arrays of structures.
+\item The hierarchy is self-describing and can be queried.
+\item The ability to associates structures with an arbitrary data type.
+\item The ability to delete, copy or rename structures within a file.
+\item Automatic byte swapping whilst retaining the native byte order
+  for output files.
+\end{itemize}
 
-Basic overview of HDS. Presumably no need to talk about internals.
+An early description of the internal layout of an HDS file can be
+found in \citet{SSN27a}.
 
-Initial language was BLISS. C investigated but issues with compiler on
-VAX when doing system calls prevented its use.
-Ported to Unix early 1990s.
-
-Starlink chronology says initial HDS design was August 1981. V1 ready
-for testing in June 1982. Version 2 in August 1983. 1981 Confirmed by
-Lawden 1991 Bulletin 8, Page 2.
-
-Note in passing that SSN/27 was the HDS reference manual but these
-days SSN/27 is staradmin. There is a version of SSN/27 in the obsolete
-Starlink document directory from 1989. An interesting document.
-
-Initially called Starlink Data System (changed in October 1983 to
-HDS). Presumably \texttt{.sdf} comes from Starlink Data Format?
-
-1991 RFWS ports HDS to Sun. Was this version 3 of the format?
-
-
-Now supports 64-bit LARGEFILE file offsets (but not 64-bit data arrays
-yet -- code is mostly there but has a bug). This was HDS v4. Recently
-added 64-bit integer data types.
-
-Automatically detects byte order and does byte swapping in the library.
+More recently HDS has been extended to support 64-bit file offsets so
+that larger files can be written\footnote{Support for individual data
+  arrays with a 64-bit integer size is not yet possible.}, and also the
+addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 
 First couple of pages of SUN/92.
 
 \begin{table}
-\caption{HDS basic data types}
+\caption{HDS basic data types.}
 \label{tab:hdstypes}
 \begin{center}
 \begin{tabular}{lll}
@@ -250,26 +273,25 @@ First couple of pages of SUN/92.
 \_UWORD & uw & Unsigned 16-bit integer \\
 \_INTEGER & i & Signed 32-bit integer \\
 \_INT64 & k &Signed 64-bit integer \\
-\_REAL & r & 32-bit float \\
-\_DOUBLE & d & 64-bit float \\
+\_REAL & r & 32-bit IEEE float \\
+\_DOUBLE & d & 64-bit IEEE float \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
 
-\section{Early Years}
+\section{File Format without Data Model}
 
-The Starlink INTERIM software environment was delivered with BDF format.
+HDS files allowed people to arrange their data in the files however
+they pleased and placed no constraints on the organization of the
+structures or the semantic meaning of the content. This resulted in
+serious interoperability issues when moving files between applications
+that nominally could read HDS files. Within the Starlink ecosystem
+there were at least three prominent attempts at providing a data model
+to organize the chaos.
 
-IRAS CRDD data (SUN/91) was in .BDF format. Used STARIN to convert
-from BDF to HDS file suitable for kappa (SUN/96). STARIN phased out in
-1990. Replaced with CONVERT (SUN/55).
-
-Unconstrained use of structures leads to anarchy.
-
-Wright \& Giddings 1983 influence seemed to end up with the
-IMAGE data format as described in Appendix H of SUN/95.
+\subsection{Wright-Giddings IMAGE}
 
 \begin{figure*}
 \begin{minipage}{\textwidth}
@@ -283,25 +305,49 @@ HORSEHEAD  <IMAGE>
    TITLE          <_CHAR*72>      'KAPPA - Flip'
    DATA_MIN       <_REAL>         28.513
    DATA_MAX       <_REAL>         255.94
+   AXIS1_DATA     <_REAL}         1,2,3,4,5,6,7,8,
+                                  ... 383, 384
+   AXIS1_LABEL    <_CHAR*5>       'XAXIS'
 \end{verbatim}
 \end{quote}
-\caption{Example IMAGE structure developed by Wright \& Giddings 1983.}
+\caption{Example IMAGE structure using the Wright-Giddings
+  convention. The components are all at a single level without any hierarchy.}
 \end{minipage}
 \end{figure*}
 
+An early proposal \citep[][but see also \citet{SGP38}]{WrightGiddings1983} introduced the
+\texttt{IMAGE} organizational scheme. This Wright-Giddings design specified that
+data should go into a \texttt{DATA\_ARRAY} item and there should also be
+items for pre-computed data minimum and maximum, and also a value for
+a array-specific blank value. Errors were represented as standard
+deviations and stored in \texttt{DATA\_ERROR} and bad-pixel masks were
+stored in \texttt{DATA\_QUALITY}. Software was provided to convert BDF
+format files to HDS using this model \citep{SUN96} and the format became
+reasonably popular because of its simplicity.
 
-Data STructures (DST) format. \citep{1993ASPC...52..219S} see Fig.\
-\ref{fig:dst}
+There were a number of shortcomings with the design, not the least of
+which was that it did not make use of hierarchical structures. The
+design was very flat and heavily influenced by FITS and BDF.
 
-The \textsc{Asterix} X-Ray data reduction package \citep{SUN98} used the HDS
-format exclusively until the introduction of an abstract data access
-interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
-and FITS format files. \textsc{Asterix} defined its
-own data models and layered those on top of HDS. The \texttt{SPECTRA}
-layout was closest to that found in NDF and an example is shown in
-Fig.\ \ref{fig:asterix} with a trace from a file created in 1992. The
-use of \texttt{HISTORY}, \texttt{AXIS} and \texttt{DATA\_ARRAY}
-structures provides some similarity to NDF.
+\subsection{Figaro DST}
+
+The Figaro data reduction package
+\citep{1988igbo.conf..448C,1993ASPC...52..219S} independently adopted
+a hierarchical design based on HDS, influenced by early discussions on
+NDF. This DST\footnote{The reason for the name has been lost in the
+  mists of time but our best guess is that it stood for \emph{\textbf{D}ata
+  \textbf{ST}ructures}.} format makes good use of structures and supported
+standard deviations for errors. The main image/spectral data was
+labeled \texttt{Z} and was of type \texttt{IMAGE}, and axis
+information was stored in structures labeled \texttt{X} and
+\texttt{Y}. The axis structures reused components from the
+\texttt{IMAGE} structure although they were themselves given a type of
+\texttt{AXIS}. FITS-style keyword/value pairs were encoded explicitly
+in a structure of type \texttt{FITS} but using scalar components for
+each header item. This design meant that FITS comments could not
+easily be encoded. An example trace can be found in \ref{fig:dst}.
+
+{\color{red} How did Figaro DST files store 3d data?}
 
 \begin{figure*}
 \begin{minipage}{\textwidth}
@@ -336,11 +382,31 @@ OUT  <FIGARO>
       SOFTWARE       <_CHAR*8>       'CF v1.0'
 \end{verbatim}
 \end{quote}
-\caption{Partial dump of the structure of a DST file. This example is from a CGS4
-  observation from January 1991.}
+\caption{Partial dump of the structure of a DST file. Structures make
+  use of a hierarchy and reuse concepts in the data array and axis
+  definition. This example is from a CGS4 observation from January
+  1991.}
 \label{fig:dst}
 \end{minipage}
 \end{figure*}
+
+\subsection{Asterix}
+
+{\color{red} My examples are from the early 1990s so I'm not sure how
+  much of this influenced NDF or was influenced by NDF. Documents from
+  the mid 1980s suggest that ASTERIX used an HDS file before NDF and
+  were the first to adopt HISTORY.}
+
+The \textsc{Asterix} X-Ray data reduction package \citep{SUN98,1992STARB...9....3S} used the HDS
+format exclusively until the introduction of an abstract data access
+interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
+and FITS format files. \textsc{Asterix} defined its
+own data models and layered those on top of HDS. The \texttt{SPECTRA}
+layout was closest to that found in NDF and an example is shown in
+Fig.\ \ref{fig:asterix} with a trace from a file created in 1992. The
+use of \texttt{HISTORY}, \texttt{AXIS} and \texttt{DATA\_ARRAY}
+structures provides some similarity to NDF. {\color{red} What
+  components did ASTERIX develop themselves?}
 
 \begin{figure*}
 \begin{minipage}{\textwidth}
@@ -380,13 +446,14 @@ RZ_PSPC_Z00000  <SPECTRA>
 \end{verbatim}
 \end{quote}
 \caption{Partial dump of the structure of an ASTERIX HDS
-  \texttt{spectra} file. This example comes from the ASTERIX source
-  distribution from 1992.}
+  \texttt{spectra} file. \texttt{HISTORY} and \texttt{AXIS} structures
+  make extensive use of hierarchy and arrays of structures.  This
+  example comes from the ASTERIX source distribution from 1992.}
 \label{fig:asterix}
 \end{minipage}
 \end{figure*}
 
-Were there any other structures used with HDS other than DST and IMAGE prior to NDF?
+{\color{red} Were there any other structures used with HDS other than DST and IMAGE prior to NDF?}
 
 \section{\emph{N}-Dimensional Data Format}
 
