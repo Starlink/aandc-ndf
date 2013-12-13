@@ -237,7 +237,8 @@ ported to Unix.  HDS was in common usage in 1986 although it was
 hampered by the next generation Starlink Software Environment
 \citep{1986BICDS..30...13L}.  There are many parallels between the
 hierarchical way HDS stores data within files and the way that a
-filing system organises the files themselves.
+filing system organises the files themselves. An early description of
+the internal layout of an HDS file can be found in \citet{SSN27a}.
 
 Some key features of the HDS design are:
 
@@ -251,18 +252,15 @@ Some key features of the HDS design are:
   for output files.
 \end{itemize}
 
-An early description of the internal layout of an HDS file can be
-found in \citet{SSN27a}.
-
 More recently HDS has been extended to support 64-bit file offsets so
 that larger files can be written\footnote{Support for individual data
   arrays with a 64-bit integer size is not yet possible.}, and also the
 addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 
-First couple of pages of SUN/92.
-
 \begin{table}
-\caption{HDS basic data types.}
+\caption{HDS basic data types. The unsigned types did not correspond
+  to standard Fortran~77 data types but had to be included for
+  compatibility with astronomy instrumentation.}
 \label{tab:hdstypes}
 \begin{center}
 \begin{tabular}{lll}
@@ -273,12 +271,102 @@ First couple of pages of SUN/92.
 \_UWORD & uw & Unsigned 16-bit integer \\
 \_INTEGER & i & Signed 32-bit integer \\
 \_INT64 & k &Signed 64-bit integer \\
+\_LOGICAL & l & Boolean \\
 \_REAL & r & 32-bit IEEE float \\
 \_DOUBLE & d & 64-bit IEEE float \\
+\_CHAR[$*$n] & c & 8-bit Character string \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
+
+The advantage of HDS is that it allows many different kinds of data to
+be stored in a consistent and logical fashion. It is also very
+flexible, in that objects can be added or deleted whilst retaining the
+logical structure. HDS also provides portability of data, so that the
+same data objects may be accessed from different types of computer
+despite the fact that each may actually format its files and data in
+different ways.
+
+\subsection{\label{sect:objects}HDS Objects}
+
+HDS files are known as \emph{container files} and by default have the
+extension `.sdf'.  HDS files contain \emph{data objects} which will
+often be referred to simply as \emph{objects}. An object is an entity
+which contains data or other objects. This is the basis of the
+hierarchical nature of HDS and is analogous to the concepts of
+\emph{file} and \emph{directory} -- a directory can contain files and
+directories which can themselves contain files and directories and so
+on.
+
+An HDS object possesses a number of attributes, each of which is
+described in more detail below:
+
+\subsubsection{\label{sect:name}Name}
+
+The primary way of identifying an HDS object is by its \emph{name},
+which must be unique within its own container object.  The name of an
+object is a character string which may contain any printing
+characters; white space is ignored and alphabetic characters are
+capitalised. The maximum length of an HDS name is 15 characters.
+
+There are no special rules governing the first character
+({i.e.\ it can be numeric), so HDS itself allows great freedom in specifying
+names (and also types -- see \S\ref{sect:type}). In practice,
+however, some restrictions will be imposed by considerations of
+portability of data and applications, and of possible syntax conflicts
+with the environment within which HDS is used.
+
+\subsubsection{\label{sect:type}Type}
+
+The \emph{type} of an HDS object falls into two \emph{classes} named
+Structure and Primitive.
+
+Structure objects contain other objects called
+\emph{components}. Primitive objects contain only numeric, character,
+or logical values. Objects in the different classes are referred to as
+\emph{structures} and \emph{primitives} while the more general term
+\emph{object} refers to either a \emph{structure} or a
+\emph{primitive}. Structures are analogous to the directories in a
+filing system -- they can contain a part of the hierarchy below
+them. Primitives are analogous to files -- they are at the bottom of
+any branch of the structure and contain the actual data.
+
+In HDS, structure types are represented by character strings with the
+same rules of formation as \emph{name} (\S\ref{sect:name}) except that
+a structure type may not start with an underscore character `\_' (a
+structure type may also be completely blank). Examples of structure
+types are `IMAGE', `SPECTRUM', `INSTR\_RESP', \emph{etc.} These do not
+begin with an underscore, so they are easily distinguished from the
+primitive types, which do.
+
+Special rules apply to the primitive types, which all begin with an
+underscore and are ``pre-defined'' by HDS, as shown in table
+\ref{tab:hdstypes}.
+
+\subsubsection{\label{sect:shape}Shape}
+
+Every HDS object has a \emph{shape} or dimensionality. This is
+described by an integer (the number of dimensions) and an integer
+array (containing the size of each dimension). A \emph{scalar} (for
+example a single number) has, by convention, a dimensionality of zero;
+\emph{i.e.}\ its number of dimensions is 0. A \emph{vector} has a
+dimensionality of 1; \emph{i.e.}\ its number of dimensions is 1, and
+the first element of the dimension array contains the size of the
+vector.  An \emph{array} refers to an object with 2 or more dimensions;
+a maximum of 7 dimensions are allowed. Objects may be referred to as
+\emph{scalar primitives} or \emph{vector structures} and so on.
+
+\subsubsection{State}
+
+The \emph{state} of an HDS object specifies whether or not its value is
+defined. It is represented as a logical value where .TRUE.\ means
+defined and .FALSE.\ means undefined.
+
+Objects start out undefined when they are created and become defined
+when you write a value to them. In general, an error will result if
+you attempt to obtain the value of an object while it is still
+undefined.
 
 
 \section{File Format without Data Model}
@@ -548,6 +636,7 @@ Things to be improved upon:
   should support it. Ideally it should be possible to generate a
   reference checksum for a structure. It may be that this has to be
   done in conjunction with HDS.
+\item Character encodings.
 \end{itemize}
 
 
