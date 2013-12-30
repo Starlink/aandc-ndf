@@ -628,34 +628,103 @@ was adopted for ACSIS and SCUBA-2 from 2006.
 {\color{red} Covered somewhat in ADASS paper so need some more content as this is
 the justification for the existence of this paper.}
 
-Successes:
+\subsection{Successes}
 
-\begin{itemize}
-\item demonstrated usability in many wavelength regimes
-\item can round-trip to and from FITS \citep[see e.g.][]{1997STARB..19...14C}
-\item Pragmatic adoption of FITS header structure did make the format
-  more transparent with the downside being that libraries had to be
-  used to parse the character array and keep up with changes to the
-  FITS convention.
-\item The ability to associate a data type with a structure is important.
-\item Addition of data compression, WCS objects and provenance has
-  proven the flexibility of the early design.
-\end{itemize}
+\subsubsection{Hierarchy can be useful}
 
-Things to be improved upon:
+\subsubsection{Do not try to do everything}
 
-\begin{itemize}
-\item Quality array should support more than a byte mask
-\item Tables are important
-\item Flexible variance definitions. Covariance: \citep{1991STARB...8...19M}
-\item Be vigilant with too much complexity in extensions when reusing
-  an NDF structure in an extension can simplify tool access.
-\item Checksumming. The FITS DATASUM facility is very useful and NDF
-  should support it. Ideally it should be possible to generate a
-  reference checksum for a structure. It may be that this has to be
-  done in conjunction with HDS.
-\item Character encodings.
-\end{itemize}
+Demonstrated usability in many wavelength regimes that were not
+involved in initial discussion.
+
+\subsubsection{Standardised features aids application writers}
+
+
+
+\subsubsection{Round-tripping to other data formats}
+
+Can round-trip to and from FITS \citep[see e.g.][]{1997STARB..19...14C}
+
+\subsubsection{Adoption of FITS header}
+
+Pragmatic adoption of FITS header structure did make the format more
+transparent with the downside being that libraries had to be used to
+parse the character array and keep up with changes to the FITS
+convention.
+
+\subsubsection{Structure Data Types}
+
+The ability to associate a data type with a structure is important.
+
+\subsubsection{Proven ability to enhance format}
+
+Addition of data compression, WCS objects and provenance has proven
+the flexibility of the early design.
+
+\subsection{Areas for improvement}
+
+\subsubsection{Quality masking}
+
+The initial design for the quality mask used a single unsigned byte
+allowing 8 different quality assignments in a single data file. The
+design did not allow for the possibility of supporting larger unsigned
+integer data types. This restriction should be raised to allow more
+assignments. The SMURF map-maker
+\citep[][ascl:1310.007]{2013MNRAS.430.2545C} already makes use of more
+than 8 internally and uses an unsigned short. When the results are
+written out mask types have to be combined if more than 8 were present
+in the output data file.
+
+\subsubsection{Table support}
+
+Tables were added to FITS \citep{1988A&AS...73..365H} during the
+initial development of NDF and the need for tables got lost in the
+drive for a standardised image format. A table type was never added to
+NDF and Starlink software eventually took the pragmatic solution of
+using FITS binary tables \citep{1995A&AS..113..159C} for output
+tables. This can not solve the problem of integrating data tables into
+image data files and the format would benefit from a native data
+type. The JCMT raw data format instead uses individual 1-dimensional
+data arrays to store time-series data but this is inefficient and adds
+programming overhead.
+
+\subsubsection{Flexible variance definitions}
+
+The adoption of variance as a standard part of NDF was an important
+motivator for application writers to add support for variance and
+almost all the Starlink applications now support variance. The next
+step is to support different types of errors, including
+covariance. This has been proposed many times \citep[see
+e.g.][]{1991STARB...8...19M} but is a very difficult problem to solve
+in the general case and may involve having to support pluggable
+algorithms for handling special types of error propagation.
+
+\subsubsection{Extension complexity}
+
+Many extensions created in the early years of NDF became more complex
+than was strictly necessary by ignoring th design decisions of NDF and
+using highly complex HDS structures. In many cases it would have been
+beneficial to use NDF structures in the extensions which would have
+allowed the NDF library to read the data (by giving the full path to
+the structure) without resorting to low-level HDS API calls. The NDF
+structures would also have been visible to general purpose tools for
+visualization.
+
+\subsubsection{Data checksums}
+
+The FITS \texttt{DATASUM} facility is very useful and NDF should support
+it. Ideally it should be possible to generate a reference checksum for
+a structure. It may be that this has to be done in conjunction with
+HDS.
+
+\subsubsection{Character encodings}
+
+The \texttt{\_CHAR} data type in HDS uses an 8-bit character type,
+assumed to be ASCII. It was designed long before Unicode came to exist
+and has no support for accented characters or non-ASCII character
+sets. Multi-byte Unicode should be supported in any modern format to
+allow metadata to be represented properly. HDS can not support the
+storage of common astronomical units such as $\mu$m or $\AA$.
 
 
 \section{Conclusions}
