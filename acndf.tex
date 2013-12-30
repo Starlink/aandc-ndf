@@ -186,7 +186,10 @@ Starlink
 \section{Introduction}
 \label{sec:intro}
 
-Author list not finalised. Should invite PTW, PWD, NXG and RFWS and others.
+{\color{red} Author list not finalised. Should invite PTW, PWD, NXG
+  and RFWS and others.}
+
+{\color{red} Introduction is incoherent.}
 
 There is a renewed interest in file format choices for astronomy
 including discussions on the future of FITS (Thomas et al 2014) and
@@ -420,7 +423,7 @@ design was very flat and heavily influenced by FITS and BDF.
 \subsection{Figaro DST}
 
 The Figaro data reduction package
-\citep{1988igbo.conf..448C,1993ASPC...52..219S} independently adopted
+\citep[][ascl:1203.013]{1988igbo.conf..448C,1993ASPC...52..219S} independently adopted
 a hierarchical design based on HDS, influenced by early discussions on
 NDF. This DST\footnote{The reason for the name has been lost in the
   mists of time but our best guess is that it stood for \emph{\textbf{D}ata
@@ -433,7 +436,7 @@ information was stored in structures labeled \texttt{X} and
 \texttt{AXIS}. FITS-style keyword/value pairs were encoded explicitly
 in a structure of type \texttt{FITS} but using scalar components for
 each header item. This design meant that FITS comments could not
-easily be encoded. An example trace can be found in \ref{fig:dst}.
+easily be encoded. An example trace can be found in Fig.\ \ref{fig:dst}.
 
 {\color{red} How did Figaro DST files store 3d data?}
 
@@ -622,8 +625,8 @@ was adopted for ACSIS and SCUBA-2 from 2006.
 
 \section{Lessons Learned}
 
-Covered somewhat in ADASS paper so need some more content as this is
-the justification for the existence of this paper.
+{\color{red} Covered somewhat in ADASS paper so need some more content as this is
+the justification for the existence of this paper.}
 
 Successes:
 
@@ -634,6 +637,7 @@ Successes:
   more transparent with the downside being that libraries had to be
   used to parse the character array and keep up with changes to the
   FITS convention.
+\item The ability to associate a data type with a structure is important.
 \item Addition of data compression, WCS objects and provenance has
   proven the flexibility of the early design.
 \end{itemize}
@@ -643,8 +647,7 @@ Things to be improved upon:
 \begin{itemize}
 \item Quality array should support more than a byte mask
 \item Tables are important
-\item Flexible variance definitions. Covariance: See Meyerdierks 1991,
-  Starlink Bulletin 8, 19
+\item Flexible variance definitions. Covariance: \citep{1991STARB...8...19M}
 \item Be vigilant with too much complexity in extensions when reusing
   an NDF structure in an extension can simplify tool access.
 \item Checksumming. The FITS DATASUM facility is very useful and NDF
@@ -668,7 +671,7 @@ from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 use of hierarchical structures to a data model enforced by a library
 and API is extremely important.
 
-Mention HDX \citep{2003ASPC..295..221G}.
+{\color{red} Mention HDX \citep{2003ASPC..295..221G}.}
 
 Consider reimplementing NDF on top of HDF5. \texttt{MORE} extension
 requires that initially this is done by reimplementing HDS itself as a
