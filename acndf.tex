@@ -372,7 +372,7 @@ you attempt to obtain the value of an object while it is still
 undefined.
 
 
-\section{File Format without Data Model}
+\section{File Format without standardised Data Model}
 
 HDS files allowed people to arrange their data in the files however
 they pleased and placed no constraints on the organization of the
@@ -632,18 +632,73 @@ the justification for the existence of this paper.}
 
 \subsubsection{Hierarchy can be useful}
 
+Initially it was very hard to convince people that hierarchical data
+structures were at all useful. This can be seen in the Wright-Giddings
+layout of a simple astronomical image file using HDS. Over the years
+the adoption of hierarchy has been an important part of the NDF
+experience. The ability to relocate or modify parts of a data file,
+changing the organization, or to copy related sections to a new file
+is very powerful.  NDF extensions containing NDF structures, allowing
+software packages to extract those NDFs or simply focus on them
+without regard to the enclosing data module becomes very intuitive and
+obvious once it is learned. A flat layout would require additional
+grouping metadata to understand which components were related and this
+is neatly handled by a simple hierarchy.
+
 \subsubsection{Do not try to do everything}
 
-Demonstrated usability in many wavelength regimes that were not
-involved in initial discussion.
+There are two incompatible approaches to designing a data model. The
+default position tends to be to think of everything that is needed for
+all of astronomy and try to design a model where all metadata is
+described and everything has its place. This is the approach taken by
+the IVOA \citep[see e.g.][]{2012arXiv1204.3055M} and leads to long and
+heated discussions that generate data models that are never quite
+perfect and continually need to be tweaked as new instrumentation and
+metadata are developed. This is a worthy goal and it is clear that
+much can be gained if these data models can be utilised, especially if
+related models (spectrum and image when combined into a data cube)
+share common ground.
 
-\subsubsection{Standardised features aids application writers}
+For NDF there was a need to generate a usable model quickly that took
+concepts that were generically useful, leaving instrumental details to
+extensions. These extensions were ignored by generic software packages
+although clear rules were made regarding how extensions should be
+propagated. This approach allowed for the format to grow without
+requiring the format or the NDF library to have to understand the
+contents of extensions.
 
+This approach has been very successfull, not only in enabling new
+features to be added to NDF once the need became obvious, but also
+in so far that wavelength regimes not initially involved in the
+discussion can make use of NDF without requiring that the core data
+model be changed.
 
+\subsubsection{Standardised features aid application writers}
+
+Once application writers understand that there is a standard place for
+error information, quality masks and other features of the standard
+data model, they begin to write application software that can use
+these features. Not having to use a heuristic to determine whether a
+particular data array represents an image or an error can allow the
+application writer to focus more on the algorithms that matter. Once
+users of the software understand that errors and masks are an option
+they begin to have an expectation that all the software packages will
+handle them. This then motivates the developer to support these
+features.  This is especially true if the core concepts of the data
+model are simple enough that the learning curve is small.
 
 \subsubsection{Round-tripping to other data formats}
 
-Can round-trip to and from FITS \citep[see e.g.][]{1997STARB..19...14C}
+For a new format to be used it must be possible to safely and reliably
+convert to and from existing formats without losing information.
+Significant effort was spent in developing conversion software that
+would allow conversion to and from NDF
+\citep{SUN55,1997STARB..19...14C}. In particular, special code was
+used to recognize specific data models present in FITS files to enable
+a more accurate conversion of scientific information into the NDF
+form. Support was also added for the \emph{multispec} format in IRAF
+\citep{1993ASPC...52..467V} to ensure that wavelength scales were not
+lost.
 
 \subsubsection{Adoption of FITS header}
 
