@@ -702,10 +702,18 @@ lost.
 
 \subsubsection{Adoption of FITS header}
 
-Pragmatic adoption of FITS header structure did make the format more
-transparent with the downside being that libraries had to be used to
-parse the character array and keep up with changes to the FITS
-convention.
+Given hierarchical structures the default assumption might be to use
+arrays of keyword structures where each structure would contain the
+value, the comment and the unit. Alternatively simply drop the unit
+and comment and just use keyword/value pairs. These approaches turned
+out to be extremely slow and space inefficient so a pragmatic solution
+was taken to standardise on an array of characters formatted
+identically to a FITS header. The initial NDF standard did not include
+this approach and parsing of a FITS header is left up to the user
+rather than being integral to the NDF library. In practice the AST
+library \citep{1998ASPC..145...41W} is used for processing the FITS
+header from an NDF so this causes few problems and simplifies the NDF
+organization.
 
 \subsubsection{Structure Data Types}
 
