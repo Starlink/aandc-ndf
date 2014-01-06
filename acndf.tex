@@ -720,7 +720,15 @@ organization.
 
 \subsubsection{Structure Data Types}
 
-The ability to associate a data type with a structure is important.
+The ability to associate a data type with a structure is important for
+the ability of applications to know how to process particular
+structures. An NDF extension may itself include many more NDF
+structures each of which would have a different name but would also
+share the data type of \texttt{NDF}. For example, the GAIA
+visualization tool \citep{2009ASPC..411..575D} will scan the HDS file
+for all such NDF strutures and make them available for
+display. Applications can therefore make decisions on how to handle a
+structure without having to know its name.
 
 \subsubsection{Proven ability to enhance format}
 
