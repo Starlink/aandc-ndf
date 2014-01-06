@@ -595,15 +595,27 @@ Quality labels.
 
 \subsection{Extensions}
 
-{\color{red}
-\texttt{MORE}
-}
+The NDF standard included a special place for local extensions to the
+format. This allowed instruments and applications to track additional
+information without requiring standardisation. The only rule was that
+each extension should be given a reserved name and that the data type
+would define the specific data model of an extension. Some
+applications, for example, went so far as to include covariance
+information in extensions to overcome limitations in the default error
+propagation model for NDF.
+
+Two extensions proved so popular that they are now part of the broader
+standard for NDFs.
 
 \subsubsection{FITS headers}
 
-{\color{red}
-FITS headers as single character block.
-}
+FITS headers, consisting of 80 character header cards, are extremely
+common and to simplify interoperability with FITS files and to
+minimize structure overhead, it was decided early on to store FITS
+headers as an array of 80 character strings matching the FITS
+convention rather than attempting to parse the contents and expand
+into structures.
+
 \subsubsection{Provenance}
 
 {\color{red} Technically an extension rather than part of NDF. Or talk
