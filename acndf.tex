@@ -721,8 +721,15 @@ The ability to associate a data type with a structure is important.
 
 \subsubsection{Proven ability to enhance format}
 
-Addition of data compression, WCS objects and provenance has proven
-the flexibility of the early design.
+The initial NDF design document did not profess to know the future and
+was deliberately designed to allow new features to be added as they
+became necessary. The adoption of a character array matching an 80
+character FITS header was an early change but there have also been
+changes to support world coordinate objects
+\citep{2001ASPC..238..129B}, data compression algorithms
+\citep{2008ASPC..394..650C} and provenance tracking
+\citep{2009ASPC..411..418J}. The NDF standard is continuing to evolve
+to meat the needs of modern astronomy data processing.
 
 \subsection{Areas for improvement}
 
@@ -750,6 +757,8 @@ image data files and the format would benefit from a native data
 type. The JCMT raw data format instead uses individual 1-dimensional
 data arrays to store time-series data but this is inefficient and adds
 programming overhead.
+
+{\color{red} Say how FITS2NDF handles binary tables.}
 
 \subsubsection{Flexible variance definitions}
 
@@ -789,6 +798,30 @@ sets. Multi-byte Unicode should be supported in any modern format to
 allow metadata to be represented properly. HDS can not support the
 storage of common astronomical units such as $\mu$m or $\AA$.
 
+\subsubsection{Library limitations}
+
+Whilst there are many advantages to having a single library
+providing the access layer to an NDF, there is also a related problem
+of limitations in this one library causing limitations to all
+users. In particular the current NDF library is single-threaded due to
+use of a single block of memory tracking access status. Furthermore
+the HDS library itself is also single-threaded with its own internal
+state. As more and more programs become multi-threaded to make use of
+increased numbers of cores in modern CPUs this limitation becomes more
+and more frustrating.
+
+Another issue associated with the library is the use of 32-bit
+integers as counters in data arrays. It is now easy to imagine data
+cubes that exceed this many pixels and a new API may be needed to ease
+the transition to 64-bit counters.
+
+Whilst the HDS library is written entirely in ANS C, the NDF and
+related ARY libraries are written in Fortran. This can cause a
+reticence to adoption from people outside the Starlink community and
+adds complications when linking in Python and other higher-level
+languages.
+
+Ideally NDF would be rewritten in C and be made thread-safe.
 
 \section{Conclusions}
 
