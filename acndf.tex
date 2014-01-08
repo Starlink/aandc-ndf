@@ -583,7 +583,9 @@ Quality labels.
 
 \subsection{Character Attributes}
 
-{\color{red} Title, Label and units}
+Each NDF has three character attributes that can be specified: a
+title, a data label and a data unit. These values can be accessed
+through the library API without resorting to a FITS-style extension.
 
 \subsection{Axes and WCS}
 
@@ -604,7 +606,7 @@ applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
 propagation model for NDF.
 
-Two extensions proved so popular that they are now part of the broader
+Three extensions proved so popular that they are now part of the broader
 standard for NDFs.
 
 \subsubsection{FITS headers}
@@ -626,6 +628,16 @@ into structures.
   how this evolved from ASCII format with lots of structures for
   performance reasons. We also have scaling difficulties even with
   binary format.}
+
+\subsubsection{Quality Labels}
+
+Individual bits in the quality mask can be addressed using the
+\texttt{BADBITS} attribute but the NDF standard did not allow for
+these bits to be labeled. This confusion was solved first in the
+\textsc{iras90} package which added a \texttt{QUALITY\_NAMES}
+extension associating names with bits. \textsc{Kappa} tasks were then
+modified to understand this convention and allow users to enable and
+disable masks by name.
 
 \section{Data Acquisition}
 
