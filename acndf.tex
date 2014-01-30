@@ -620,6 +620,47 @@ into structures.
 
 \subsubsection{Provenance}
 
+In the late 1980's disk space and processing power were neither so
+cheap nor so plentiful as they are now. At the time therefore, it
+seemed prudent to limit history propagation to a single "primary"
+parent. Consequently, the NDF library ensures that each application
+copies history information from a single primary parent NDF to each
+output NDF, appending a new history record to describe the new
+application. This means that if many NDFs are combined together by a
+network of applications, then each resulting output NDF will, in
+general, contain only a subset of the history needed to determine all
+the NDFs and applications that were used to create the NDF. It would
+of course be possible to gather this information by back-tracking
+through all the intermediate NDFs, analysing the history component of
+each one, but this depends on the intermediate NDFs still being
+available, which is often not the case.
+
+In 2009, it was decided that the inconvenience of this "single line of
+descent" approach to history was no longer justified by the savings in
+disk space and processing time, and so an alternative system was
+provided that enables each NDF to retain full information about all
+ancestor NDFs, and the processing that was used to create them. Thus
+each NDF may now contain a full ``family tree'' that goes back as far as
+any NDFs that have no recorded parents, or which have been marked
+explicitly as ``root'' NDFs. Each node in the tree records the name of
+the ancestor NDF, the command that was used to create it, the date and
+time at which it was created, and its immediate parent nodes. Each
+node also allows arbitrary extra information to be associated with the
+ancestor NDF. Care is taken to merge nodes -- possibly inherited from
+different input NDFs -- that refer to the same ancestor.
+
+For reasons of backward compatibility, it was decided to retain the
+original NDF History mechanism, and add this new ``family tree'' feature
+as an extra facility named ``Provenance''.  Originally the family tree
+was stored as a fully hierarchical structure within an NDF extension,
+using raw HDS. However, given the possibility for exponential growth
+in the number of ancestors, the cost of navigating such a complex
+structure quickly became prohibitive. Therefore, storage as raw HDS
+was replaced by an optimised bespoke binary format packed into an
+array of integers. Even so, it is still possible for the reading and
+writing of provenance information to be a significant overhead when
+running relatively minor applications.
+
 {\color{red} Technically an extension rather than part of NDF. Or talk
   in context of history? Explain where NDG fits in and how we extended
   NDF without extending NDF itself (much like .MORE.FITS).}
