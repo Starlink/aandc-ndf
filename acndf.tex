@@ -283,7 +283,7 @@ addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 \end{center}
 \end{table}
 
-The advantage of HDS is that it allows many different kinds of data to
+The advantage of HDS over flat file formats is that it allows many different kinds of data to
 be stored in a consistent and logical fashion. It is also very
 flexible, in that objects can be added or deleted whilst retaining the
 logical structure. HDS also provides portability of data, so that the
@@ -326,7 +326,7 @@ The \emph{type} of an HDS object falls into two \emph{classes} named
 Structure and Primitive.
 
 Structure objects contain other objects called
-\emph{components}. Primitive objects contain only numeric, character,
+\emph{components}. Primitive objects are only numeric, character,
 or logical values. Objects in the different classes are referred to as
 \emph{structures} and \emph{primitives} while the more general term
 \emph{object} refers to either a \emph{structure} or a
@@ -431,7 +431,8 @@ NDF. This DST\footnote{The reason for the name has been lost in the
 standard deviations for errors. The main image/spectral data was
 labeled \texttt{Z} and was of type \texttt{IMAGE}, and axis
 information was stored in structures labeled \texttt{X} and
-\texttt{Y}. The axis structures reused components from the
+\texttt{Y}. The axis structures, \texttt{X} and \texttt{Y},
+reused components from the
 \texttt{IMAGE} structure although they were themselves given a type of
 \texttt{AXIS}. FITS-style keyword/value pairs were encoded explicitly
 in a structure of type \texttt{FITS} but using scalar components for
@@ -734,7 +735,7 @@ concepts that were generically useful, leaving instrumental details to
 extensions. These extensions were ignored by generic software packages
 although clear rules were made regarding how extensions should be
 propagated. This approach allowed for the format to grow without
-requiring the format or the NDF library to have to understand the
+requiring the format or the NDF library to understand the
 contents of extensions.
 
 This approach has been very successfull, not only in enabling new
@@ -759,8 +760,9 @@ model are simple enough that the learning curve is small.
 
 \subsubsection{Round-tripping to other data formats}
 
-For a new format to be used it must be possible to safely and reliably
-convert to and from existing formats without losing information.
+For a new format to be used it must be possible to
+convert to and from existing formats in a safe and reliable manner
+without losing information.
 Significant effort was spent in developing conversion software that
 would allow conversion to and from NDF
 \citep{SUN55,1997STARB..19...14C}. In particular, special code was
@@ -781,7 +783,7 @@ was taken to standardise on an array of characters formatted
 identically to a FITS header. The initial NDF standard did not include
 this approach and parsing of a FITS header is left up to the user
 rather than being integral to the NDF library. In practice the AST
-library \citep{1998ASPC..145...41W} is used for processing the FITS
+library \citep{1998ASPC..145...41W} is often used for processing the FITS
 header from an NDF so this causes few problems and simplifies the NDF
 organization.
 
@@ -807,7 +809,7 @@ changes to support world coordinate objects
 \citep{2001ASPC..238..129B}, data compression algorithms
 \citep{2008ASPC..394..650C} and provenance tracking
 \citep{2009ASPC..411..418J}. The NDF standard is continuing to evolve
-to meat the needs of modern astronomy data processing.
+to meet the needs of modern astronomy data processing.
 
 \subsection{Areas for improvement}
 
