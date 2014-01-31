@@ -930,7 +930,12 @@ need to support HDS in the longer term. NDF and all the existing
 Starlink applications would continue to work so long as a conversion
 program is made available to convert HDS structures to HDF5 structures.
 This would have the added advantage of making it straightforward to
-add support for tables natively to the NDF data model.
+add support for tables natively to the NDF data model. Many of the
+concepts in NDF map directly to HDF5. One remaining issue is that HDF5
+does not support the notion of arrays of groups so the
+\texttt{HISTORY} and \texttt{AXIS} structures in NDF would need to be
+remapped into a flatter layout, maybe with numbered components in an
+\texttt{AXIS} or \texttt{HISTORY} group.
 
 \section{Acknowledgments}
 
