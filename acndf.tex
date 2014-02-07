@@ -426,26 +426,6 @@ design was very flat and heavily influenced by FITS and BDF.
 
 \subsection{Figaro DST}
 
-The Figaro data reduction package
-\citep[][ascl:1203.013]{1988igbo.conf..448C,1993ASPC...52..219S}
-independently adopted a hierarchical design based on HDS. This DST
-format\footnote{The reason for the name has been lost in the mists of
-  time but our best guess is that it stood for \emph{\textbf{D}ata
-    \textbf{ST}ructures}.} made good use of structures and supported
-standard deviations for errors. Axis information was stored in
-structures labeled X and Y, and the main image/spectral data was
-stored in a structure labeled Z. The main data array was
-\texttt{.Z.DATA}.  FITS-style keyword/value pairs were encoded
-explicitly in a structure called \texttt{.FITS} but using scalar
-components for each header item. Any comments associated with the FITS
-keywords were held in similar structure labelled
-\texttt{.COMMENTS}. This basic structure suggests a bias towards 1- or
-2-dimensional data, but it could handle data of up to 6 dimensions;
-the \texttt{.Z.DATA} array could have as many dimensions as HDS would
-support, and the axis structures for the higher dimensions were
-labelled -- awkwardly -- from \texttt{.T} through to \texttt{.W}. An
-example trace can be found in Fig.\ \ref{fig:dst}.
-
 \begin{figure*}[t]
 \begin{minipage}{\textwidth}
 \begin{quote}
@@ -486,6 +466,26 @@ OUT  <FIGARO>
 \label{fig:dst}
 \end{minipage}
 \end{figure*}
+
+The Figaro data reduction package
+\citep[][ascl:1203.013]{1988igbo.conf..448C,1993ASPC...52..219S}
+independently adopted a hierarchical design based on HDS. This DST
+format\footnote{The reason for the name has been lost in the mists of
+  time but our best guess is that it stood for \emph{\textbf{D}ata
+    \textbf{ST}ructures}.} made good use of structures and supported
+standard deviations for errors. Axis information was stored in
+structures labeled X and Y, and the main image/spectral data was
+stored in a structure labeled Z. The main data array was
+\texttt{.Z.DATA}.  FITS-style keyword/value pairs were encoded
+explicitly in a structure called \texttt{.FITS} but using scalar
+components for each header item. Any comments associated with the FITS
+keywords were held in similar structure labelled
+\texttt{.COMMENTS}. This basic structure suggests a bias towards 1- or
+2-dimensional data, but it could handle data of up to 6 dimensions;
+the \texttt{.Z.DATA} array could have as many dimensions as HDS would
+support, and the axis structures for the higher dimensions were
+labelled -- awkwardly -- from \texttt{.T} through to \texttt{.W}. An
+example trace can be found in Fig.\ \ref{fig:dst}.
 
 Around 1990, the code used by Figaro to access the DST format was
 reworked to handle both DST and NDF format files
