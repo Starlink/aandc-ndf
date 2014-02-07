@@ -572,29 +572,66 @@ RZ_PSPC_Z00000  <SPECTRA>
 \label{fig:ndf-structure}
 \end{figure}
 
-{\color{red}
-There is text in SGP/38 that can probably be brought over verbatim.
-
-Funnily enough this seems to be a data model and not a data format.
-
-Interestingly \citet{1993ASPC...52..199B} talks of how useful NDF was in designing the
-2dF data reduction system using object-oriented fortran with NDF as
-the object backing store.
-
-Not trying to be comprehensive covering all possible astronomy
-data. Trying to be generically useful whilst providing an extension facility.
-
-Earliest reference to NDF I have found is Starlink bulletin 1988,
-number 2. \citep{1988STARB...2...11C}
-
-Anatomy of an NDF file
-
-Proper block diagram of the hierarchy for each structure type? That
-was part of the ADASS poster that could not be squeezed into the ADASS
-paper and it needs to be made explicit.
-}
+Given the situation with competing schemes for using the hierarchy, it
+become clear that a unified data model was required. A working group
+was formed to analyze the competing models and come up and this work
+was completed in the late 1980s \citep{1988STARB...2...11C,SGP38}.
+After much debate it was decided to develop a data model that included
+the minimum structures to be useful for the general astronomer without
+attempting to be everything to everybody but designing in an extension
+facility from the beginning. The resulting model was named the
+extensible \emph{N}-Dimensional Data Format (NDF).  NDF combined some
+features of the \texttt{IMAGE} scheme, such as the use of
+\texttt{DATA\_ARRAY}, and some features adopted from Asterix, from
+which the \texttt{HISTORY} structure was adopted complete.  The
+decision to recognize NDF structures based on the presence of a
+\texttt{DATA\_ARRAY} array was an important compromise as it allowed
+data in the \texttt{IMAGE} format, which indirectly included data in
+BDF format that had been converted previously, to be used immediately
+in applications that had been ported to use the NDF library.
 
 \subsection{Data Arrays}
+
+NDF supports the concept of a primary data array and an associated
+variance array and quality mask. Variance was selected as the error
+component to reduce the computational overhead when propagating errors
+during processing. All three components share the same
+basic \texttt{ARRAY} structure which defines the dimensionality of the
+array and allows for the concept of a pixel origin. The
+\texttt{BAD\_PIXEL} flag is intended as a hint to application
+software to allow simpler algorithms to be used if it is known
+that no magic values are present in the data array.
+
+{\small
+\begin{verbatim}
+DATA_ARRAY     <ARRAY>         {structure}
+  ORIGIN(2)      <_INTEGER>      2,2
+  DATA(300,300)  <_REAL>         0.0598,0.0237
+                                 ... 0.2154, 0.0234
+  BAD_PIXEL      <_LOGICAL>      FALSE
+
+VARIANCE       <ARRAY>         {structure}
+  ORIGIN(2)      <_INTEGER>      2,2
+  DATA(300,300)  <_DOUBLE>       *,*,*,*,*,*,*,
+                                 ... *,*,*,*,*
+\end{verbatim}
+}
+
+The quality mask uses the \texttt{ARRAY} type but includes an extra
+level in the structure to support a bit mask. The \texttt{BADBITS}
+mask can be used to enable or disable planes in the \texttt{QUALITY} array.
+
+{\small
+\begin{verbatim}
+QUALITY        <QUALITY>       {structure}
+  QUALITY        <ARRAY>         {structure}
+    ORIGIN(2)      <_INTEGER>      2,2
+    DATA(300,300)  <_UBYTE>      3,3,3,3,3,3,
+                                   ... 3,3,3,3
+
+  BADBITS        <_UBYTE>        32
+\end{verbatim}
+}
 
 {\color{red}
 Data, Variance, Quality
@@ -942,6 +979,11 @@ from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 \citep{2008ASPC..394..450E,P01_adassxxiii}. The shift from arbitrary
 use of hierarchical structures to a data model enforced by a library
 and API is extremely important.
+
+The NDF data model also allowed applications written in Fortran to
+adopt object-oriented methodologies by adopting NDF as a backing store
+and using the self-describing features to represent objects
+\citep{1993ASPC...52..199B}.
 
 {\color{red} Mention HDX \citep{2003ASPC..295..221G}.}
 
