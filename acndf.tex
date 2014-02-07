@@ -389,40 +389,36 @@ The result was chaos.
 
 \subsection{Wright-Giddings IMAGE}
 
-\begin{figure*}[t]
-\begin{minipage}{\textwidth}
-\begin{quote}
-\small
-\begin{verbatim}
-HORSEHEAD  <IMAGE>
-   DATA_ARRAY(384,512)  <_REAL>   100.5,102.6,110.1,109.8,105.3,107.6,
-                                  ... 123.1,117.3,119,120.5,127.3,108.4
-   TITLE          <_CHAR*72>      'KAPPA - Flip'
-   DATA_MIN       <_REAL>         28.513
-   DATA_MAX       <_REAL>         255.94
-   AXIS1_DATA     <_REAL}         1,2,3,4,5,6,7,8,
-                                  ... 383, 384
-   AXIS1_LABEL    <_CHAR*5>       'XAXIS'
-\end{verbatim}
-\end{quote}
-\caption{Example IMAGE structure using the Wright-Giddings
-  convention. The components are all at a single level without any hierarchy.}
-\end{minipage}
-\end{figure*}
-
 An early proposal \citep[][but see also \citet{SGP38}]{WrightGiddings1983} introduced the
 \texttt{IMAGE} organizational scheme. This Wright-Giddings design specified that
 data should go into a \texttt{DATA\_ARRAY} item and there should also be
-items for pre-computed data minimum and maximum, and also a value for
-a array-specific blank value. Errors were represented as standard
+items for pre-computed data minimum and maximum, as well as a value for
+an array-specific blank value (similar to the FITS \texttt{BLANK}
+header keyword). Errors were represented as standard
 deviations and stored in \texttt{DATA\_ERROR} and bad-pixel masks were
-stored in \texttt{DATA\_QUALITY}. Software was provided to convert BDF
-format files to HDS using this model \citep{SUN96} and the format became
-reasonably popular because of its simplicity.
+stored in \texttt{DATA\_QUALITY}. An example trace is given below:
 
-There were a number of shortcomings with the design, not the least of
-which was that it did not make use of hierarchical structures. The
-design was very flat and heavily influenced by FITS and BDF.
+{
+\small
+\begin{verbatim}
+HORSEHEAD  <IMAGE>
+  DATA_ARRAY(384,512)  <_REAL>   100.5,102.6,110.1,
+                                  ... 123.1,117.3
+  TITLE          <_CHAR*72>      'KAPPA - Flip'
+  DATA_MIN       <_REAL>         28.513
+  DATA_MAX       <_REAL>         255.94
+  AXIS1_DATA     <_REAL}         1,2,3,4,5,6,7,8,
+                                 ... 383, 384
+  AXIS1_LABEL    <_CHAR*5>       'XAXIS'
+\end{verbatim}
+}
+
+Software was provided to convert BDF format files to HDS using this
+model \citep{SUN96} and the format became reasonably popular because
+of its simplicity. There were a number of shortcomings with the
+design, not the least of which was that it did not make use of
+hierarchical structures. The design was very flat and heavily
+influenced by FITS and BDF.
 
 \subsection{Figaro DST}
 
