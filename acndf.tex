@@ -629,14 +629,31 @@ QUALITY        <QUALITY>       {structure}
 \end{verbatim}
 }
 
-{\color{red}
-Data, Variance, Quality
+For applications that do not wish to support explicit quality tracking
+the NDF library supports the ability to automatically mask the data
+and variance arrays based on the mask, setting the corresponding value
+in the variance array to a magic value. Unlike the \emph{IMAGE} scheme
+or FITS, NDF specifies the magic value to be used for each data type
+covering both floating point and integer representations. Indeed,
+\texttt{NaN} is not explicitly part of the standard and it is usually
+best to convert \texttt{NaN} to the corresponding floating point magic
+value before further processing is applied. This was done to simplify
+applications which can compile in a single value to indicate bad
+values.
 
-Quality labels.
-}
 \subsubsection{Data compression}
 
-{\color{red} Short description of options \citep{2008ASPC..394..650C}}
+The original NDF standard included the \emph{SCALED} data compression
+variant commonly required when representing floating point numbers in
+integer form, equivalent to \texttt{BSCALE} and \texttt{BZERO} in
+FITS, although this variant was not implemented in the NDF library
+until 2006 \citep{2008ASPC..394..650C}. In 2010 a lossless delta
+compression system for integers was added to support raw SCUBA-2 data
+\citep{2013MNRAS.430.2513H}. This was a new implementation of the
+\texttt{slim} data compression
+algorithm\footnote{\url{http://sourceforge.net/projects/slimdata/}}
+implemented for the Atacama Cosmology Telescope
+\citep{2004SPIE.5498....1F}.
 
 \subsubsection{Chunking}
 
