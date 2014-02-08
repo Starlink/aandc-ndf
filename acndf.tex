@@ -671,7 +671,44 @@ through the library API without resorting to a FITS-style extension.
 
 \subsection{History}
 
-{\color{red} Structured with a supporting API.}
+The \texttt{HISTORY} structure is used to track processing history and
+includes the date, application name, arguments and a narrative
+description. The structure was first developed for the
+\textsc{Asterix} application and adopted directly into the NDF data
+model. The library API was designed to make history updating as easy
+as possible and by default if the history structure existed the NDF
+library would automatically add a new entry when a file was written
+to. The history was intended specifically to not be parseable by
+application software but applications such as SURF
+\citep{1998ASPC..145..216J} did use the history to determine whether a
+particular application had been run on the data so the user could be
+informed if they have missed a mandatory step in the processing.
+
+{\small
+\begin{verbatim}
+HISTORY        <HISTORY>      {structure}
+  CREATED        <_CHAR*24>   '2014-FEB-04 23:40:26.412'
+  CURRENT_RECORD  <_INTEGER>  2
+  RECORDS(10)    <HIST_REC>   {array of structures}
+
+  Contents of RECORDS(1)
+   DATE        <_CHAR*24>   '2014-FEB-04 23:40:28.153'
+   COMMAND     <_CHAR*30>   'MAKEMAP (SMURF V1.5.0)'
+   USER        <_CHAR*4>    'user'
+   HOST        <_CHAR*13>   'host.io'
+   DATASET     <_CHAR*30>   '/data/results.sdf'
+   TEXT(78)    <_CHAR*72>   'Parameters: BBM=FALSE',
+                            ... 'REFRES=3.0"'
+\end{verbatim}
+}
+
+Comparing the above trace to that shown in Fig.\ \ref{fig:asterix},
+the only change involves the increase in resolution of the time
+stamp to support milliseconds. This was required as computers have
+become faster over the years and many processing steps can occur
+within a single second. Provenance handling, \S\ref{sec:provenance},
+uses the history block to disambiguate provenance entries and relies
+on the timestamp field.
 
 \subsection{Extensions}
 
@@ -697,6 +734,7 @@ convention rather than attempting to parse the contents and expand
 into structures.
 
 \subsubsection{Provenance}
+\label{sec:provenance}
 
 In the late 1980s disk space and processing power were neither so
 cheap nor so plentiful as they are now. At the time therefore, it
