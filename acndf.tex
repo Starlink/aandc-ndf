@@ -387,10 +387,10 @@ that nominally could read HDS files. Within the Starlink ecosystem
 there were at least three prominent attempts at providing a data model.
 The result was chaos.
 
-\subsection{Wright-Giddings IMAGE}
+\subsection{Wright-Giddings \emph{IMAGE}}
 
 An early proposal \citep[][but see also \citet{SGP38}]{WrightGiddings1983} introduced the
-\texttt{IMAGE} organizational scheme. This Wright-Giddings design specified that
+\emph{IMAGE} organizational scheme. This Wright-Giddings design specified that
 data should go into a \texttt{DATA\_ARRAY} item and there should also be
 items for pre-computed data minimum and maximum, as well as a value for
 an array-specific blank value (similar to the FITS \texttt{BLANK}
@@ -577,12 +577,12 @@ the minimum structures to be useful for the general astronomer without
 attempting to be everything to everybody but designing in an extension
 facility from the beginning. The resulting model was named the
 extensible \emph{N}-Dimensional Data Format (NDF).  NDF combined some
-features of the \texttt{IMAGE} scheme, such as the use of
+features of the \emph{IMAGE} scheme, such as the use of
 \texttt{DATA\_ARRAY}, and some features adopted from Asterix, from
 which the \texttt{HISTORY} structure was adopted complete.  The
 decision to recognize NDF structures based on the presence of a
 \texttt{DATA\_ARRAY} array was an important compromise as it allowed
-data in the \texttt{IMAGE} format, which indirectly included data in
+data in the \emph{IMAGE} format, which indirectly included data in
 BDF format that had been converted previously, to be used immediately
 in applications that had been ported to use the NDF library.
 
