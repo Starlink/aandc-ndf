@@ -655,10 +655,6 @@ algorithm\footnote{\url{http://sourceforge.net/projects/slimdata/}}
 implemented for the Atacama Cosmology Telescope
 \citep{2004SPIE.5498....1F}.
 
-\subsubsection{Chunking}
-
-
-
 \subsection{Character Attributes}
 
 Each NDF has three character attributes that can be specified: a
@@ -792,6 +788,33 @@ these bits to be labeled. This confusion was solved first in the
 extension associating names with bits. \textsc{Kappa} tasks were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
+
+\subsection{Library Features}
+
+Above and beyond the core data model, the NDF library provides some
+additional features that can simplify application development.
+
+\subsubsection{Chunking}
+
+Mapping large data arrays into memory can use considerable resources
+and astronomical data always seems to be growing at a rate slightly
+exceeding the computers available to the average astronomer. The NDF
+library provides an API to allow subsets of a data array to be mapped
+in chunks to allow data files to be processed in smaller pieces.
+
+\subsubsection{Foreign Format Conversion}
+
+The NDF format has always been a niche format and much work has been
+expended on providing facilities to convert NDF files into FITS and
+IRAF format and convert from those formats into FITS \citep{SUN55}. In
+many cases an astronomer would like to use a particular NDF
+application on a FITS file without realising that the application does
+not natively support FITS. If foreign format conversion is enabled the
+NDF library will run the appropriate conversion utility based on the
+file suffix and present the temporary file to the application. If the
+user specifies an output file with a particular foreign format suffix
+the NDF library will create a temporary NDF for the output and convert
+it when the file is closed.
 
 \section{Data Acquisition}
 
