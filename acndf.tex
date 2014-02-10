@@ -663,7 +663,58 @@ through the library API without resorting to a FITS-style extension.
 
 \subsection{Axes and WCS}
 
-{\color{red} First there was \texttt{AXIS} and then there was AST. \citep{1998ASPC..145...41W,2001ASPC..238..129B}}
+Axis information was initially specified using an \texttt{AXIS} array
+structure with an element for each dimension of the primary data
+array. The axis information was specified in an \texttt{ARRAY} type
+structure as for data and variance and allowed data labels and units
+to be specified. For each axis, coordinates were specified for each
+pixel in the corresponding dimension of the data array. This allowed
+for non-linear axes to be specified and is similar to the
+\texttt{-TAB} formalism later adopted in FITS \citep{2006A&A...446..747G}.
+
+{\small
+\begin{verbatim}
+AXIS(3)      <AXIS>       {array of structures}
+
+Contents of AXIS(1)
+  DATA_ARRAY   <ARRAY>      {structure}
+    ORIGIN(1)    <_INTEGER>   -74
+    DATA(187)    <_DOUBLE>    0.041666,0.0411111,
+                              ... -0.061666
+
+  LABEL        <_CHAR*22>   'Right ascension offset'
+  UNITS        <_CHAR*3>    'deg'
+\end{verbatim}
+}
+
+The \texttt{AXIS} formalism worked well for spectral coordinates but
+it did not solve the general problem of coupled coordinates such as
+Right Ascension and Declination or how to change the representation of
+an axis, for example by changing from wavelength to frequency or from
+ICRS to Galactic. A more general solution was required and this
+resulted in the adoption of the AST library
+\citep{1998ASPC..145...41W} with an object-oriented approach to
+generalised coordinate frames. AST support was added to the NDF
+standard in 2000 \citep{2001ASPC..238..129B} by adding a new top-level
+\texttt{WCS} structure to NDF.
+
+{\small
+\begin{verbatim}
+WCS        <WCS>    {structure}
+  DATA(229)   <_CHAR*32> ' Begin FrameSet',' Nframe = 5',
+                         ... ' End CmpMap',' End FrameSet'
+\end{verbatim}
+}
+
+AST objects were stored simply as an array of strings using the native
+ASCII representation. The library API was modified to support routines
+for reading and writing AST objects without the library user knowing
+the form of the representation of the object on disk. The library also
+added a \texttt{GRID} frame to the resultant object to simulate the
+coordinate frame used in FITS where the bottom left hand pixel is at
+coordinate (1,1). It also adds a \texttt{PIXEL} frame to the resultant
+object to take into account any changes to the pixel origin that may
+have been associated with the primary data array.
 
 \subsection{History}
 
