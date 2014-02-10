@@ -729,6 +729,14 @@ into structures.
 \subsubsection{Provenance}
 \label{sec:provenance}
 
+\begin{figure}
+\includegraphics[width=\columnwidth]{provenance.pdf}
+\caption{A simple provenance tree for an example of two observations
+  being reduced independently and then co-added into a final
+  mosaic.}
+\label{fig:prov}
+\end{figure}
+
 In the late 1980s disk space and processing power were neither so
 cheap nor so plentiful as they are now. At the time therefore, it
 seemed prudent to limit history propagation to a single ``primary''
@@ -756,19 +764,24 @@ the ancestor NDF, the command that was used to create it, the date and
 time at which it was created, and its immediate parent nodes. Each
 node also allows arbitrary extra information to be associated with the
 ancestor NDF. Care is taken to merge nodes -- possibly inherited from
-different input NDFs -- that refer to the same ancestor.
+different input NDFs -- that refer to the same ancestor. A simple
+provanence tree is show in Fig.\ \ref{fig:prov}.
 
 For reasons of backward compatibility, it was decided to retain the
-original NDF History mechanism, and add this new ``family tree'' feature
-as an extra facility named ``Provenance''.  Originally the family tree
-was stored as a fully hierarchical structure within an NDF extension,
-using raw HDS. However, given the possibility for exponential growth
-in the number of ancestors, the cost of navigating such a complex
-structure quickly became prohibitive. Therefore, storage as raw HDS
-was replaced by an optimised bespoke binary format packed into an
-array of integers. Even so, it is still possible for the reading and
-writing of provenance information to be a significant overhead when
-running relatively minor applications.
+original NDF History mechanism, and add this new ``family tree''
+feature as an extra facility named ``Provenance''.  Originally the
+family tree was stored as a fully hierarchical structure within an NDF
+extension, using raw HDS. However, given the possibility for
+exponential growth in the number of ancestors, the cost of navigating
+such a complex structure quickly became prohibitive. Therefore,
+storage as raw HDS was replaced by an optimised bespoke binary format
+packed into an array of integers. Even so, it is still possible for
+the reading and writing of provenance information to be a significant
+overhead when running relatively minor applications.  In data
+reduction pipelines such as those found in products from ORAC-DR
+\citep{2008AN....329..295C}, there can be many thousands of provenance
+entries including some loops where products are fed back into earlier
+stages because of iterations.
 
 {\color{red} Technically an extension rather than part of NDF. Or talk
   in context of history? Explain where NDG fits in and how we extended
