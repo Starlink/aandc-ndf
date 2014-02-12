@@ -641,7 +641,15 @@ covering both floating point and integer representations. Indeed,
 best to convert \texttt{NaN} to the corresponding floating point magic
 value before further processing is applied. This was done to simplify
 applications which can compile in a single value to indicate bad
-values.
+values. \texttt{NaN} was excluded from the standard as it was not
+supported in VAX floating point \citep[see e.g.][]{660194} and the Starlink
+software was not ported to machines supporting IEEE floating point
+until the 1990s \citep[e.g.,][]{1991STARB...8...11C}.
+
+{\color{red} so it's interesting that FITS does support NaN in
+  floating point data arrays, although not in FITS headers, despite
+  FITS being developed on VAX. Is the issue here that floating point
+  FITS came later?}
 
 \subsubsection{Data compression}
 
