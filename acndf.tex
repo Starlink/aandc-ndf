@@ -881,13 +881,19 @@ cube(55:63,75~10,-100.0:250.0)
 where a subset of a cube is extracted where the first two coordinates
 specify pixels and the third coordinate is a world coordinate range.
 
-\subsubsection{Chunking}
+\subsubsection{Chunking \& Blocking}
 
 Mapping large data arrays into memory can use considerable resources
 and astronomical data always seems to be growing at a rate slightly
 exceeding the computers available to the average astronomer. The NDF
 library provides an API to allow subsets of a data array to be mapped
-in chunks to allow data files to be processed in smaller pieces.
+in chunks to allow data files to be processed in smaller pieces. The
+concept of blocking is also used to allow a subset of the image to be
+mapped in chunks of a specified dimension. The distinction between
+chunking and blocking is significant in that chunking returns the data
+in sections that are contiguous in memory for maximum efficiency
+whereas blocking allows spatially related pixel data to be returned at
+the expense of performance for reordering the data array.
 
 \subsubsection{Foreign Format Conversion}
 
