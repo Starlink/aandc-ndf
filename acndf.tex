@@ -850,6 +850,35 @@ disable masks by name.
 Above and beyond the core data model, the NDF library provides some
 additional features that can simplify application development.
 
+\subsubsection{Slicing}
+
+The NDF library allows a subset of the array to be selected using a
+slicing syntax that can work with variety of coordinate systems. The
+user can specify the section in pixel coordinates (where the pixel
+origin is taken into account) or in world coordinates, either in the
+legacy \texttt{AXIS} scheme or using full WCS support. The section can
+either be specified using bounds or a center coordinate and
+extent. Example sections are
+\begin{verbatim}
+image(12h59m49s~4.5m,27.5d:28d29.8m)
+\end{verbatim}
+to extract an area from an image where the Right Ascension is
+specified as a radius and the Declination using bounds;
+\begin{verbatim}
+spectrum(400.:600.)
+\end{verbatim}
+where the spectrum is truncated to a range of , say, 400 to 600\,km/s;
+\begin{verbatim}
+cube(12h34m56.7s,-41d52m09s,-100.0:250.0)
+\end{verbatim}
+where a spectrum is extracted from a cube at a particular location and
+also truncated;
+\begin{verbatim}
+cube(55:63,75~10,-100.0:250.0)
+\end{verbatim}
+where a subset of a cube is extracted where the first two coordinates
+specify pixels and the third coordinate is a world coordinate range.
+
 \subsubsection{Chunking}
 
 Mapping large data arrays into memory can use considerable resources
