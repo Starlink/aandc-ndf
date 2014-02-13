@@ -223,7 +223,7 @@ spectra.
 
 A data reduction file format should be efficient when generating
 intermediate files and be able to address and modify individual items.
-Additionally, it is import to be able to copy individual
+Additionally, it is important to be able to copy individual
 self-contained structures from one file to another. At the time FITS
 was not capable of doing this and it was realised that the finalised
 Starlink software environment would benefit from a more advanced file
@@ -409,7 +409,7 @@ HORSEHEAD  <IMAGE>
   TITLE          <_CHAR*72>      'KAPPA - Flip'
   DATA_MIN       <_REAL>         28.513
   DATA_MAX       <_REAL>         255.94
-  AXIS1_DATA     <_REAL}         1,2,3,4,5,6,7,8,
+  AXIS1_DATA     <_REAL>         1,2,3,4,5,6,7,8,
                                  ... 383, 384
   AXIS1_LABEL    <_CHAR*5>       'XAXIS'
 \end{verbatim}
@@ -1113,7 +1113,7 @@ algorithms for handling special types of error propagation.
 \subsubsection{Extension complexity}
 
 Many extensions created in the early years of NDF became more complex
-than was strictly necessary by ignoring th design decisions of NDF and
+than was strictly necessary by ignoring the design decisions of NDF and
 using highly complex HDS structures. In many cases it would have been
 beneficial to use NDF structures in the extensions which would have
 allowed the NDF library to read the data (by giving the full path to
