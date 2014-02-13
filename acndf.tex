@@ -645,12 +645,12 @@ applications which can compile in a single value to indicate bad
 values. \texttt{NaN} was excluded from the standard as it was not
 supported in VAX floating point \citep[see e.g.][]{660194} and the Starlink
 software was not ported to machines supporting IEEE floating point
-until the 1990s \citep[e.g.,][]{1991STARB...8...11C}.
-
-{\color{red} so it's interesting that FITS does support NaN in
-  floating point data arrays, although not in FITS headers, despite
-  FITS being developed on VAX. Is the issue here that floating point
-  FITS came later?}
+until the 1990s \citep[e.g.,][]{1991STARB...8...11C}. Unlike FITS, which
+FITS did not officially support floating point until 1990
+\citep{1989FPFITS,1991BAAS...23..993S} and were able to adopt
+\texttt{NaN} as part of the standard, much software pre-existed in the
+Starlink environment by this time and it was decided to continue with
+the magic value concept.
 
 \subsubsection{Data compression}
 
