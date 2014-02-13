@@ -198,9 +198,9 @@ Starlink
 There is a renewed interest in file format choices for astronomy
 including discussions on the future of FITS \citep{P90_adassxxiii} and
 with some projects adopting HDF5 and investigating JPEG2000. The
-Starlink project \citep{2000ASSL..250...93W,2002A&G....43a..25P},
+Starlink Project \citep{2000ASSL..250...93W,2002A&G....43a..25P},
 which began in 1980 \citep{1982MmSAI..53...55T}, was interested in
-using a single file format for all their data reduction software. The
+using a single file format for all its data reduction software. The
 shift from a FITS-based format to a hierarchical self-describing
 format was driven by data reduction efficiency requirements and the
 desire to reuse software. A file format without a corresponding data
@@ -261,7 +261,7 @@ Some key features of the HDS design are:
 
 More recently HDS has been extended to support 64-bit file offsets so
 that larger files can be written\footnote{Support for individual data
-  arrays with a 64-bit integer size is not yet possible.}, and also the
+arrays with a 64-bit integer size is not yet possible.}, and also the
 addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 
 \begin{table}
@@ -351,8 +351,8 @@ begin with an underscore, so they are easily distinguished from the
 primitive types, which do.
 
 Special rules apply to the primitive types, which all begin with an
-underscore and are ``pre-defined'' by HDS, as shown in table
-\ref{tab:hdstypes}.
+underscore and are ``pre-defined'' by HDS, as shown in
+Table\ \ref{tab:hdstypes}.
 
 \subsubsection{\label{sect:shape}Shape}
 
@@ -503,7 +503,7 @@ files.
   the mid 1980s suggest that ASTERIX used an HDS file before NDF and
   were the first to adopt HISTORY.}
 
-The \textsc{Asterix} X-Ray data reduction package \citep{SUN98,1992STARB...9....3S} used the HDS
+The \textsc{Asterix} X-ray data reduction package \citep{SUN98,1992STARB...9....3S} used the HDS
 format exclusively until the introduction of an abstract data access
 interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \textsc{Asterix} defined its
@@ -773,17 +773,17 @@ each extension should be given a reserved name and that the data type
 would define the specific data model of an extension. Some
 applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
-propagation model for NDF \citep[for example SPECDRE;][]{SUN140}.
+propagation model for NDF \citep[for example \textsc{SPECDRE};][]{SUN140}.
 
 Three extensions proved so popular that they are now part of the broader
 standard for NDFs.
 
 \subsubsection{FITS headers}
 
-FITS headers, consisting of 80 character header cards, are extremely
+FITS headers, consisting of 80-character header cards, are extremely
 common and to simplify interoperability with FITS files and to
 minimize structure overhead, it was decided early on to store FITS
-headers as an array of 80 character strings matching the FITS
+headers as an array of 80-character strings matching the FITS
 convention rather than attempting to parse the contents and expand
 into structures.
 
@@ -801,7 +801,7 @@ into structures.
 In the late 1980s disk space and processing power were neither so
 cheap nor so plentiful as they are now. At the time therefore, it
 seemed prudent to limit history propagation to a single ``primary''
-parent. Consequently, the NDF library ensures that each application
+parent.  As a consequence the NDF library ensures that each application
 copies history information from a single primary parent NDF to each
 output NDF, appending a new history record to describe the new
 application. This means that if many NDFs are combined together by a
@@ -851,7 +851,7 @@ Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
 \textsc{iras90} package which added a \texttt{QUALITY\_NAMES}
-extension associating names with bits. \textsc{Kappa} tasks were then
+extension associating names with bits. \textsc{KAPPA} tasks were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
@@ -1054,7 +1054,7 @@ structures. An NDF extension may itself include many more NDF
 structures each of which would have a different name but would also
 share the data type of \texttt{NDF}. For example, the GAIA
 visualization tool \citep{2009ASPC..411..575D} will scan the HDS file
-for all such NDF strutures and make them available for
+for all such NDF structures and make them available for
 display. Applications can therefore make decisions on how to handle a
 structure without having to know its name.
 
@@ -1062,8 +1062,8 @@ structure without having to know its name.
 
 The initial NDF design document did not profess to know the future and
 was deliberately designed to allow new features to be added as they
-became necessary. The adoption of a character array matching an 80
-character FITS header was an early change but there have also been
+became necessary. The adoption of a character array matching an
+80-character FITS header was an early change but there have also been
 changes to support world coordinate objects
 \citep{2001ASPC..238..129B}, data compression algorithms
 \citep{2008ASPC..394..650C} and provenance tracking
@@ -1091,7 +1091,7 @@ initial development of NDF and the need for tables got lost in the
 drive for a standardised image format. A table type was never added to
 NDF and Starlink software eventually took the pragmatic solution of
 using FITS binary tables \citep{1995A&AS..113..159C} for output
-tables. This can not solve the problem of integrating data tables into
+tables. This cannot solve the problem of integrating data tables into
 image data files and the format would benefit from a native data
 type. The JCMT raw data format instead uses individual 1-dimensional
 data arrays to store time-series data but this is inefficient and adds
@@ -1172,8 +1172,9 @@ applications processing data from disparate instrumentation.
 
 From its beginnings in the mid-1980s the NDF data model has been used
 throughout the Starlink software collection within diverse
-applications such as SMURF \citep{2013MNRAS.430.2545C}, CCDPACK, GAIA
-and KAPPA. It has also been used as a raw data acquisition format at the
+applications such as \textsc{SMURF} \citep{2013MNRAS.430.2545C},
+\textsc{CCDPACK}, \textsc{GAIA} and \textsc{KAPPA}.
+It has also been used as a raw data acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
 Telescope {\color{red} (was it used at ING?)} and available in that form
 from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
