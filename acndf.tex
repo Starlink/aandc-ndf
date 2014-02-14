@@ -724,12 +724,27 @@ WCS        <WCS>    {structure}
 AST objects were stored simply as an array of strings using the native
 ASCII representation. The library API was modified to support routines
 for reading and writing AST objects without the library user knowing
-the form of the representation of the object on disk. The library also
-added a \texttt{GRID} frame to the resultant object to simulate the
-coordinate frame used in FITS where the bottom left hand pixel is at
-coordinate (1,1). It also adds a \texttt{PIXEL} frame to the resultant
-object to take into account any changes to the pixel origin that may
-have been associated with the primary data array.
+the form of the representation of the object on disk.
+
+The NDF library manages a number of WCS frames specifically intended to
+describe coordinate systems defined by the NDF library:
+
+\begin{description}
+\item[\texttt{GRID}] - a coordinate frame in which the first pixel in the NDF is
+centred at coordinate (1,1). This is the same as the ``pixel coordinate
+system'' in FITS.
+\item[\texttt{PIXEL}] - a coordinate frame in which (0,0) corresponds to
+the pixel origin of the NDF. The transformation between \texttt{PIXEL}
+and \texttt{GRID} is a simple shift of origin.
+\item[\texttt{AXIS}] - a coordinate frame that corresponds to AXIS
+structures (if any) stored in the NDF.
+\item[\texttt{FRACTION}] - a coordinate frame in which the NDF spans a
+unit box on all pixel axes.
+\end{description}
+
+The NDF library always removes the above frames when storing a FrameSet
+within an NDF, and re-creates them using the current state of the NDF
+when returning a FrameSet for an NDF.
 
 \subsection{History}
 
