@@ -346,8 +346,8 @@ In HDS, structure types are represented by character strings with the
 same rules of formation as \emph{name} (\S\ref{sect:name}) except that
 a structure type may not start with an underscore character `\_' (a
 structure type may also be completely blank). Examples of structure
-types are `\texttt{IMAGE}', `\texttt{SPECTRUM}', `\texttt{INSTR\_RESP}', \emph{etc.} These do not
-begin with an underscore, so they are easily distinguished from the
+types are `\texttt{IMAGE}', `\texttt{SPECTRUM}', `\texttt{INSTR\_RESP}'.
+These do not begin with an underscore, so they are easily distinguished from the
 primitive types, which do.
 
 Special rules apply to the primitive types, which all begin with an
@@ -856,7 +856,7 @@ Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
 \textsc{iras90} package which added a \texttt{QUALITY\_NAMES}
-extension associating names with bits. \textsc{KAPPA} tasks were then
+extension associating names with bits. \textsc{kappa} tasks were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
@@ -1002,7 +1002,7 @@ propagated. This approach allowed for the format to grow without
 requiring the format or the NDF library to understand the
 contents of extensions.
 
-This approach has been very successfull, not only in enabling new
+This approach has been very successful, not only in enabling new
 features to be added to NDF once the need became obvious, but also
 in so far that wavelength regimes not initially involved in the
 discussion can make use of NDF without requiring that the core data
@@ -1057,7 +1057,7 @@ The ability to associate a data type with a structure is important for
 the ability of applications to know how to process particular
 structures. An NDF extension may itself include many more NDF
 structures each of which would have a different name but would also
-share the data type of \texttt{NDF}. For example, the GAIA
+share the data type of \texttt{NDF}. For example, the \textsc{GAIA}
 visualization tool \citep{2009ASPC..411..575D} will scan the HDS file
 for all such NDF structures and make them available for
 display. Applications can therefore make decisions on how to handle a
