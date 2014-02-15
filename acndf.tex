@@ -478,14 +478,14 @@ stored in a structure labeled Z. The main data array was
 \texttt{Z.DATA}\footnote{where the `\texttt{.}' indicates a
   parent-child relationship analagous to a directory separator in the
   file system.}. FITS-style keyword/value pairs were encoded
-explicitly in a structure called \texttt{.FITS} but using scalar
+explicitly in a structure called \texttt{FITS} but using scalar
 components for each header item. Any comments associated with the FITS
 keywords were held in similar structure labelled
 \texttt{COMMENTS}. This basic structure suggests a bias towards 1- or
 2-dimensional data, but it could handle data of up to 6 dimensions;
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
-labelled -- awkwardly -- from \texttt{.T} through to \texttt{.W}. An
+labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
 example trace can be found in Fig.\ \ref{fig:dst}.
 
 Around 1990, the code used by Figaro to access the DST format was
