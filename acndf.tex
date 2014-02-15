@@ -204,7 +204,7 @@ using a single file format for all its data reduction software. The
 shift from a FITS-based format to a hierarchical self-describing
 format was driven by data reduction efficiency requirements and the
 desire to reuse software. A file format without a corresponding data
-model caused chaos and it took sometime until order could be restored
+model caused chaos and it took some time until order could be restored
 with the definition of the $N$-Dimensional Data Format (NDF).
 
 When the Starlink Project was created it soon became apparent that a
@@ -247,15 +247,14 @@ hierarchical way HDS stores data within files and the way that a
 filing system organises the files themselves. An early description of
 the internal layout of an HDS file can be found in \citet{SSN27a}.
 
-Some key features of the HDS design are:
-
+Some key features of the HDS design are as follows.
 \begin{itemize}
-\item Hierarchical organization of arbitrary structures, including the
+\item It provides a hierarchical organization of arbitrary structures, including the
   ability to store arrays of structures.
 \item The hierarchy is self-describing and can be queried.
-\item The ability to associate structures with an arbitrary data type.
-\item The ability to delete, copy or rename structures within a file.
-\item Automatic byte swapping whilst retaining the native byte order
+\item It gives the data author the ability to associate structures with an arbitrary data type.
+\item Data managers can delete, copy or rename structures within a file.
+\item It supports automatic byte swapping whilst retaining the native byte order
   for output files.
 \end{itemize}
 
@@ -352,7 +351,7 @@ primitive types, which do.
 
 Special rules apply to the primitive types, which all begin with an
 underscore and are ``pre-defined'' by HDS, as shown in
-Table\ \ref{tab:hdstypes}.
+Table~\ref{tab:hdstypes}.
 
 \subsubsection{\label{sect:shape}Shape}
 
@@ -486,7 +485,7 @@ keywords were held in similar structure labelled
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
-example trace can be found in Fig.\ \ref{fig:dst}.
+example trace can be found in Fig.~\ref{fig:dst}.
 
 Around 1990, the code used by Figaro to access the DST format was
 reworked to handle both DST and NDF format files
@@ -512,7 +511,7 @@ interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \textsc{asterix} defined its
 own data models and layered those on top of HDS. The \texttt{SPECTRA}
 layout was closest to that found in NDF and an example is shown in
-Fig.\ \ref{fig:asterix} with a trace from a file created in 1992. The
+Fig.~\ref{fig:asterix} with a trace from a file created in 1992. The
 use of \texttt{HISTORY}, \texttt{AXIS} and \texttt{DATA\_ARRAY}
 structures provides some similarity to NDF. {\color{red} What
   components did ASTERIX develop themselves?}
@@ -661,8 +660,8 @@ values in floating point data.
 \subsubsection{Data compression}
 
 The original NDF standard included the \emph{SCALED} data compression
-variant commonly required when representing floating point numbers in
-integer form, equivalent to \texttt{BSCALE} and \texttt{BZERO} in
+variant, which is commonly required when representing floating point numbers in
+integer form; this is equivalent to \texttt{BSCALE} and \texttt{BZERO} in
 FITS, although this variant was not implemented in the NDF library
 until 2006 \citep{2008ASPC..394..650C}. In 2010 a lossless delta
 compression system for integers was added to support raw SCUBA-2 data
@@ -778,7 +777,7 @@ HISTORY        <HISTORY>      {structure}
 \end{verbatim}
 }
 
-Comparing the above trace to that shown in Fig.\ \ref{fig:asterix},
+Comparing the above trace to that shown in Fig.~\ref{fig:asterix},
 the only change involves the increase in resolution of the time
 stamp to support milliseconds. This was required as computers have
 become faster over the years and many processing steps can occur
@@ -820,8 +819,8 @@ into structures.
 \label{fig:prov}
 \end{figure}
 
-In the late 1980s disk space and processing power were neither so
-cheap nor so plentiful as they are now. At the time therefore, it
+In the late 1980s disk space and processing power were more highly
+constrained than they are now. At the time therefore, it
 seemed prudent to limit history propagation to a single ``primary''
 parent.  As a consequence the NDF library ensures that each application
 copies history information from a single primary parent NDF to each
@@ -848,7 +847,7 @@ time at which it was created, and its immediate parent nodes. Each
 node also allows arbitrary extra information to be associated with the
 ancestor NDF. Care is taken to merge nodes -- possibly inherited from
 different input NDFs -- that refer to the same ancestor. A simple
-provanence tree is show in Fig.\ \ref{fig:prov}.
+provanence tree is show in Fig.~\ref{fig:prov}.
 
 For reasons of backward compatibility, it was decided to retain the
 original NDF History mechanism, and add this new ``family tree''
@@ -1204,12 +1203,22 @@ from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 use of hierarchical structures to a data model enforced by a library
 and API is extremely important.
 
-The NDF data model also allowed applications written in Fortran to
+The NDF data model also supported a number of data-structuring
+experiments within the Starlink project.
+The model allowed applications written in Fortran to
 adopt object-oriented methodologies by adopting NDF as a backing store
 and using the self-describing features to represent objects
-\citep{1993ASPC...52..199B}. HDX was an attempt to combine
-the NDF data model with FITS \citep{2003ASPC..295..221G} but there was
-no take up in the community outside of the Starlink Java applications
+\citep{1993ASPC...52..199B}.
+The HDX framework \citep{2003ASPC..295..221G} was developed around 2002 as a flexible
+way of layering high-level data structures, presented as a virtual XML
+DOM, atop otherwise unstructured external data stores.  This was in
+turn used to develop Starlink's NDX framework, which allowed FITS
+files to be viewed and manipulated using the concepts of the NDF
+format.  The NDX experiment was an attempt to directly apply the
+lessons of the long NDF/HDS experience -- namely that a small amount of
+structure, overlaid on conceptually separate bitbuckets, can very
+promptly bring order out of chaos.
+However, there was no take up in the community outside of the Starlink Java applications
 such as \textsc{treeview} \citep{2003ASPC..295..445B} and
 \textsc{splat} \citep[][ascl:1402.007]{2005ASPC..347...22D}.
 
