@@ -419,7 +419,7 @@ Software was provided to convert BDF format files to HDS using this
 model \citep{SUN96} and the format became reasonably popular because
 of its simplicity. There were a number of shortcomings with the
 design, not the least of which was that it did not make use of
-hierarchical structures. The design was very flat and heavily
+hierarchical structures. The design was flat and heavily
 influenced by FITS and BDF.
 
 \subsection{Figaro DST}
@@ -475,13 +475,15 @@ format\footnote{The reason for the name has been lost in the mists of
 standard deviations for errors. Axis information was stored in
 structures labeled X and Y, and the main image/spectral data was
 stored in a structure labeled Z. The main data array was
-\texttt{.Z.DATA}.  FITS-style keyword/value pairs were encoded
+\texttt{Z.DATA}\footnote{where the `\texttt{.}' indicates a
+  parent-child relationship analagous to a directory separator in the
+  file system.}. FITS-style keyword/value pairs were encoded
 explicitly in a structure called \texttt{.FITS} but using scalar
 components for each header item. Any comments associated with the FITS
 keywords were held in similar structure labelled
-\texttt{.COMMENTS}. This basic structure suggests a bias towards 1- or
+\texttt{COMMENTS}. This basic structure suggests a bias towards 1- or
 2-dimensional data, but it could handle data of up to 6 dimensions;
-the \texttt{.Z.DATA} array could have as many dimensions as HDS would
+the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{.T} through to \texttt{.W}. An
 example trace can be found in Fig.\ \ref{fig:dst}.
@@ -598,7 +600,7 @@ during processing. All three components share the same
 basic \texttt{ARRAY} structure which defines the dimensionality of the
 array and allows for the concept of a pixel origin. The
 \texttt{BAD\_PIXEL} flag is intended as a hint to application
-software to allow simpler algorithms to be used if it is known
+software to allow simpler and faster algorithms to be used if it is known
 that no magic values are present in the data array.
 
 {\small
@@ -667,7 +669,7 @@ compression system for integers was added to support raw SCUBA-2 data
 \citep{2013MNRAS.430.2513H}. This was a new implementation of the
 \texttt{slim} data compression
 algorithm\footnote{\url{http://sourceforge.net/projects/slimdata/}}
-implemented for the Atacama Cosmology Telescope
+developed for the Atacama Cosmology Telescope
 \citep{2004SPIE.5498....1F}.
 
 \subsection{Character Attributes}
@@ -716,8 +718,8 @@ standard in 2000 \citep{2001ASPC..238..129B} by adding a new top-level
 {\small
 \begin{verbatim}
 WCS        <WCS>    {structure}
-  DATA(229) <_CHAR*32> ' Begin FrameSet','Nframe = 5',
-                     ... ' End CmpMap',' End FrameSet'
+  DATA(229) <_CHAR*32> 'Begin FrameSet','Nframe = 5',
+                   ... ' End CmpMap',' End FrameSet'
 \end{verbatim}
 }
 
