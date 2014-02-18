@@ -189,6 +189,15 @@ Starlink
 
 %% Applications
 
+\newcommand{\KAPPA}{\textsc{kappa}}
+\newcommand{\gaia}{\textsc{gaia}}
+\newcommand{\ccdpack}{\textsc{ccdpack}}
+\newcommand{\smurf}{\textsc{smurf}}
+\newcommand{\asterix}{\textsc{asterix}}
+\newcommand{\specdre}{\textsc{specdre}}
+\newcommand{\iras}{\textsc{iras90}}
+\newcommand{\treeview}{\textsc{treeview}}
+\newcommand{\splat}{\textsc{splat}}
 
 %% main text
 \section{Introduction}
@@ -506,10 +515,10 @@ files.
   the mid 1980s suggest that ASTERIX used an HDS file before NDF and
   were the first to adopt HISTORY.}
 
-The \textsc{asterix} X-ray data reduction package \citep{SUN98,1992STARB...9....3S} used the HDS
+The \asterix\ X-ray data reduction package \citep{SUN98,1992STARB...9....3S} used the HDS
 format exclusively until the introduction of an abstract data access
 interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
-and FITS format files. \textsc{asterix} defined its
+and FITS format files. \asterix\ defined its
 own data models and layered those on top of HDS. The \texttt{SPECTRA}
 layout was closest to that found in NDF and an example is shown in
 Fig.~\ref{fig:asterix} with a trace from a file created in 1992. The
@@ -753,7 +762,7 @@ when returning a FrameSet for an NDF.
 The \texttt{HISTORY} structure is used to track processing history and
 includes the date, application name, arguments and a narrative
 description. The structure was first developed for the
-\textsc{asterix} application and adopted directly into the NDF data
+\asterix\ application and adopted directly into the NDF data
 model. The history was intended specifically to not be parseable by
 application software but applications such as SURF
 \citep{1998ASPC..145..216J} did use the history to determine whether a
@@ -795,7 +804,7 @@ each extension should be given a reserved name and that the data type
 would define the specific data model of an extension. Some
 applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
-propagation model for NDF \citep[for example \textsc{specdre};][]{SUN140}.
+propagation model for NDF \citep[for example \specdre;][]{SUN140}.
 
 Three extensions proved so popular that they are now part of the broader
 standard for NDFs.
@@ -872,8 +881,8 @@ stages because of iterations.
 Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
-\textsc{iras90} package which added a \texttt{QUALITY\_NAMES}
-extension associating names with bits. \textsc{kappa} tasks were then
+\iras\ package which added a \texttt{QUALITY\_NAMES}
+extension associating names with bits. \KAPPA\ tasks were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
@@ -1074,7 +1083,7 @@ The ability to associate a data type with a structure is important for
 the ability of applications to know how to process particular
 structures. An NDF extension may itself include many more NDF
 structures each of which would have a different name but would also
-share the data type of \texttt{NDF}. For example, the \textsc{gaia}
+share the data type of \texttt{NDF}. For example, the \gaia\
 visualization tool \citep{2009ASPC..411..575D} will scan the HDS file
 for all such NDF structures and make them available for
 display. Applications can therefore make decisions on how to handle a
@@ -1194,8 +1203,8 @@ applications processing data from disparate instrumentation.
 
 From its beginnings in the mid-1980s the NDF data model has been used
 throughout the Starlink software collection within diverse
-applications such as \textsc{smurf} \citep{2013MNRAS.430.2545C},
-\textsc{ccdpack}, \textsc{gaia} and \textsc{kappa}.
+applications such as \smurf\ \citep{2013MNRAS.430.2545C},
+\ccdpack\, \gaia\ and \KAPPA.
 It has also been used as a raw data acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
 Telescope and available in that form
@@ -1220,8 +1229,8 @@ lessons of the long NDF/HDS experience -- namely that a small amount of
 structure, overlaid on conceptually separate bitbuckets, can very
 promptly bring order out of chaos.
 However, there was no take up in the community outside of the Starlink Java applications
-such as \textsc{treeview} \citep{2003ASPC..295..445B} and
-\textsc{splat} \citep[][ascl:1402.007]{2005ASPC..347...22D}.
+such as \treeview\ \citep{2003ASPC..295..445B} and
+\splat\ \citep[][ascl:1402.007]{2005ASPC..347...22D}.
 
 For the future we are considering the possibility of replacing the HDS
 layer with a more widely used hierarchical data format such as HDF5
