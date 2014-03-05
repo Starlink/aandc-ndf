@@ -512,68 +512,69 @@ files.
 
 \subsection{Asterix}
 
-{\color{red} My examples are from the early 1990s so I'm not sure how
-  much of this influenced NDF or was influenced by NDF. Documents from
-  the mid 1980s suggest that ASTERIX used an HDS file before NDF and
-  were the first to adopt HISTORY.}
-
-The \asterix\ X-ray data reduction package \citep{1987JBIS...40..185P,SUN98,1992STARB...9....3S} used the HDS
+The \asterix\ X-ray data reduction package
+\citep{1987JBIS...40..185P,SUN98,1992STARB...9....3S} used the HDS
 format exclusively until the introduction of an abstract data access
 interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
-and FITS format files. \asterix\ defined its
-own data models and layered those on top of HDS. The \texttt{SPECTRA}
-layout was closest to that found in NDF and an example is shown in
-Fig.~\ref{fig:asterix} with a trace from a file created in 1992. The
-use of \texttt{HISTORY}, \texttt{AXIS} and \texttt{DATA\_ARRAY}
-structures provides some similarity to NDF. {\color{red} What
-  components did ASTERIX develop themselves?}
+and FITS format files. \asterix\ defined many data models designed for
+the specific uses of X-ray astronomy, with a particular focus on
+photon event lists. A trace of an alignment file is shown in
+Fig.\,\ref{fig:asterix}. This experience fed into the design of NDF
+and the \texttt{HISTORY} structure was adopted without change. Once
+NDF was available some data models were modified to use features from
+NDF such as adopting \texttt{DATA\_ARRAY}.
 
 \begin{figure*}[t]
 \begin{minipage}{\textwidth}
 \begin{quote}
 \small
 \begin{verbatim}
-RZ_PSPC_Z00000  <SPECTRA>
+WFC_MASTER_CAL  <TOP_LEVEL>
 
-   AXIS(3)        <AXIS>          {array of structures}
+   ALIGN          <HIST>          {structure}
+      DATA_UNITS     <_CHAR*10>      'Radians'
+      ROSAT_TO_WFC   <ALIGN_REC>     {structure}
+         MJD_ARRAY(1)   <_DOUBLE>       47430
+         DATA_RECORD(1)  <STRUCTURE>    {structure}
+            DATE_MJD       <_DOUBLE>       47430
+            EULER(3)       <_REAL>         0,0,0
+            ERROR(3)       <_REAL>         2.4000001E-5,2.4000001E-5,
+                                           2.4000001E-5
+            CAL_TYPE       <_CHAR*32>      'TEST_DATA'
+      HISTORY        <HISTORY>       {structure}
+         VARIANT        <_CHAR*80>      'SIMPLE'
+         CREATED        <_CHAR*32>      '9-JUL-1990-11:54:12.50'
+         EXTEND_SIZE    <_INTEGER>      1
+         CURRENT_RECORD  <_INTEGER>     1
+         RECORDS(1)     <HIST_REC>      {structure}
+            VARIANT        <_CHAR*80>      'SIMPLE'
+            DATE           <_CHAR*32>      '9-JUL-1990-11:54:12.50'
+            COMMAND        <_CHAR*12>      'CAL_UPDATE'
+            TEXT(1)        <_CHAR*80>      'WFC alignment data'
 
-   Contents of AXIS(1)
-      DATA_ARRAY(729)  <_REAL>       0.07115,0.07154,0.07162001,0.07166,
-                                     ... 2.97,2.975,2.98,2.985,2.99,2.995,3
+   INTERFACE      <_INTEGER>      2
+   ON_AXIS_AREA   <HIST>          {structure}
+      HIST_LABEL     <_CHAR*80>      'WFC on axis collecting area'
+      AXIS1_UNITS    <_CHAR*10>      'eV'
+      AXIS1_LABEL    <_CHAR*10>      'Energy eV'
+      AREA(8,2)      <STRUCTURE>     {array of structures}
 
-   EMBOL_UNITS    <_CHAR*16>      'keV/cm**3/s'
-   HISTORY        <HISTORY>       {structure}
-      CREATED        <_CHAR*18>      '16-JUN-92 01:07:08'
-      RECORDS(10)    <HIST_REC>      {array of structures}
+      Contents of AREA(1,1)
+         DATA_RECORD(1)  <STRUCTURE>    {structure}
+            DATA_ARRAY(991)  <_DOUBLE>     1.57868994267912D-12,
+                                           ... 0.0001629192789743
+            AXIS_ARRAY(991)  <_REAL>       10,11,12,13,14,15,16,17,18,19,
+                                           ... 994,995,996,997,998,999,1000
 
-      Contents of RECORDS(1)
-         DATE           <_CHAR*30>      '   16-JUN-92 01:07:08'
-         COMMAND        <_CHAR*35>      'RS_CREATE V1.3        [1 Jun 92]'
-
-      EXTEND_SIZE    <_INTEGER>      10
-      CURRENT_RECORD  <_INTEGER>     2
-
-   DATA_ARRAY(729,2,162)  <_REAL>   10183284,2089223,1044320,1044320,
-                                    ... 18350.33,18349.45,18275.11,36474.31
-   TMIN           <_REAL>         0.017558
-   TMAX           <_REAL>         29.13903
-   TLSTEP         <_REAL>         0.02
-   ENERGY_BOUNDS(730)  <_REAL>    0.07115,0.07154,0.07162001,0.07166,
-                                  ... 2.97,2.975,2.98,2.985,2.99,2.995,3,3.01
-   REDSHIFT       <_REAL>         0
-   EMBOL(2,162)   <_REAL>         1.2466619E9,3.2856078E10,1.1444687E9,
-                                  ... 2.8344144E8,2.3983852E9,2.8333168E8
+         MJD_ARRAY(1)   <_DOUBLE>       47430
 \end{verbatim}
 \end{quote}
-\caption{Partial dump of the structure of an ASTERIX HDS
-  \texttt{spectra} file. \texttt{HISTORY} and \texttt{AXIS} structures
-  make extensive use of hierarchy and arrays of structures.  This
-  example comes from the ASTERIX source distribution from 1992.}
+\caption{Partial dump of the structure of an \asterix\ HDS
+  file. Extensive use is made of hierarchy and the \texttt{HISTORY}
+  structure is identical to the NDF standard version.}
 \label{fig:asterix}
 \end{minipage}
 \end{figure*}
-
-{\color{red} Were there any other structures used with HDS other than DST and IMAGE prior to NDF?}
 
 \section{\emph{N}-Dimensional Data Format}
 \label{sec:ndf}
