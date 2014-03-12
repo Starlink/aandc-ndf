@@ -203,60 +203,54 @@ Starlink
 \section{Introduction}
 \label{sec:intro}
 
-{\color{red} Introduction is incoherent.}
-
 There is a renewed interest in file format choices for astronomy
-including discussions on the future of FITS \citep{P90_adassxxiii} and
-with some projects adopting HDF5 and investigating JPEG2000. The
-Starlink Project \citep{2000ASSL..250...93W,2002A&G....43a..25P},
-which began in 1980 \citep{1982MmSAI..53...55T}, was interested in
-using a single file format for all its data reduction software. The
-shift from a FITS-based format to a hierarchical self-describing
-format was driven by data reduction efficiency requirements and the
-desire to reuse software. A file format without a corresponding data
-model caused chaos and it took some time until order could be restored
-with the definition of the \emph{N}-Dimensional Data Format (NDF).
+with discussions on the future of FITS
+\citep{P90_adassxxiii,2014Thomas}, projects adopting or considering
+HDF5 \citep{2012ASPC..461..283A,P10_adassxxiii} and investigations into
+non-scientific formats such as JPEG2000 \citep{2014Kitaeff}. These
+discussions have provided an opportunity to consider existing
+astronomy file formats that are not as widely known in the community
+as FITS. Here we discuss the extensible \emph{N}-Dimensional
+Data Format (NDF) developed by the Starlink Project
+\citep{1982MmSAI..53...55T,2000ASSL..250...93W} in the late 1980s
+\citep{1988STARB...2...11C,SGP38} to bring order to the proliferation
+of data models that were being adopted by applications using the Starlink
+hierarchical file format.
 
-When the Starlink Project was created it soon became apparent that a
-unified file format should be adopted for all the Starlink
-applications. FITS \citep{1979ipia.coll..445W,1981A&AS...44..363W} had
-recently been developed and was adopted as a tape interchange
-format. A file format was required that was explicitly optimized for
-data reduction applications and the choice of format involved much
-debate (reference to FITS adoption). The initial Starlink software
-environment, known as the INTERIM environment, proposed the use of the
-Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}. The BDF format
-was heavily influenced by FITS and used a FITS header block with
-standard FITS keywords. Whilst it had a flexible design a special
-``IMAGE'' variant was standardised for astronomical images and
-spectra.
-
-A data reduction file format should be efficient when generating
-intermediate files and be able to address and modify individual items.
-Additionally, it is important to be able to copy individual
-self-contained structures from one file to another. At the time FITS
-was not capable of doing this and it was realised that the finalised
-Starlink software environment would benefit from a more advanced file
-format capable of addressing hierarchical structures
-\citep{1981STARENT4}.
-
+In Sec.\ \ref{sec:ndf} we discuss the genesis and features of the Starlink
+file format, then in Sec.\ \ref{sec:chaos} we provide examples of data
+models developed in the mid-1980s. The NDF data model itself is
+discussed in Sec.\ \ref{sec:ndf} and its usage in data acquisition
+system is covered in Sec.\ \ref{sec:daq}. We finish in Sec.\
+\ref{sec:lessons} by discussing the positive lessons learned from
+developing NDF and the areas where NDF could be improved, expanding on
+some earlier work \citep{P91_adassxxiii}.
 
 \section{Hierarchical Data System}
 \label{sec:hds}
 
-The Starlink Data System\footnote{from which the file extension of
-  \texttt{.sdf}, for Starlink Data File, was chosen.} was first
-proposed in 1981 and the first version was released in 1982 \citep[see
+Starlink, created in 1980
+\citep{1980IrAJ...14..197E,1982MmSAI..53...55T}, was designed
+primarily to provide data reduction software and facilities to United
+Kingdom astronomers. FITS
+\citep{1979ipia.coll..445W,1981A&AS...44..363W} had recently been
+developed and was adopted as a tape interchange format but there was a
+requirement for a file format optimized for data reduction that all
+Starlink applications could understand. Files
+needed to be written to and read from efficiently with an emphasis on the
+ability to group and modify related information
+\citep{1981STARENT4}. This was a few years before the NCSA developed
+the Hierarchical Data Format \citep{HDF1,Folk2010} and it was decided
+to develop a new file format. The resulting Starlink Data
+System\footnote{from which the file extension of \texttt{.sdf}, for
+  Starlink Data File, was chosen.} was first proposed in 1981 with the
+first version being released in 1982 \citep[see
 e.g.][]{1982QJRAS..23..485D,1991STARB...8....2L}. In 1983 the name was
 changed to the Hierarchical Data System (HDS) to make the file format
-benefits more explicit. It was originally written in the BLISS
+benefits more explicit and was in common usage within Starlink by 1986
+\citep{1986BICDS..30...13L}. It was originally written in the BLISS
 programming language on a VAX/VMS system and later rewritten in C and
-ported to Unix.  HDS was in common usage in 1986 although it was
-hampered by the next generation Starlink Software Environment
-\citep{1986BICDS..30...13L}.  There are many parallels between the
-hierarchical way HDS stores data within files and the way that a
-filing system organises the files themselves. An early description of
-the internal layout of an HDS file can be found in \citet{SSN27a}.
+ported to Unix.
 
 Some key features of the HDS design are as follows.
 \begin{itemize}
@@ -267,11 +261,13 @@ Some key features of the HDS design are as follows.
 \item Data managers can delete, copy or rename structures within a file.
 \item It supports automatic byte swapping whilst retaining the native byte order
   for output files.
+\item VAX and IEEE floating point formats were supported.
 \end{itemize}
 
 More recently HDS has been extended to support 64-bit file offsets so
 that larger files can be written\footnote{Support for individual data
-arrays with a 64-bit integer size is not yet possible.}, and also the
+arrays containing more elements than can be counted in a 32-bit
+integer is not yet possible.}, and also the
 addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 
 \begin{table}
@@ -304,90 +300,6 @@ logical structure. HDS also provides portability of data, so that the
 same data objects may be accessed from different types of computer
 despite the fact that each may actually format its files and data in
 different ways.
-
-\subsection{\label{sect:objects}HDS Objects}
-
-HDS files are known as \emph{container files} and by default have the
-extension `\texttt{.sdf}'.  HDS files contain \emph{data objects} which will
-often be referred to simply as \emph{objects}. An object is an entity,
-either a scalar or an array,
-which contains data or other objects. This is the basis of the
-hierarchical nature of HDS and is analogous to the concepts of
-\emph{file} and \emph{directory} -- a directory can contain files and
-directories which can themselves contain files and directories and so
-on.
-
-An HDS object possesses a number of attributes, each of which is
-described in more detail below:
-
-\subsubsection{\label{sect:name}Name}
-
-The primary way of identifying an HDS object is by its \emph{name},
-which must be unique within its own container object.  The name of an
-object is a character string which may contain any printing
-characters; white space is ignored and alphabetic characters are
-capitalised. The maximum length of an HDS name is 15 characters.
-
-There are no special rules governing the first character
-(i.e.\ it can be numeric), so HDS itself allows great freedom in specifying
-names (and also types -- see \S\ref{sect:type}). In practice,
-however, some restrictions will be imposed by considerations of
-portability of data and applications, and of possible syntax conflicts
-with the environment within which HDS is used.
-
-\subsubsection{\label{sect:type}Type}
-
-The \emph{type} of an HDS object falls into two \emph{classes} named
-Structure and Primitive.
-
-Structure objects contain other objects called
-\emph{components}. It is possible to have an array of structures,
-each element of which functions as a separate structure.
-Primitive objects are only numeric, character,
-or logical values. Objects in the different classes are referred to as
-\emph{structures} and \emph{primitives} while the more general term
-\emph{object} refers to either a \emph{structure} or a
-\emph{primitive}. Structures are analogous to the directories in a
-filing system -- they can contain a part of the hierarchy below
-them. Primitives are analogous to files -- they are at the bottom of
-any branch of the structure and contain the actual data.
-
-In HDS, structure types are represented by character strings with the
-same rules of formation as \emph{name} (\S\ref{sect:name}) except that
-a structure type may not start with an underscore character `\_' (a
-structure type may also be completely blank). Examples of structure
-types are `\texttt{IMAGE}', `\texttt{SPECTRUM}', `\texttt{INSTR\_RESP}'.
-These do not begin with an underscore, so they are easily distinguished from the
-primitive types, which do.
-
-Special rules apply to the primitive types, which all begin with an
-underscore and are ``pre-defined'' by HDS, as shown in
-Table~\ref{tab:hdstypes}.
-
-\subsubsection{\label{sect:shape}Shape}
-
-Every HDS object has a \emph{shape} or dimensionality. This is
-described by an integer (the number of dimensions) and an integer
-array (containing the size of each dimension). A \emph{scalar} (for
-example a single number) has, by convention, a dimensionality of zero;
-i.e.\ its number of dimensions is 0. A \emph{vector} has a
-dimensionality of 1; i.e.\ its number of dimensions is 1, and
-the first element of the dimension array contains the size of the
-vector.  An \emph{array} refers to an object with 2 or more dimensions;
-a maximum of 7 dimensions are allowed. Objects may be referred to as
-\emph{scalar primitives} or \emph{vector structures} and so on.
-
-\subsubsection{State}
-
-The \emph{state} of an HDS object specifies whether or not its value is
-defined. It is represented as a logical value where \texttt{.TRUE.} means
-defined and \texttt{.FALSE.} means undefined.
-
-Objects start out undefined when they are created and become defined
-when you write a value to them. In general, an error will result if
-you attempt to obtain the value of an object while it is still
-undefined.
-
 
 \section{File Format without standardised Data Model}
 \label{sec:chaos}
@@ -426,12 +338,16 @@ HORSEHEAD  <IMAGE>
 \end{verbatim}
 }
 
-Software was provided to convert BDF format files to HDS using this
-model \citep{SUN96} and the format became reasonably popular because
-of its simplicity. There were a number of shortcomings with the
-design, not the least of which was that it did not make use of
-hierarchical structures. The design was flat and heavily
-influenced by FITS and BDF.
+Prior to HDS becoming generally available, the Starlink project adopted
+the Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4} as part
+of its \emph{INTERIM} software environment. BDF was heavily influenced
+by FITS and used many of the same convntions.  Software was provided
+to convert BDF format files to HDS using this model \citep{SUN96} and
+the \emph{IMAGE} format became reasonably popular because of its
+simplicity and the many BDF files that existed at the time. There were
+a number of shortcomings with the design, not the least of which was
+that it did not make use of hierarchical structures. The design was
+flat and heavily influenced by FITS and BDF.
 
 \subsection{Figaro DST}
 
@@ -522,7 +438,7 @@ photon event lists. A trace of an alignment file is shown in
 Fig.\,\ref{fig:asterix}. This experience fed into the design of NDF
 and the \texttt{HISTORY} structure was adopted without change. Once
 NDF was available some data models were modified to use features from
-NDF such as adopting \texttt{DATA\_ARRAY}.
+NDF such as adopting the \texttt{DATA\_ARRAY} label.
 
 \begin{figure*}[t]
 \begin{minipage}{\textwidth}
