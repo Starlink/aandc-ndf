@@ -1140,8 +1140,9 @@ Whilst the HDS library is written entirely in ANSI C, the NDF and
 related ARY \citep{SUN11} and NDG \citep{SUN2} libraries are written
 mainly in Fortran.
 This can cause a reticence to adoption from people outside the Starlink community and
-adds complications when linking in Python and other higher-level
-languages.
+adds complications when providing interfaces to higher-level languages
+such as Python, Perl and Java. Indeed a subset of the NDF model  was
+written as a Java layer on top of the C HDS library.
 
 Ideally NDF would be rewritten in C and be made thread-safe.
 
