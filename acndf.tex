@@ -1027,10 +1027,13 @@ organization.
 
 \subsubsection{Structure Data Types}
 
+{\color{red} This needs a better example given that, as it turns out,
+  the NDF library doesn't look at the structure type when looking for NDFs.}
+
 The ability to associate a data type with a structure is important for
 the ability of applications to know how to process particular
 structures. An NDF extension may itself include many more NDF
-structures each of which would have a different name but would also
+structures each of which would have a different name but could also
 share the data type of \texttt{NDF}. For example, the \gaia\
 visualization tool \citep{2009ASPC..411..575D} will scan the HDS file
 for all such NDF structures and make them available for
