@@ -1121,6 +1121,14 @@ and has no support for accented characters or non-ASCII character
 sets. Multi-byte Unicode should be supported in any modern format to
 allow metadata to be represented properly. HDS can not support the
 storage of common astronomical units such as $\upmu$m or $\AA$.
+It may be possible to use the automatic type conversion concept
+already in use for numeric data types
+to allow Unicode to be added to NDF without forcing every application
+to be rewritten. If an application uses the standard API for reading character
+components they will get ASCII even if that involves replacing Unicode
+characters with either normalised versions of characters outside the
+ASCII character set (for example, dropping accents) or whitespace. A new API
+would be provided for reading and writing Unicode strings.
 
 \subsubsection{Library limitations}
 
