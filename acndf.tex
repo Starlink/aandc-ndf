@@ -272,8 +272,9 @@ addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 
 \begin{table}
 \caption{HDS basic data types. The unsigned types did not correspond
-  to standard Fortran~77 data types but had to be included for
-  compatibility with astronomy instrumentation.}
+  to standard Fortran~77 data types and were included for
+  compatibility with astronomy instrumentation. HDS supports both VAX
+  and IEEE floating point formats.}
 \label{tab:hdstypes}
 \begin{center}
 \begin{tabular}{lll}
@@ -285,9 +286,9 @@ addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 \_INTEGER & i & Signed 32-bit integer \\
 \_INT64 & k &Signed 64-bit integer \\
 \_LOGICAL & l & Boolean \\
-\_REAL & r & 32-bit IEEE float \\
-\_DOUBLE & d & 64-bit IEEE float \\
-\_CHAR[$*$n] & c & 8-bit Character string \\
+\_REAL & r & 32-bit float \\
+\_DOUBLE & d & 64-bit float \\
+\_CHAR[$*$n] & c & String of 8-bit characters \\
 \hline
 \end{tabular}
 \end{center}
@@ -504,7 +505,7 @@ WFC_MASTER_CAL  <TOP_LEVEL>
 
 Given the situation with competing schemes for using the hierarchy, it
 become clear that a unified data model was required. A working group
-was formed to analyze the competing models and come up and this work
+was formed to analyze the competing models and come up with a standard and this work
 was completed in the late 1980s \citep{1988STARB...2...11C,SGP38}.
 After much debate it was decided to develop a data model that included
 the minimum structures to be useful for the general astronomer without
@@ -536,7 +537,11 @@ basic \texttt{ARRAY} structure which defines the dimensionality of the
 array and allows for the concept of a pixel origin. The
 \texttt{BAD\_PIXEL} flag is intended as a hint to application
 software to allow simpler and faster algorithms to be used if it is known
-that no bad values are present in the data array.
+that no bad values are present in the data array. Additionally, the flag
+can be used to indicate that all values are to be used, thereby
+disabling bad value handling and allowing the full range of a data
+type. This was felt to be particularly important for the shorter
+integer data types.
 
 {\small
 \begin{verbatim}
@@ -576,17 +581,20 @@ in the variance array to a magic value when the data are mapped into
 memory. Unlike the \emph{IMAGE} scheme
 or FITS, which allow the magic (or blank) value to be specified per
 data array, NDF specifies the magic value to be used for each data type
-covering both floating point and integer representations. Indeed,
+covering both floating point and integer representations, inheriting
+the definition from the underlying HDS definition. Indeed,
 \texttt{NaN} is not explicitly part of the standard and it is usually
 best to convert \texttt{NaN} elements to the corresponding floating point magic
 value before further processing is applied. A single definition of the
-magic value for each data type simplifies applications programming.
+magic value for each data type simplifies applications programming and
+removes the need for the additional overhead of providing a value for
+every primitive data array.
 
 \texttt{NaN} was excluded from the standard as it was not
 supported in VAX floating point \citep[see e.g.][]{660194} and the Starlink
 software was not ported to machines supporting IEEE floating point
 until the 1990s \citep[e.g.,][]{1991STARB...8...11C}. Unlike FITS, which
-FITS did not officially support floating point until 1990
+did not officially support floating point until 1990
 \citep{1989FPFITS,1991BAAS...23..993S} when they were able to adopt
 \texttt{NaN} as part of the standard, much software pre-existed in the
 Starlink environment by this time and it was decided to continue with
@@ -613,12 +621,12 @@ Each NDF has three character attributes that can be specified: a
 title, a data label and a data unit. These values can be accessed
 through the library API without resorting to a FITS-style extension.
 
-\subsection{Axes and WCS}
+\subsection{Axes and World Coordinate Systems (WCS)}
 
 Axis information was initially specified using an \texttt{AXIS} array
 structure with an element for each dimension of the primary data
 array. The axis information was specified in an \texttt{ARRAY} type
-structure as for data and variance and allowed data labels and units
+structure as for data and variance and allowed axis labels and units
 to be specified. For each axis, coordinates were specified for each
 pixel in the corresponding dimension of the data array. This allowed
 for non-linear axes to be specified and is similar to the
@@ -644,7 +652,7 @@ it did not solve the general problem of coupled coordinates such as
 Right Ascension and Declination or how to change the representation of
 an axis, for example by changing from wavelength to frequency or from
 ICRS to Galactic. A more general solution was required and this
-resulted in the adoption of the AST library
+prompted the development of the AST library
 \citep{1998ASPC..145...41W} with an object-oriented approach to
 generalised coordinate frames. AST support was added to the NDF
 standard in 2000 \citep{2001ASPC..238..129B} by adding a new top-level
@@ -661,7 +669,7 @@ WCS        <WCS>    {structure}
 AST objects were stored simply as an array of strings using the native
 ASCII representation. The library API was modified to support routines
 for reading and writing AST objects without the library user knowing
-the form of the representation of the object on disk.
+how the object is represented in the hierarchical model.
 
 The NDF library manages a number of WCS frames specifically intended to
 describe coordinate systems defined by the NDF library:
@@ -732,15 +740,17 @@ applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
 propagation model for NDF \citep[for example \specdre;][]{SUN140}.
 
-Three extensions proved so popular that they are now part of the broader
-standard for NDFs.
+Three extensions proved so popular that they are now effectively part of the NDF
+standard, and for backwards compatibility with existing usage they can
+not be moved out of the extension component.
 
 \subsubsection{FITS headers}
 
 FITS headers, consisting of 80-character header cards, are extremely
 common and to simplify interoperability with FITS files and to
-minimize structure overhead, it was decided early on to store FITS
-headers as an array of 80-character strings matching the FITS
+minimize structure overhead, as was found from experience with DST,
+it became commonplace to store the header \emph{as is}
+as an array of 80-character strings matching the FITS
 convention rather than attempting to parse the contents and expand
 into structures.
 
@@ -774,7 +784,7 @@ In 2009, it was decided that the inconvenience of this ``single line of
 descent'' approach to history was no longer justified by the savings in
 disk space and processing time, and so an alternative system was
 provided that enables each NDF to retain full information about all
-ancestor NDFs, and the processing that was used to create them. Thus
+ancestor NDFs, and the processing that was used to create them \citep{2009ASPC..411..418J,2011tfa..confE..42J}. Thus
 each NDF may now contain a full ``family tree'' that goes back as far as
 any NDFs that have no recorded parents, or which have been marked
 explicitly as ``root'' NDFs. Each node in the tree records the name of
@@ -817,6 +827,15 @@ disable masks by name.
 Above and beyond the core data model, the NDF library provides some
 additional features that can simplify application development.
 
+\subsubsection{Component Propagation}
+
+The NDF library enforced the rules relating to the propagation of
+NDF components to output data files. Untouched components would be
+copied automatically with the application writer only having to worry
+about the components that are of interest. The library also provided
+the ability to prevent components (including extensions) from being
+copied if they were no longer relevant.
+
 \subsubsection{Slicing}
 
 The NDF library allows a subset of the array to be selected using a
@@ -827,21 +846,21 @@ legacy \texttt{AXIS} scheme or using full WCS support. The section can
 either be specified using bounds or a center coordinate and
 extent. Example sections are
 \begin{verbatim}
-image(12h59m49s~4.5m,27.5d:28d29.8m)
+myimage(12h59m49s~4.5m,27.5d:28d29.8m)
 \end{verbatim}
 to extract an area from an image where the Right Ascension is
 specified as a radius and the Declination using bounds;
 \begin{verbatim}
-spectrum(400.:600.)
+myspectrum(400.:600.)
 \end{verbatim}
 where the spectrum is truncated to a range of, say, 400 to 600\,km/s;
 \begin{verbatim}
-cube(12h34m56.7s,-41d52m09s,-100.0:250.0)
+mycube(12h34m56.7s,-41d52m09s,-100.0:250.0)
 \end{verbatim}
 where a spectrum is extracted from a cube at a particular location and
 also truncated;
 \begin{verbatim}
-cube(55:63,75~10,-100.0:250.0)
+mycube(55:63,75~10,-100.0:250.0)
 \end{verbatim}
 where a subset of a cube is extracted where the first two coordinates
 specify pixel bounds and the third coordinate is a world coordinate range.
@@ -862,7 +881,7 @@ the expense of performance for reordering the data array.
 
 \subsubsection{Foreign Format Conversion}
 
-The NDF format has always been a niche format and much work has been
+The NDF format has always been one format amongst many formats in astronomy and much work has been
 expended on providing facilities to convert NDF files into FITS and
 IRAF format and convert from those formats into FITS \citep{SUN55}. In
 many cases an astronomer would like to use a particular NDF
