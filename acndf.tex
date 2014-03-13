@@ -1057,6 +1057,21 @@ changes to support world coordinate objects
 \citep{2009ASPC..411..418J}. The NDF standard is continuing to evolve
 to meet the needs of modern astronomy data processing.
 
+NDF combined with HDS was a conscious decision to not develop an
+interchange or archive format. HDS was designed solely to be accessed
+through a reference implementation library and API and many of the NDF
+features were directly integrated into the reference NDF library without being
+specified in the core data model.  This yielded great flexibility
+regarding exactly how the data are stored and greatly simplified
+future enhancemants (and general future-proofing) because changes to
+the data format and how data are accessed could all be hidden from
+applications by changes made in one place. However, care needs to be taken
+when rolling out updates: software linked with old versions
+may not be able to read newer data. Indeed, HDS includes an internal
+version number and can read earlier versions of the data format, but If a
+newer version is encountered than supported by the library HDS will
+know about it and report the problem.
+
 \subsection{Areas for improvement}
 
 \subsubsection{Quality masking}
