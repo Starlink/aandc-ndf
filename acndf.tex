@@ -261,7 +261,10 @@ Some key features of the HDS design are as follows.
 \item Data managers can delete, copy or rename structures within a file.
 \item It supports automatic byte swapping whilst retaining the native byte order
   for output files.
-\item VAX and IEEE floating point formats were supported.
+\item VAX and IEEE floating point formats are supported.
+\item Automatic type conversion allows a programmer to request that,
+  say, a data array of 32-bit integers is mapped as 64-bit floating
+  point numbers.
 \end{itemize}
 
 More recently HDS has been extended to support 64-bit file offsets so
