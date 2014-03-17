@@ -839,7 +839,12 @@ disable masks by name.
 \subsection{Library Features}
 
 Above and beyond the core data model, the NDF library provides some
-additional features that can simplify application development.
+additional features that can simplify application development. The
+library uses very much an object-oriented interface, despite being
+developed in Fortran and the python interface, \texttt{pyndf}, provides a full object
+interface whereby an NDF object can have methods invoked upon it and
+provides direct access to object attributes such as dimensionality and
+data label.
 
 \subsubsection{Component Propagation}
 
@@ -1203,7 +1208,8 @@ mainly in Fortran.
 This can cause a reticence to adoption from people outside the Starlink community and
 adds complications when providing interfaces to higher-level languages
 such as Python, Perl and Java. Indeed a subset of the NDF model  was
-written as a Java layer on top of the C HDS library.
+written as a Java layer on top of the C HDS library, precisely to
+avoid the added dependency to the Fortran runtime library.
 
 Ideally NDF would be rewritten in C and be made thread-safe.
 
