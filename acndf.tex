@@ -153,8 +153,9 @@ The extensible \emph{N}-dimensional Data Format (NDF) was designed and
 developed in the late 1980s to provide a data model suitable for use
 in a variety of astronomy data processing applications supported by
 Starlink. This paper provides an overview of the historical drivers
-for the development of NDF and the lessons learned from using the
-format for many years in the Starlink software collection and in data
+for the development of NDF and the lessons learned from using
+a defined hierarchical data model
+for many years in data reduction software, data pipelines and in data
 acquisition systems.
 
 \end{abstract}
@@ -217,7 +218,7 @@ Data Format (NDF) developed by the Starlink Project
 of data models that were being adopted by applications using the Starlink
 hierarchical file format.
 
-In Sec.\ \ref{sec:ndf} we discuss the genesis and features of the Starlink
+In Sec.\ \ref{sec:hds} we discuss the genesis and features of the Starlink
 file format, then in Sec.\ \ref{sec:chaos} we provide examples of data
 models developed in the mid-1980s. The NDF data model itself is
 discussed in Sec.\ \ref{sec:ndf} and its usage in data acquisition
@@ -229,8 +230,8 @@ some earlier work \citep{P91_adassxxiii}.
 \section{Hierarchical Data System}
 \label{sec:hds}
 
-Starlink, created in 1980
-\citep{1980IrAJ...14..197E,1982MmSAI..53...55T}, was designed
+The Starlink Project, created in 1980
+\citep{1980IrAJ...14..197E,1982MmSAI..53...55T}, was set up
 primarily to provide data reduction software and facilities to United
 Kingdom astronomers. FITS
 \citep{1979ipia.coll..445W,1981A&AS...44..363W} had recently been
@@ -239,7 +240,7 @@ requirement for a file format optimized for data reduction that all
 Starlink applications could understand. Files
 needed to be written to and read from efficiently with an emphasis on the
 ability to group and modify related information
-\citep{1981STARENT4}. This was a few years before the NCSA developed
+\citep{1981STARENT4}. This was many years before the NCSA developed
 the Hierarchical Data Format \citep{HDF1,Folk2010} and it was decided
 to develop a new file format. The resulting Starlink Data
 System\footnote{from which the file extension of \texttt{.sdf}, for
