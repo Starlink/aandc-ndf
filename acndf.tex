@@ -664,7 +664,7 @@ Contents of AXIS(1)
 The \texttt{AXIS} formalism worked well for spectral coordinates but
 it did not solve the general problem of coupled coordinates such as
 Right Ascension and Declination or how to change the representation of
-an axis, for example by changing from wavelength to frequency or from
+an axis, for example when changing from wavelength to frequency or from
 ICRS to Galactic. A more general solution was required and this
 prompted the development of the AST library
 \citep{1998ASPC..145...41W} with an object-oriented approach to
@@ -701,7 +701,8 @@ structures (if any) stored in the NDF.
 unit box on all pixel axes.
 \end{description}
 
-The NDF library always removes the above frames when storing a FrameSet
+The NDF library always removes the above frames when storing the
+collection of WCS frames
 within an NDF, and re-creates them using the current state of the NDF
 when returning a FrameSet for an NDF.
 
@@ -746,7 +747,7 @@ on the timestamp field.
 \subsection{Extensions}
 
 The NDF standard included a special place, named \texttt{MORE}, for local extensions to the
-format. This allowed instruments and applications to track additional
+model. This allowed instruments and applications to track additional
 information without requiring standardisation. The only rule was that
 each extension should be given a reserved name and that the data type
 would define the specific data model of an extension. Some
@@ -755,7 +756,7 @@ information in extensions to overcome limitations in the default error
 propagation model for NDF \citep[for example \specdre;][]{SUN140}.
 
 Three extensions proved so popular that they are now effectively part of the NDF
-standard, and for backwards compatibility with existing usage they can
+standard, but for backwards compatibility with existing usage they can
 not be moved out of the extension component.
 
 \subsubsection{FITS headers}
@@ -848,12 +849,10 @@ data label.
 
 \subsubsection{Component Propagation}
 
-The NDF library enforced the rules relating to the propagation of
-NDF components to output data files. Untouched components would be
-copied automatically with the application writer only having to worry
-about the components that are of interest. The library also provided
-the ability to prevent components (including extensions) from being
-copied if they were no longer relevant.
+The default behavior of the NDF library encourages the convention
+that all applications should copy any unrecognised extensions
+unchanged from input to output. Applications are free to modify this
+default behaviour, but in general do not do so.
 
 \subsubsection{Slicing}
 
@@ -902,7 +901,7 @@ the expense of performance for reordering the data array.
 
 The NDF format has always been one format amongst many formats in astronomy and much work has been
 expended on providing facilities to convert NDF files into FITS and
-IRAF format and convert from those formats into FITS \citep{SUN55}. In
+IRAF format and convert from those formats into NDF \citep{SUN55}. In
 many cases an astronomer would like to use a particular NDF
 application on a FITS file without realising that the application does
 not natively support FITS. If foreign format conversion is enabled the
@@ -916,7 +915,7 @@ it when the file is closed.
 
 The library API was designed to make history updating as easy
 as possible and by default if the history structure existed the NDF
-library would automatically add a new entry when a file was written
+library automatically adds a new entry when a file was written
 to.
 
 \subsubsection{Event Triggers}
