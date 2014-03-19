@@ -1287,64 +1287,81 @@ The source code for the NDF library and the Starlink software
 
 \section{The Provenance Data Model}
 \label{app:prov}
-HDS can be slow when reading and writing large complex nested structures,
-and so the provenance information is instead encoded into a single array
-of bytes, which is stored in a primitive HDS array. This array contains
-the following values:
-
-\begin{itemize}
-\item A 4-byte integer version number identifying the format in which the
-following information is stored.
-\item A 4-byte integer giving the number of NDFs included in the
-provenance information, including the main NDF.
-\item A byte-encoded ``Prov'' structure describing the main NDF
-(\emph{i.e.} the NDF to which the provenance information relates).
-\item A list of byte-encoded ``Prov'' structures, one for each
-ancestor NDF.
-\item A 4-byte integer value marking the end of the useful information in
-the array.
-\end{itemize}
-
-Each ``Prov'' structure describes a single NDF, and contains the
-following components:
+This appendix describe the data model used to record the ``family tree'' of
+ancestor NDFs that were used to create an NDF. Each node in the tree
+describes a single NDF, with the root node being the NDF for which
+provenance is being recorded. Thus the parents of the root node each
+describe one of the NDFs that were used to create the NDF described by the
+root node. A node stores the following items of information about the
+associated NDF:
 
 \begin{itemize}
 \item The path to the NDF within the local file system. This is a blank
-string for the main NDF, since the main NDF may be moved to a new location.
-\item The UTC date and time at which the NDF was created, as a string in
-ISO Gregorian calendar format.
+string for the root node, since the main NDF may be moved to a new location.
+\item The UTC date and time at which the NDF was created.
 \item A boolean flag indicating if the NDF is ``hidden'' - meaning that
 the NDF will not be included as an ancestor when provenance is copied
 from one NDF to another.
 \item A string identifying the command that created the NDF.
-\item History information. For the main NDF, this is just a 4-byte hash code
-that represents the contents of the NDF's History component. This hash code
-is used by subsequent commands to identify the same history information within
-other NDFs. For ancestor NDFs, the history information contains any history
-records read from the ancestor NDF that were not also present in any of the
-ancestors direct parents\footnote{This is done to avoid unnecessary
-duplication of History records in different Prov structures.}. This
-history information consists of:
-\begin{itemize}
-\item A 4-byte integer holding the number of history records that follow.
-\item The date associated with the first history record.
-\item The command name associated with the first history record.
-\item The user associated with the first history record.
-\item The full text, including parameter values, \emph{etc.}, associated
-with the first history record.
-\item The previous four items repeated for the second and all subsequent
-history records.
-\end{itemize}
-\item Any extra arbitrary information associated with the NDF, formatted
-as a string. There are no conventions on what this extra information
-represents or how it is formatted.
-\item A 4-byte integer giving the number of direct parent NDFs that were
-used to create the NDF.
-\item A list of 4-byte integers giving the indicies of the direct parents
-within the list of Prov structures.
+\item History information. For the root node, this is just a 4-byte hash code
+that represents the contents of the main NDF's History component. This hash
+code is subsequently to identify the same history information within other
+NDFs. For non-root nodes, the history information contains any history
+records read from the corresponding ancestor NDF that were not also present
+in any of the ancestors direct parents\footnote{This is done to avoid unnecessary
+duplication of History records in different Prov structures.}.
+\item Any extra arbitrary information associated with the NDF. There are no conventions on what this extra information
+represents.
+\item A list of pointers to nodes representing the direct parents of the
+NDF.
 \end{itemize}
 
-All strings are variable-length, null terminated.
+The full tree of nodes is stored on disk in an extension named
+``PROVENANCE'' within the main NDF, and is encoded into an array of
+integers in order to avoid the overhead of reading and writing complex
+HDS structures.
+
+Each application will normally first create a basic tree for each output
+NDF, holding a single root node describing the output NDF. It will then
+read the provenance tree from each input NDF and append each one to the
+provenance tree of the output NDF, making it a direct parent of the root
+node. When the application closes, the final output tree is stored in
+the output NDF.
+
+This whole process can be automated by registering handlers with the NDF
+library that are called when-ever an NDF is opened. The only changes that
+then need be made to an application to enable basic provenance is for the
+application to add two call to mark the start and end of a ``provenance
+recording context''. Alternatively, to achieve finer control of which
+input NDFs are recorded as parents of each output NDF, it is possible for
+an appliction to handle the reading and writing of provenance trees
+itself.
+
+It is possible that a single input NDF may be used many times in the
+creaton of an output NDF. For instance, if NDF ``A'' is added to NDF
+``B'' to create NDF ''C'', and ``A'' is then added to ``C'' to create
+``D'', then ``A'' (and all its ancestors) would appear twice in the
+provenance tree of ``D''. To avoid this, wheneve a new parent is added to
+the root node, each node within the tree of the new parent is compared to
+each node already in the tree. If they match, the tree of the new parent
+is `snipped'' at that point to exclude the duplicated node (and all its
+parent nodes). This comparison needs to be done carefully since it is
+possible for two nodes to include the same path, creator and date, and
+yet still refer to different NDFs\footnote{For instance, if an NDF is
+created, used once, and then immediately replaced with a new NDF}. For
+this reason, the comparison two nodes are considered equal if:
+
+\begin{enumerate}
+\item they have the same path, date and creator, and
+\item they have the same number of parent nodes, and
+\item each pair of corresponding parent nodes are equal
+\end{enumerate}
+
+The third requirement above means that two nodes will never be considered
+equal if any of the ancestors of the two nodes differ.
+
+
+
 
 %% References
 %%
