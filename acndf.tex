@@ -819,13 +819,7 @@ exponential growth in the number of ancestors, the cost of navigating
 such a complex structure quickly became prohibitive. Therefore,
 storage as raw HDS was replaced by an optimised bespoke binary format
 packed into an array of integers (the provenance model is outlined in
-\ref{app:prov}). Even so, it is still possible for
-the reading and writing of provenance information to be a significant
-overhead when running relatively minor applications.  In data
-reduction pipelines such as those found in products from ORAC-DR
-\citep{2008AN....329..295C}, there can be many thousands of provenance
-entries including some loops where products are fed back into earlier
-stages because of iterations.
+\ref{app:prov}).
 
 \subsubsection{Quality Labels}
 
@@ -1189,12 +1183,15 @@ would be provided for reading and writing Unicode strings.
 Whilst the provenance handling works extremely well and is very useful
 for tracking what processing has gone into making a data product, the
 provenance information can become extremely large during long and
-complicated pipeline processing. The provenance tracking eventually
-begins to take up a non-trivial amount of time to collate and copy
-from input files to output files. One solution to this may be to
-offload the provenence handling to a database during processing, only
-writing the information to the file when processing is complete and
-the file is to be exported. It would be fairly straightforward to
+complicated pipeline processing such as those found in products from
+ORAC-DR \citep{2008AN....329..295C}.  There can be many thousands of
+provenance entries including some loops where products are fed back
+into earlier stages because of iterations.  The provenance tracking
+eventually begins to take up a non-trivial amount of time to collate
+and copy from input files to output files. One solution to this may be
+to offload the provenence handling to a database during processing,
+only writing the information to the file when processing is complete
+and the file is to be exported. It would be fairly straightforward to
 modify the NDG library to use the Core Provenance Library
 \citep{Macko:2012:GPL:2342875.2342881}.
 
