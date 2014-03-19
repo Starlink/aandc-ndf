@@ -1338,10 +1338,10 @@ an appliction to handle the reading and writing of provenance trees
 itself.
 
 It is possible that a single input NDF may be used many times in the
-creaton of an output NDF. For instance, if NDF ``A'' is added to NDF
-``B'' to create NDF ''C'', and ``A'' is then added to ``C'' to create
-``D'', then ``A'' (and all its ancestors) would appear twice in the
-provenance tree of ``D''. To avoid this, whenever a new parent is added to
+creaton of an output NDF. For instance, if NDF \emph{A} is added to NDF
+\emph{B} to create NDF \emph{C}, and \emph{A} is then added to \emph{C} to create
+\emph{D}, then \emph{A} (and all its ancestors) would appear twice in the
+provenance tree of \emph{D}. To avoid this, whenever a new parent is added to
 the root node, each node within the tree of the new parent is compared to
 each node already in the tree. If they match, the tree of the new parent
 is ``snipped'' at that point to exclude the duplicated node (and all its
