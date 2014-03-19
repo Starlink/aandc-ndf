@@ -1317,7 +1317,7 @@ NDF.
 \end{itemize}
 
 The full tree of nodes is stored on disk in an extension named
-``PROVENANCE'' within the main NDF, and is encoded into an array of
+\texttt{PROVENANCE} within the main NDF, and is encoded into an array of
 integers in order to avoid the overhead of reading and writing complex
 HDS structures.
 
@@ -1329,9 +1329,9 @@ node. When the application closes, the final output tree is stored in
 the output NDF.
 
 This whole process can be automated by registering handlers with the NDF
-library that are called when-ever an NDF is opened. The only changes that
-then need be made to an application to enable basic provenance is for the
-application to add two call to mark the start and end of a ``provenance
+library that are called whenever an NDF is opened. The only change that
+then needs to be made to an application to enable basic provenance tracking is for the
+application to add two calls to mark the start and end of a ``provenance
 recording context''. Alternatively, to achieve finer control of which
 input NDFs are recorded as parents of each output NDF, it is possible for
 an appliction to handle the reading and writing of provenance trees
@@ -1341,10 +1341,10 @@ It is possible that a single input NDF may be used many times in the
 creaton of an output NDF. For instance, if NDF ``A'' is added to NDF
 ``B'' to create NDF ''C'', and ``A'' is then added to ``C'' to create
 ``D'', then ``A'' (and all its ancestors) would appear twice in the
-provenance tree of ``D''. To avoid this, wheneve a new parent is added to
+provenance tree of ``D''. To avoid this, whenever a new parent is added to
 the root node, each node within the tree of the new parent is compared to
 each node already in the tree. If they match, the tree of the new parent
-is `snipped'' at that point to exclude the duplicated node (and all its
+is ``snipped'' at that point to exclude the duplicated node (and all its
 parent nodes). This comparison needs to be done carefully since it is
 possible for two nodes to include the same path, creator and date, and
 yet still refer to different NDFs\footnote{For instance, if an NDF is
