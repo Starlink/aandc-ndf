@@ -1184,6 +1184,20 @@ characters with either normalised versions of characters outside the
 ASCII character set (for example, dropping accents) or whitespace. A new API
 would be provided for reading and writing Unicode strings.
 
+\subsubsection{Provenance Growth}
+
+Whilst the provenance handling works extremely well and is very useful
+for tracking what processing has gone into making a data product, the
+provenance information can become extremely large during long and
+complicated pipeline processing. The provenance tracking eventually
+begins to take up a non-trivial amount of time to collate and copy
+from input files to output files. One solution to this may be to
+offload the provenence handling to a database during processing, only
+writing the information to the file when processing is complete and
+the file is to be exported. It would be fairly straightforward to
+modify the NDG library to use the Core Provenance Library
+\citep{Macko:2012:GPL:2342875.2342881}.
+
 \subsubsection{Library limitations}
 
 Whilst there are many advantages to having a single library
