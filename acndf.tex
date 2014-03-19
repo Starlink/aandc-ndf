@@ -1288,8 +1288,64 @@ The source code for the NDF library and the Starlink software
 
 \section{The Provenance Data Model}
 \label{app:prov}
+HDS can be slow when reading and writing large complex nested structures,
+and so the provenance information is instead encoded into a single array
+of bytes, which is stored in a primitive HDS array. This array contains
+the following values:
 
-{\color{red} For David to fill.}
+\begin{itemize}
+\item A 4-byte integer version number identifying the format in which the
+following information is stored.
+\item A 4-byte integer giving the number of NDFs included in the
+provenance information, including the main NDF.
+\item A byte-encoded ``Prov'' structure describing the main NDF
+(\emph{i.e.} the NDF to which the provenance information relates).
+\item A list of byte-encoded ``Prov'' structures, one for each
+ancestor NDF.
+\item A 4-byte integer value marking the end of the useful information in
+the array.
+\end{itemize}
+
+Each ``Prov'' structure describes a single NDF, and contains the
+following components:
+
+\begin{itemize}
+\item The path to the NDF within the local file system. This is a blank
+string for the main NDF, since the main NDF may be moved to a new location.
+\item The UTC date and time at which the NDF was created, as a string in
+ISO Gregorian calendar format.
+\item A boolean flag indicating if the NDF is ``hidden'' - meaning that
+the NDF will not be included as an ancestor when provenance is copied
+from one NDF to another.
+\item A string identifying the command that created the NDF.
+\item History information. For the main NDF, this is just a 4-byte hash code
+that represents the contents of the NDF's History component. This hash code
+is used by subsequent commands to identify the same history information within
+other NDFs. For ancestor NDFs, the history information contains any history
+records read from the ancestor NDF that were not also present in any of the
+ancestors direct parents\footnote{This is done to avoid unnecessary
+duplication of History records in different Prov structures.}. This
+history information consists of:
+\begin{itemize}
+\item A 4-byte integer holding the number of history records that follow.
+\item The date associated with the first history record.
+\item The command name associated with the first history record.
+\item The user associated with the first history record.
+\item The full text, including parameter values, \emph{etc.}, associated
+with the first history record.
+\item The previous four items repeated for the second and all subsequent
+history records.
+\end{itemize}
+\item Any extra arbitrary information associated with the NDF, formatted
+as a string. There are no conventions on what this extra information
+represents or how it is formatted.
+\item A 4-byte integer giving the number of direct parent NDFs that were
+used to create the NDF.
+\item A list of 4-byte integers giving the indicies of the direct parents
+within the list of Prov structures.
+\end{itemize}
+
+All strings are variable-length, null terminated.
 
 %% References
 %%
