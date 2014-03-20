@@ -442,8 +442,9 @@ interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \asterix\ defined many data models designed for
 the specific uses of X-ray astronomy, with a particular focus on
 photon event lists. A trace of an alignment file is shown in
-Fig.\,\ref{fig:asterix}. This experience fed into the design of NDF
-and the \texttt{HISTORY} structure was adopted without change. Once
+Fig.\,\ref{fig:asterix}. The \asterix\ data models were not competing directly with \emph{IMAGE} or
+DST formats but this experience fed directly into the design of NDF.
+For example, the \texttt{HISTORY} structure was adopted without change. Once
 NDF was available some data models were modified to use features from
 NDF such as adopting the \texttt{DATA\_ARRAY} label.
 
@@ -498,14 +499,6 @@ WFC_MASTER_CAL  <TOP_LEVEL>
 \label{fig:asterix}
 \end{minipage}
 \end{figure*}
-
-{\color{red} The core Asterix data model was based on event lists
-  which were completely at odds with the \emph{IMAGE}
-  approach. Asterix could not strictly adopt NDF in the early days and
-  presumably would have benefited from AST and/or table support. Have
-  to be careful not to suggest that Asterix was directly competing
-  with NDF and simply that there was cross pollination of ideas
-  between Asterix and NDF evolution.}
 
 \section{\emph{N}-Dimensional Data Format}
 \label{sec:ndf}
