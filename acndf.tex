@@ -250,7 +250,7 @@ System\footnote{from which the file extension of \texttt{.sdf}, for
 first version being released in 1982 \citep[see
 e.g.][]{1982QJRAS..23..485D,1991STARB...8....2L}. In 1983 the name was
 changed to the Hierarchical Data System (HDS) to make the file format
-benefits more explicit and was in common usage within Starlink by 1986
+benefits more explicit. HDS itself was in common usage within Starlink by 1986
 \citep{1986BICDS..30...13L}. It was originally written in the BLISS
 programming language on a VAX/VMS system and later rewritten in C and
 ported to Unix.
@@ -414,7 +414,7 @@ stored in a structure labeled Z. The main data array was
   file system.}. FITS-style keyword/value pairs were encoded
 explicitly in a structure called \texttt{FITS} but using scalar
 components for each header item. Any comments associated with the FITS
-keywords were held in similar structure labelled
+keywords were held in a similar structure labelled
 \texttt{COMMENTS}. This basic structure suggests a bias towards 1- or
 2-dimensional data, but it could handle data of up to 6 dimensions;
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
@@ -808,7 +808,7 @@ time at which it was created, and its immediate parent nodes. Each
 node also allows arbitrary extra information to be associated with the
 ancestor NDF. Care is taken to merge nodes -- possibly inherited from
 different input NDFs -- that refer to the same ancestor. A simple
-provanence tree is show in Fig.~\ref{fig:prov}.
+provenance tree is shown in Fig.~\ref{fig:prov}.
 
 For reasons of backward compatibility, it was decided to retain the
 original NDF History mechanism, and add this new ``family tree''
@@ -1095,7 +1095,7 @@ the data format and how data are accessed could all be hidden from
 applications by changes made in one place. However, care needs to be taken
 when rolling out updates: software linked with old versions
 may not be able to read newer data. Indeed, HDS includes an internal
-version number and can read earlier versions of the data format, but If a
+version number and can read earlier versions of the data format, but if a
 newer version is encountered than supported by the library HDS will
 know about it and report the problem.
 
@@ -1189,7 +1189,7 @@ provenance entries including some loops where products are fed back
 into earlier stages because of iterations.  The provenance tracking
 eventually begins to take up a non-trivial amount of time to collate
 and copy from input files to output files. One solution to this may be
-to offload the provenence handling to a database during processing,
+to offload the provenance handling to a database during processing,
 only writing the information to the file when processing is complete
 and the file is to be exported. It would be fairly straightforward to
 modify the NDG library to use the Core Provenance Library
@@ -1237,7 +1237,7 @@ applications such as \smurf\ \citep{2013MNRAS.430.2545C},
 \ccdpack\, \gaia\ and \KAPPA.
 It has also been used as a raw data acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
-Telescope and available in that form
+Telescope and NDF format data are available from
 from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 \citep{2008ASPC..394..450E,P01_adassxxiii}. The shift from arbitrary
 use of hierarchical structures to a data model enforced by a library
