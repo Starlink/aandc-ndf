@@ -202,6 +202,9 @@ Starlink
 \newcommand{\treeview}{\textsc{treeview}}
 \newcommand{\splat}{\textsc{splat}}
 
+%% Links
+\newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
+
 %% main text
 \section{Introduction}
 \label{sec:intro}
@@ -401,7 +404,7 @@ OUT  <FIGARO>
 \end{figure*}
 
 The Figaro data reduction package
-\citep[][ascl:1203.013]{1988igbo.conf..448C,1993ASPC...52..219S}
+\citep[][\ascl{1203.013}]{1988igbo.conf..448C,1993ASPC...52..219S}
 independently adopted a hierarchical design based on HDS. This DST
 format\footnote{The reason for the name has been lost in the mists of
   time but our best guess is that it stood for \emph{\textbf{D}ata
@@ -1105,7 +1108,7 @@ allowing 8 different quality assignments in a single data file. The
 design did not allow for the possibility of supporting larger unsigned
 integer data types. This restriction should be raised to allow more
 assignments. The SMURF map-maker
-\citep[][ascl:1310.007]{2013MNRAS.430.2545C} already makes use of more
+\citep[][\ascl{1310.007}]{2013MNRAS.430.2545C} already makes use of more
 than 8 internally and uses an unsigned short. When the results are
 written out mask types have to be combined if more than 8 were present
 in the output data file.
@@ -1253,7 +1256,7 @@ structure, overlaid on conceptually separate bitbuckets, can very
 promptly bring order out of chaos.
 However, there was no take up in the community outside of the Starlink Java applications
 such as \treeview\ \citep{2003ASPC..295..445B} and
-\splat\ \citep[][ascl:1402.007]{2005ASPC..347...22D}.
+\splat\ \citep[][\ascl{1402.007}]{2005ASPC..347...22D}.
 
 For the future we are considering the possibility of replacing the HDS
 layer with a more widely used hierarchical data format such as HDF5
@@ -1281,7 +1284,7 @@ comments on the manuscript regarding the early days of HDS and the
 development of \asterix.
 
 The source code for the NDF library and the Starlink software
-(ascl:1110.012) is open-source and is available on Github at
+(\ascl{1110.012}) is open-source and is available on Github at
 \htmladdnormallink{https://github.com/Starlink}.
 
 %% The Appendices part is started with the command \appendix;
