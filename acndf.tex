@@ -85,6 +85,9 @@
 
 \usepackage{upgreek}
 
+% Aim to be consistent, and correct, about how we refer to sections
+\newcommand*\secref[1]{Sect.~\ref{#1}}
+
 \begin{document}
 
 \begin{frontmatter}
@@ -223,12 +226,12 @@ Data Format (NDF) developed by the Starlink Project
 of data models that were being adopted by applications using the Starlink
 hierarchical file format.
 
-In Sec.\ \ref{sec:hds} we discuss the genesis and features of the Starlink
-file format, then in Sec.\ \ref{sec:chaos} we provide examples of data
+In \secref{sec:hds} we discuss the genesis and features of the Starlink
+file format, then in \secref{sec:chaos} we provide examples of data
 models developed in the mid-1980s. The NDF data model itself is
-discussed in Sec.\ \ref{sec:ndf} and its usage in data acquisition
-system is covered in Sec.\ \ref{sec:daq}. We finish in Sec.\
-\ref{sec:lessons} by discussing the positive lessons learned from
+discussed in \secref{sec:ndf} and its usage in data acquisition
+system is covered in \secref{sec:daq}. We finish in 
+\secref{sec:lessons} by discussing the positive lessons learned from
 developing NDF and the areas where NDF could be improved, expanding on
 some earlier work \citep{P91_adassxxiii}.
 
@@ -306,10 +309,13 @@ addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 The advantage of HDS over flat file formats is that it allows many different kinds of data to
 be stored in a consistent and logical fashion. It is also very
 flexible, in that objects can be added or deleted whilst retaining the
-logical structure. HDS also provides portability of data, so that the
+logical structure.  HDS also provides portability of data, so that the
 same data objects may be accessed from different types of computer
 despite the fact that each may actually format its files and data in
 different ways.
+\textcolor{red}{What does `format' mean?  Is it referring to byte
+  order, or to IEEE/VAX floats?  How about `\dots despite
+  platform-specific details of byte-order and floating-point format.'?}
 
 \section{File Format without standardised Data Model}
 \label{sec:chaos}
@@ -350,12 +356,14 @@ HORSEHEAD  <IMAGE>
 
 Prior to HDS becoming generally available, the Starlink project adopted
 the Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4} as part
-of its \emph{INTERIM} software environment. BDF was heavily influenced
+of its \emph{INTERIM} software environment.  BDF was heavily influenced
 by FITS and used many of the same conventions.  Software was provided
-to convert BDF format files to HDS using this model \citep{SUN96} and
-the \emph{IMAGE} format became reasonably popular because of its
-simplicity and the many BDF files that existed at the time. There were
-a number of shortcomings with the design, not the least of which was
+to convert BDF format files to HDS using the \emph{IMAGE} model
+\citep{SUN96}, and
+the \emph{IMAGE} format became reasonably popular, because of its
+simplicity, and because of the many BDF files that existed at the time.
+There were however
+a number of shortcomings with the \emph{IMAGE} design, not the least of which was
 that it did not make use of hierarchical structures. The design was
 flat and heavily influenced by FITS and BDF.
 
@@ -503,7 +511,7 @@ WFC_MASTER_CAL  <TOP_LEVEL>
 \end{minipage}
 \end{figure*}
 
-\section{\emph{N}-Dimensional Data Format}
+\section{The \emph{N}-Dimensional Data Format}
 \label{sec:ndf}
 
 \begin{figure}[t]
@@ -702,6 +710,8 @@ The NDF library always removes the above frames when storing the
 collection of WCS frames
 within an NDF, and re-creates them using the current state of the NDF
 when returning a collection of WCS frames for an NDF.
+\textcolor{red}{I'm not confident I understand this remark: is it saying that
+  these four frames were always synthesised afresh on input and never stored?}
 
 \subsection{History}
 
@@ -709,10 +719,10 @@ The \texttt{HISTORY} structure is used to track processing history and
 includes the date, application name, arguments and a narrative
 description. The structure was first developed for the
 \asterix\ application and adopted directly into the NDF data
-model. The history was intended specifically to not be parseable by
-application software but applications such as SURF
-\citep{1998ASPC..145..216J} did use the history to determine whether a
-particular application had been run on the data so the user could be
+model. The history was, by design, not expected to be parseable by
+application software; applications such as SURF
+\citep{1998ASPC..145..216J} did nonetheless use the history to determine whether a
+particular application had been run on the data, so that the user could be
 informed if they have missed a mandatory step in the processing.
 
 {\small
@@ -737,7 +747,7 @@ Comparing the above trace to that shown in Fig.~\ref{fig:asterix},
 the only change involves the increase in resolution of the time
 stamp to support milliseconds. This was required as computers have
 become faster over the years and many processing steps can occur
-within a single second. Provenance handling, \S\ref{sec:provenance},
+within a single second. Provenance handling, \secref{sec:provenance},
 uses the history block to disambiguate provenance entries and relies
 on the timestamp field.
 
@@ -748,14 +758,18 @@ The NDF standard included a special place, named \texttt{MORE}, for local extens
 model. This allowed instruments and applications to track additional
 information without requiring standardisation. The only rule was that
 each extension should be given a reserved name and that the data type
-would define the specific data model of an extension. Some
+would define the specific data model of an extension.
+\textcolor{red}{Where were these names registered?  If informal,
+  `\dots be given a reserved name (registered informally within the
+  small contemporary community), and that the data type\dots'}
+Some
 applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
 propagation model for NDF \citep[for example \specdre;][]{SUN140}.
 
 Three extensions proved so popular that they are now effectively part of the NDF
-standard, but for backwards compatibility with existing usage they can
-not be moved out of the extension component.
+standard, but for backwards compatibility with existing usage they
+cannot be moved out of the extension component.
 
 \subsubsection{FITS headers}
 
@@ -833,7 +847,7 @@ disable masks by name.
 
 Above and beyond the core data model, the NDF library provides some
 additional features that can simplify application development. The
-library uses very much an object-oriented interface, despite being
+library uses an object-oriented interface, despite being
 developed in Fortran and the python interface, \texttt{pyndf}, provides a full object
 interface whereby an NDF object can have methods invoked upon it and
 provides direct access to object attributes such as dimensionality and
@@ -858,6 +872,7 @@ extent. Example sections are
 \begin{verbatim}
 myimage(12h59m49s~4.5m,27.5d:28d29.8m)
 \end{verbatim}
+\textcolor{red}{Explain tilde vs colon syntax}
 to extract an area from an image where the Right Ascension is
 specified as a radius and the Declination using bounds;
 \begin{verbatim}
@@ -868,7 +883,7 @@ where the spectrum is truncated to a range of, say, 400 to 600\,km/s;
 mycube(12h34m56.7s,-41d52m09s,-100.0:250.0)
 \end{verbatim}
 where a spectrum is extracted from a cube at a particular location and
-also truncated;
+also truncated; and
 \begin{verbatim}
 mycube(55:63,75~10,-100.0:250.0)
 \end{verbatim}
@@ -909,9 +924,9 @@ it when the file is closed.
 \subsubsection{Automated History}
 
 The library API was designed to make history updating as easy
-as possible and by default if the history structure existed the NDF
-library automatically adds a new entry when a file was written
-to.
+as possible: by default, if the history structure exists the NDF
+library automatically adds a new entry when a file is written
+to.  \textcolor{red}{And if the history structure does not exist?}
 
 \subsubsection{Event Triggers}
 
@@ -990,23 +1005,24 @@ private data, which does not interfere with the sharability or
 intelligibility of the dataset as a whole.
 
 The Starlink project translated these insights into the XML world in
-the early-2000s NDX project (Sec.~\ref{sec:ndx}).  We believe this was a
+the early-2000s NDX project (\secref{sec:ndx}).  We believe this was a
 successful and illuminating experiment, but the results did not make
 it into wider circulation.
 
 \subsubsection{Do not try to do everything}
 
-There are two incompatible approaches to designing a data model. The
-default position tends to be to think of everything that is needed for
-all of astronomy and try to design a model where all metadata is
+There are two incompatible approaches to designing a data model. One
+extreme aims (to try) to think of everything that is needed for
+all of astronomy, and to to design a model where all metadata is
 described and everything has its place. This is the approach taken by
-the IVOA \citep[see e.g.][]{2012arXiv1204.3055M} and leads to long and
-heated discussions that generate data models that are never quite
-perfect and continually need to be tweaked as new instrumentation and
-metadata are developed. This is a worthy goal and it is clear that
+the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
+intelligible and worthy goal and it is clear that
 much can be gained if these data models can be utilised, especially if
 related models (spectrum and image when combined into a data cube)
-share common ground.
+share common ground.  In our experience, however, this approach leads to long and
+heated discussions that generate data models that are never quite
+perfect and continually need to be tweaked as new instrumentation and
+metadata are developed.
 
 For NDF there was a need to generate a usable model quickly that took
 concepts that were generically useful, leaving instrumental details to
@@ -1028,13 +1044,14 @@ Initially it was very hard to convince people that hierarchical data
 structures were at all useful. This can be seen in the Wright-Giddings
 layout of a simple astronomical image file using HDS. Over the years
 the adoption of hierarchy has been an important part of the NDF
-experience. The ability to relocate or modify parts of a data file,
-changing the organization, or to copy related sections to a new file
-is very powerful.  NDF extensions containing NDF structures, allowing
-software packages to extract those NDFs or simply focus on them
-without regard to the enclosing data module becomes very intuitive and
+experience, and application programmers quickly began to realise the power of
+being able to relocate or modify parts of a data file,
+to change the organization, or to copy related sections to a new file.
+NDF extensions contain NDF structures, allowing
+software packages to extract those NDFs, or simply focus on them,
+without regard to the enclosing data module; this becomes very intuitive and
 obvious once it is learned. A flat layout would require additional
-grouping metadata to understand which components were related and this
+grouping metadata to understand which components were related, but this
 is neatly handled by a simple hierarchy.
 
 \subsubsection{Allow `private' data (namespaces)}
@@ -1045,10 +1062,10 @@ data providers will want to include data that is not described within
 the NDF model, and if the model could not accommodate this extra data,
 it would be doomed to be no more than a `quick-look' format.
 
-As described above (Sec.~\ref{sec:more}), the NDF model includes a
+As described above (\secref{sec:more}), the NDF model includes a
 \texttt{MORE} tree, where particular applications can store
 application-specific data using any of the available HDS structures
-(Sec.~\ref{sec:hds}).  Some applications treated this as a black box;
+(\secref{sec:hds}).  Some applications treated this as a black box;
 others documented what they did here, making it an extended part of
 the application interface, so that their `private' data was effectively
 public, and was largely standardised in practice without the long
@@ -1113,6 +1130,9 @@ rather than being integral to the NDF library. In practice the AST
 library \citep{1998ASPC..145...41W} is often used for processing the FITS
 header from an NDF so this causes few problems and simplifies the NDF
 organization.
+\textcolor{red}{What's the `good feature' here?  Right now, it reads
+  as a few interesting but random remarks on the history of FITS
+  headers in NDF.}
 
 \subsubsection{Structure Data Types}
 
@@ -1129,7 +1149,7 @@ for all such NDF structures and make them available for
 display. Applications can therefore make decisions on how to handle a
 structure without having to know its name.
 
-\subsubsection{Proven ability to enhance format}
+\subsubsection{Extensible model}
 
 The initial NDF design document did not profess to know the future and
 was deliberately designed to allow new features to be added as they
@@ -1138,7 +1158,8 @@ became necessary. The adoption of a character array matching an
 changes to support world coordinate objects
 \citep{2001ASPC..238..129B}, data compression algorithms
 \citep{2008ASPC..394..650C} and provenance tracking
-\citep{2009ASPC..411..418J}. The NDF standard is continuing to evolve
+\citep{2009ASPC..411..418J}. The NDF standard therefore has a proven
+ability to continue to evolve
 to meet the needs of modern astronomy data processing.
 
 NDF combined with HDS was a conscious decision to not develop an
