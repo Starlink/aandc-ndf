@@ -741,6 +741,7 @@ uses the history block to disambiguate provenance entries and relies
 on the timestamp field.
 
 \subsection{Extensions}
+\label{sec:more}
 
 The NDF standard included a special place, named \texttt{MORE}, for local extensions to the
 model. This allowed instruments and applications to track additional
@@ -957,27 +958,37 @@ as much as for technical reasons.
 \subsection{Key Successes}
 \label{sec:success}
 
-{\color{red}Need introductory remarks. NXG: \emph{What we got right
-    and what you should carefully consider}. Maybe remove subsections
-  and simply have introduction, bullets, detailed
-  explanation. Recapitulate what happened without these
-  features. Include difficulties with marketing a new format? Although
-that isn't really a \emph{key success}.}
+NDF is a successful data model: it achieves its goal of supporting
+broad interoperability of astronomical data between applications in a
+pipeline and between pipelines, across multiple wavelengths, and
+across time.  It did this without inhibiting applications from
+including any and all of the application- or instrument-specific
+features they needed to preserve.  Below, we try to tease apart some
+separately important strands of this design, but summarise the key
+points here.
 
-\subsubsection{Hierarchy can be useful}
+Despite much detailed discussion and inventiveness at the time the
+model was devised, the NDF model remains modest: \emph{NDF does not
+  try to do everything}, but instead adds a bare minimum of useful
+structure.\footnote{Einstein did not quite say `everything should be
+  as simple as possible, but no simpler', but the thought is no less
+  true for being a misquotation, and he might as well get the credit
+  for it.}  Astronomy data is fundamentally rather simple, and the
+elements in the NDF data model represent both a large fraction of the
+information that is necessary for high-level understanding of a
+dataset, and a large fraction of what is readily interoperable between
+applications without relying on detailed documentation.
 
-Initially it was very hard to convince people that hierarchical data
-structures were at all useful. This can be seen in the Wright-Giddings
-layout of a simple astronomical image file using HDS. Over the years
-the adoption of hierarchy has been an important part of the NDF
-experience. The ability to relocate or modify parts of a data file,
-changing the organization, or to copy related sections to a new file
-is very powerful.  NDF extensions containing NDF structures, allowing
-software packages to extract those NDFs or simply focus on them
-without regard to the enclosing data module becomes very intuitive and
-obvious once it is learned. A flat layout would require additional
-grouping metadata to understand which components were related and this
-is neatly handled by a simple hierarchy.
+The NDF model is strongly \emph{hierarchical}.  This both makes it
+easy to find and manipulate data elements, and makes it easy for
+applications to \emph{extend the model}, by providing a space for
+private data, which does not interfere with the sharability or
+intelligibility of the dataset as a whole.
+
+The Starlink project translated these insights into the XML world in
+the early-2000s NDX project (Sec.~\ref{sec:ndx}).  We believe this was a
+successful and illuminating experiment, but the results did not make
+it into wider circulation.
 
 \subsubsection{Do not try to do everything}
 
@@ -1007,6 +1018,49 @@ in so far that wavelength regimes not initially involved in the
 discussion can make use of NDF without requiring that the core data
 model be changed.
 
+\subsubsection{Hierarchy can be useful}
+
+Initially it was very hard to convince people that hierarchical data
+structures were at all useful. This can be seen in the Wright-Giddings
+layout of a simple astronomical image file using HDS. Over the years
+the adoption of hierarchy has been an important part of the NDF
+experience. The ability to relocate or modify parts of a data file,
+changing the organization, or to copy related sections to a new file
+is very powerful.  NDF extensions containing NDF structures, allowing
+software packages to extract those NDFs or simply focus on them
+without regard to the enclosing data module becomes very intuitive and
+obvious once it is learned. A flat layout would require additional
+grouping metadata to understand which components were related and this
+is neatly handled by a simple hierarchy.
+
+\subsubsection{Allow `private' data (namespaces)}
+
+The NDF model, by design, supports only a subset of the information
+associated with a realistic dataset; it trivially follows that most
+data providers will want to include data that is not described within
+the NDF model, and if the model could not accommodate this extra data,
+it would be doomed to be no more than a `quick-look' format.
+
+As described above (Sec.~\ref{sec:more}), the NDF model includes a
+\texttt{MORE} tree, where particular applications can store
+application-specific data using any of the available HDS structures
+(Sec.~\ref{sec:hds}).  Some applications treated this as a black box;
+others documented what they did here, making it an extended part of
+the application interface, so that their `private' data was effectively
+public, and was largely standardised in practice without the long
+drawn-out involvement of a formal standards process.  Thus, different
+elements of the data within an NDF file were painlessly standardised
+by different entities, on different timescales and in response to
+direct community demands.
+
+When applications wished to take advantage of the possibilities here,
+they registered a label within the \texttt{MORE} tree, and were deemed
+to `own' everything below that part of the tree.  The community of NDF
+application authors was small enough that this could be done
+informally, but if this were being designed now, then a simple
+namespacing mechanism (using perhaps a reversed-domain-name system)
+would be obvious good practice.
+
 \subsubsection{Standardised features aid application writers}
 
 Once application writers understand that there is a standard place for
@@ -1018,7 +1072,9 @@ application writer to focus more on the algorithms that matter. Once
 users of the software understand that errors and masks are an option
 they begin to have an expectation that all the software packages will
 handle them. This then motivates the developer to support these
-features.  This is especially true if the core concepts of the data
+features, creating a virtuous circle which tended to improve all of
+the software in the NDF community.
+This is especially true if the core concepts of the data
 model are simple enough that the learning curve is small.
 
 \subsection{Other Good Features}
@@ -1165,7 +1221,7 @@ assumed to be ASCII. It was designed long before Unicode came to exist
 and has no support for accented characters or non-ASCII character
 sets. Multi-byte Unicode should be supported in any modern format to
 allow metadata to be represented properly. HDS can not support the
-storage of common astronomical units such as $\upmu$m or $\AA$.
+storage of common astronomical units such as $\upmu$m or \AA.
 It may be possible to use the automatic type conversion concept
 already in use for numeric data types
 to allow Unicode to be added to NDF without forcing every application
@@ -1249,7 +1305,7 @@ and using the self-describing features to represent objects
 The HDX framework \citep{2003ASPC..295..221G} was developed around 2002 as a flexible
 way of layering high-level data structures, presented as a virtual XML
 DOM, atop otherwise unstructured external data stores.  This was in
-turn used to develop Starlink's NDX framework, which allowed FITS
+turn used to develop Starlink's NDX framework,\label{sec:ndx} which allowed FITS
 files to be viewed and manipulated using the concepts of the NDF
 format.  The NDX experiment was an attempt to directly apply the
 lessons of the long NDF/HDS experience -- namely that a small amount of
