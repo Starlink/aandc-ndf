@@ -563,8 +563,8 @@ DATA_ARRAY     <ARRAY>         {structure}
 
 VARIANCE       <ARRAY>         {structure}
   ORIGIN(2)      <_INTEGER>      2,2
-  DATA(300,300)  <_DOUBLE>       *,*,*,*,*,*,*,
-                                 ... *,*,*,*,*
+  DATA(300,300)  <_DOUBLE>       0.2,0.4,0.1,
+                                 ... *,0.05,0.3
 \end{verbatim}
 }
 
@@ -577,8 +577,8 @@ mask can be used to enable or disable planes in the \texttt{QUALITY} array.
 QUALITY        <QUALITY>       {structure}
   QUALITY        <ARRAY>         {structure}
     ORIGIN(2)      <_INTEGER>      2,2
-    DATA(300,300)  <_UBYTE>      3,3,3,3,3,3,
-                                   ... 3,3,3,3
+    DATA(300,300)  <_UBYTE>      3,3,4,3,2,3,
+                                   ... 3,3,1,3
 
   BADBITS        <_UBYTE>        32
 \end{verbatim}
@@ -677,7 +677,8 @@ WCS        <WCS>    {structure}
 }
 
 AST objects were stored simply as an array of strings using the native
-ASCII representation. The library API was modified to support routines
+ASCII representation, which is more general and flexible
+than adopting a FITS-WCS serialisation. The library API was modified to support routines
 for reading and writing AST objects without the library user knowing
 how the object is represented in the hierarchical model.
 
@@ -700,7 +701,7 @@ unit box on all pixel axes.
 The NDF library always removes the above frames when storing the
 collection of WCS frames
 within an NDF, and re-creates them using the current state of the NDF
-when returning a FrameSet for an NDF.
+when returning a collection of WCS frames for an NDF.
 
 \subsection{History}
 
@@ -823,8 +824,8 @@ packed into an array of integers (the provenance model is outlined in
 Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
-\iras\ package which added a \texttt{QUALITY\_NAMES}
-extension associating names with bits. \KAPPA\ tasks were then
+\iras\ package \citep{SUN165} which added a \texttt{QUALITY\_NAMES}
+extension associating names with bits. \KAPPA\ tasks \citep{SUN95} were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
@@ -845,7 +846,7 @@ that all applications should copy any unrecognised extensions
 unchanged from input to output. Applications are free to modify this
 default behaviour, but in general do not do so.
 
-\subsubsection{Slicing}
+\subsubsection{Data Sections}
 
 The NDF library allows a subset of the array to be selected using a
 slicing syntax that can work with variety of coordinate systems. The
@@ -872,7 +873,10 @@ also truncated;
 mycube(55:63,75~10,-100.0:250.0)
 \end{verbatim}
 where a subset of a cube is extracted where the first two coordinates
-specify pixel bounds and the third coordinate is a world coordinate range.
+specify pixel bounds and the third coordinate is a world coordinate
+range. If the WCS axes are not aligned with the pixel axes, then the
+section of the pixel array actually used is the smallest box that
+encloses the specified WCS limits.
 
 \subsubsection{Chunking \& Blocking}
 
@@ -1287,7 +1291,7 @@ applications processing data from disparate instrumentation.
 From its beginnings in the mid-1980s the NDF data model has been used
 throughout the Starlink software collection within diverse
 applications such as \smurf\ \citep{2013MNRAS.430.2545C},
-\ccdpack\, \gaia\ and \KAPPA.
+\ccdpack\ \citep{1993ESOC...47...39W,SUN139}, \gaia\ and \KAPPA.
 It has also been used as a raw data acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
 Telescope and NDF format data are available from
