@@ -707,9 +707,9 @@ unit box on all pixel axes.
 The NDF library always removes the above frames when storing the
 collection of WCS frames
 within an NDF, and re-creates them using the current state of the NDF
-when returning a collection of WCS frames for an NDF.
-\textcolor{red}{I'm not confident I understand this remark: is it saying that
-  these four frames were always synthesised afresh on input and never stored?}
+when returning a collection of WCS frames for an NDF. This allows the
+user to modify the \texttt{AXIS} and pixel origin information in the
+NDF without having to also remember to update the WCS information.
 
 \subsection{History}
 
