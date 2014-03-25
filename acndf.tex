@@ -416,7 +416,7 @@ format\footnote{The reason for the name has been lost in the mists of
   time but our best guess is that it stood for \emph{\textbf{D}ata
     \textbf{ST}ructures}.} made good use of structures and supported
 standard deviations for errors. Axis information was stored in
-structures labeled X and Y, and the main image/spectral data was
+structures labeled X and Y, and the main image/spectral data were
 stored in a structure labeled Z. The main data array was
 \texttt{Z.DATA}\footnote{where the `\texttt{.}' indicates a
   parent-child relationship analagous to a directory separator in the
@@ -893,7 +893,7 @@ encloses the specified WCS limits.
 \subsubsection{Chunking \& Blocking}
 
 Mapping large data arrays into memory can use considerable resources
-and astronomical data always seems to be growing at a rate slightly
+and astronomical data always seem to be growing at a rate slightly
 exceeding the computers available to the average astronomer. The NDF
 library provides an API to allow subsets of a data array to be mapped
 in chunks to allow data files to be processed in smaller pieces. The
@@ -989,7 +989,7 @@ model was devised, the NDF model remains modest: \emph{NDF does not
 structure.\footnote{Einstein did not quite say `everything should be
   as simple as possible, but no simpler', but the thought is no less
   true for being a misquotation, and he might as well get the credit
-  for it.}  Astronomy data is fundamentally rather simple, and the
+  for it.}  Astronomy data are fundamentally rather simple, and the
 elements in the NDF data model represent both a large fraction of the
 information that is necessary for high-level understanding of a
 dataset, and a large fraction of what is readily interoperable between
@@ -1010,7 +1010,7 @@ it into wider circulation.
 
 There are two incompatible approaches to designing a data model. One
 extreme aims (to try) to think of everything that is needed for
-all of astronomy, and to design a model where all metadata is
+all of astronomy, and to design a model where all metadata are
 described and everything has its place. This is the approach taken by
 the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
 intelligible and worthy goal and it is clear that
@@ -1055,8 +1055,8 @@ is neatly handled by a simple hierarchy.
 
 The NDF model, by design, supports only a subset of the information
 associated with a realistic dataset; it trivially follows that most
-data providers will want to include data that is not described within
-the NDF model, and if the model could not accommodate this extra data,
+data providers will want to include data that are not described within
+the NDF model, and if the model could not accommodate these extra data,
 it would be doomed to be no more than a `quick-look' format.
 
 As described above (\secref{sec:more}), the NDF model includes a
@@ -1064,7 +1064,7 @@ As described above (\secref{sec:more}), the NDF model includes a
 application-specific data using any of the available HDS structures
 (\secref{sec:hds}).  Some applications treated this as a black box;
 others documented what they did here, making it an extended part of
-the application interface, so that their `private' data was effectively
+the application interface, so that their `private' data were effectively
 public, and was largely standardised in practice without the long
 drawn-out involvement of a formal standards process.  Thus, different
 elements of the data within an NDF file were painlessly standardised
