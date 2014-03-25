@@ -204,6 +204,8 @@ Starlink
 \newcommand{\iras}{\textsc{iras90}}
 \newcommand{\treeview}{\textsc{treeview}}
 \newcommand{\splat}{\textsc{splat}}
+\newcommand{\catpac}{\textsc{catpac}}
+\newcommand{\fitstondf}{\textsc{fits}{\footnotesize{2}}\textsc{ndf}}
 
 %% Links
 \newcommand{\ascl}[1]{\href{http://www.ascl.net/#1}{ascl:#1}}
@@ -230,7 +232,7 @@ In \secref{sec:hds} we discuss the genesis and features of the Starlink
 file format, then in \secref{sec:chaos} we provide examples of data
 models developed in the mid-1980s. The NDF data model itself is
 discussed in \secref{sec:ndf} and its usage in data acquisition
-system is covered in \secref{sec:daq}. We finish in 
+system is covered in \secref{sec:daq}. We finish in
 \secref{sec:lessons} by discussing the positive lessons learned from
 developing NDF and the areas where NDF could be improved, expanding on
 some earlier work \citep{P91_adassxxiii}.
@@ -1197,13 +1199,77 @@ initial development of NDF and the need for tables got lost in the
 drive for a standardised image format. A table type was never added to
 NDF and Starlink software eventually took the pragmatic solution of
 using FITS binary tables \citep{1995A&AS..113..159C} for output
-tables. This cannot solve the problem of integrating data tables into
-image data files and the format would benefit from a native data
-type. The JCMT raw data format instead uses individual 1-dimensional
-data arrays to store time-series data but this is inefficient and adds
-programming overhead.
+tables.\footnote{Text formats such as tab-separated lists and
+Starlink's own Small Text List format supported by the CURSA package
+\citep{2001ASPC..232..314D} were also more popular than HDS tables.}
+This cannot solve the problem of integrating data tables into image
+data files and the format would benefit from a native data type. The
+JCMT raw data format instead uses individual 1-dimensional data arrays
+to store time-series data but this is inefficient and adds programming
+overhead.
 
-{\color{red} Say how FITS2NDF handles binary tables.}
+In the early 1990s Giaretta proposed and demonstrated that HDS could
+be used to store tables, being especially suited to column-oriented
+access.  Such a format was interfaced through the CHI subroutine
+library \citep{SUN119} for the \catpac\ package \citep{SUN120}.  In
+practice HDS tables were not promoted and documented, and hence hardly
+used.  However, the \texttt{TABLE} data structure has been used to
+encapsulate within an NDF the ancillary tables associated with image
+data derived from FITS files.  The \fitstondf\ conversion tool
+\citep{SUN55} creates an NDF extension for each FITS TABLE or BINTABLE
+extension of type \texttt{TABLE}.
+
+This \texttt{TABLE} structure is an extended version of the Giaretta
+design. It comprises a scalar, \texttt{NROWS}, to set the number of
+rows in the table, and an array structure \texttt{COLUMNS} also of
+type \texttt{COLUMNS}.  The \texttt{COLUMNS} structure contains a
+series of \texttt{COLUMN}-type structures, one for each field in the
+table. The name of each column comes from the corresponding
+\texttt{TTYPE$n$} keyword value.  The conversion does rely on the
+column name not being longer than fifteen characters.  A
+\texttt{COLUMN} structure has one mandatory component, \texttt{DATA},
+an array of values for the field, and can be 2-dimensional if the
+field is an array.  Other FITS keywords (\texttt{TFORM$n$},
+\texttt{TSCAL$n$}, and \texttt{TFORM$n$}) prescribe the primitive type
+of \texttt{DATA}, including expansion of scaled form. Components for
+the original format, the \texttt{TTYPE$n$} comment, and units may also
+be present.
+
+An example of part of such a structure is shown in
+Fig.\,\ref{fig:hdstable}.
+
+\begin{figure*}[t]
+\begin{minipage}{\textwidth}
+\begin{quote}
+\small
+\begin{verbatim}
+      FITS_EXT_1     <TABLE>         {structure}
+         NROWS          <_INTEGER>      4
+         COLUMNS        <COLUMNS>       {structure}
+            SPORDER        <COLUMN>        {structure}
+               COMMENT        <_CHAR*19>      'Spectrum order'
+               DATA(4)        <_WORD>         1,2,3,5
+               FORMAT         <_CHAR*3>       'I11'
+
+            NELEM          <COLUMN>        {structure}
+               COMMENT        <_CHAR*19>      'Number of elements'
+               DATA(4)        <_WORD>         1024,1024,1024,1024
+               FORMAT         <_CHAR*3>       'I11'
+
+            WAVELENGTH     <COLUMN>        {structure}
+               COMMENT        <_CHAR*19>      'Wavelengths of elements'
+               DATA(1024,4)   <_DOUBLE>       2897.6015206853,
+                                              ... 5707.2796545742
+               UNITS          <_CHAR*9>       'Angstroms'
+               FORMAT         <_CHAR*6>       'G25.16'
+\end{verbatim}
+\end{quote}
+\caption{Partial dump of the structure of a \texttt{TABLE} structure
+within an NDF extension.  The name of the NDF extension can be specified
+or take the generic form as above, where the digit counts the extensions.}
+\label{fig:hdstable}
+\end{minipage}
+\end{figure*}
 
 \subsubsection{Flexible variance definitions}
 
