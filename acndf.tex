@@ -335,9 +335,9 @@ items for pre-computed data minimum and maximum, as well as a value for
 an array-specific blank value (similar to the FITS \texttt{BLANK}
 header keyword). Errors were represented as standard
 deviations and stored in \texttt{DATA\_ERROR} and bad-pixel masks were
-stored in \texttt{DATA\_QUALITY}. An example trace is given below:
+stored in \texttt{DATA\_QUALITY}. An example trace is given in Fig.~\ref{fig:image}.
 
-{
+\begin{figure}[t]
 \small
 \begin{verbatim}
 HORSEHEAD  <IMAGE>
@@ -350,7 +350,9 @@ HORSEHEAD  <IMAGE>
                                  ... 383, 384
   AXIS1_LABEL    <_CHAR*5>       'XAXIS'
 \end{verbatim}
-}
+\caption{Example trace of a Wright-Giddings \emph{IMAGE} file.}
+\label{fig:image}
+\end{figure}
 
 Prior to HDS becoming generally available, the Starlink project adopted
 the Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4} as part
