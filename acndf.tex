@@ -198,6 +198,7 @@ Starlink
 
 \newcommand{\KAPPA}{\textsc{kappa}}
 \newcommand{\gaia}{\textsc{gaia}}
+\newcommand{\figaro}{\textsc{figaro}}
 \newcommand{\ccdpack}{\textsc{ccdpack}}
 \newcommand{\smurf}{\textsc{smurf}}
 \newcommand{\asterix}{\textsc{asterix}}
@@ -332,7 +333,7 @@ serious interoperability issues when moving files between applications
 that nominally could read HDS files. Within the Starlink ecosystem
 there were at least three prominent attempts at providing data
 models, and these are discussed in detail in \ref{app:chaos}. The
-models were: Wright-Giddings \emph{IMAGE}, Figaro DST and \asterix.
+models were: Wright-Giddings \emph{IMAGE}, \figaro\ DST and \asterix.
 The result was chaos.
 
 Given the situation with competing schemes for using the hierarchy, it
@@ -749,7 +750,7 @@ as a plugin without requiring direct changes to the NDF library itself.
 \section{Data Acquisition}
 \label{sec:daq}
 
-Figaro had a strong influence on the infrared spectroscopy community
+\figaro\ had a strong influence on the infrared spectroscopy community
 in the United Kingdom and the United Kingdom Infrared Telescope
 (UKIRT) adopted the DST format for CGS3 and CGS4 \citep{1993SPIE.1946..547W}. NDF was adopted in
 1995 although each instrument had a slightly different flavor of
@@ -1400,7 +1401,7 @@ OUT  <FIGARO>
 \end{minipage}
 \end{figure*}
 
-The Figaro data reduction package
+The \figaro\ data reduction package
 \citep[][\ascl{1203.013}]{1988igbo.conf..448C,1993ASPC...52..219S}
 independently adopted a hierarchical design based on HDS. This DST
 format\footnote{The reason for the name has been lost in the mists of
@@ -1422,13 +1423,13 @@ support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
 example trace can be found in Fig.~\ref{fig:dst}.
 
-Around 1990, the code used by Figaro to access the DST format was
+Around 1990, the code used by \figaro\ to access the DST format was
 reworked to handle both DST and NDF format files
 \citep{1990STARB...6...18S}. Support for NDF did
 not use the actual NDF library; instead it used direct HDS calls for
 both formats, but would use different names for the HDS items it
 accessed depending on the format of the file. This involved a
-significant reworking of the Figaro code, but maintained compatibility
+significant reworking of the \figaro\ code, but maintained compatibility
 with existing DST format files. However, it has failed to keep up with
 recent changes to the NDF format such as support for 64-bit data
 files.
