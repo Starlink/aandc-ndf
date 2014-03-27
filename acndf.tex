@@ -233,7 +233,7 @@ hierarchical file format.
 In \secref{sec:hds} we discuss the genesis and features of the Starlink
 file format. The NDF data model itself is
 discussed in \secref{sec:ndf} and its usage in data acquisition
-system is covered in \secref{sec:daq}. We finish in
+systems is covered in \secref{sec:daq}. We finish in
 \secref{sec:lessons} by discussing the positive lessons learned from
 developing NDF and the areas where NDF could be improved, expanding on
 some earlier work \citep{P91_adassxxiii}. In \ref{app:chaos} we
@@ -352,7 +352,8 @@ which the \texttt{HISTORY} structure was adopted complete.  The
 decision to recognize NDF structures based on the presence of a
 \texttt{DATA\_ARRAY} array was an important compromise as it allowed
 data in the \emph{IMAGE} format, which indirectly included data in
-BDF format that had been converted previously, to be used immediately
+Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}
+format that had been converted previously, to be used immediately
 in applications that had been ported to use the NDF library.
 
 In the following sections we describe the core components of the NDF
@@ -417,7 +418,7 @@ or FITS, which allow the magic (or blank) value to be specified per
 data array, NDF specifies the magic value to be used for each data type
 covering both floating point and integer representations, inheriting
 the definition from the underlying HDS definition. Indeed,
-\texttt{NaN} is not explicitly part of the standard and it is usually
+\texttt{NaN} (defined by the IEEE floating point model) is not explicitly part of the standard and it is usually
 best to convert \texttt{NaN} elements to the corresponding floating point magic
 value before further processing is applied. A single definition of the
 magic value for each data type simplifies applications programming and
@@ -430,10 +431,12 @@ software was not ported to machines supporting IEEE floating point
 until the 1990s \citep[e.g.,][]{1991STARB...8...11C}. Unlike FITS, which
 did not officially support floating point until 1990
 \citep{1989FPFITS,1991BAAS...23..993S} when they were able to adopt
-\texttt{NaN} as part of the standard, much software pre-existed in the
-Starlink environment by this time and it was decided to continue with
-the magic value concept rather than attempt to support multiple magic
-values in floating point data.
+\texttt{NaN} as part of the standard, much software pre-existed
+in the Starlink environment at this time and embodied
+direct tests for magic values in data. Given the different semantics
+when comparing data values for equality with \texttt{NaN}, it was decided to
+continue with the magic value concept rather than try to support two
+rather different representations of missing data simultaneously.
 
 \subsubsection{Data compression}
 
@@ -500,14 +503,14 @@ WCS        <WCS>    {structure}
 \end{verbatim}
 }
 
-AST objects were stored simply as an array of strings using the native
+AST objects were stored simply as an array of strings using their native
 ASCII representation, which is more general and flexible
-than adopting a FITS-WCS serialisation. The library API was modified to support routines
+than adopting a FITS-WCS serialisation. The NDF library API was modified to support routines
 for reading and writing AST objects without the library user knowing
 how the object is represented in the hierarchical model.
 
 The NDF library manages a number of WCS frames specifically intended to
-describe coordinate systems defined by the NDF library:
+describe coordinate systems defined by the NDF library itself:
 
 \begin{description}
 \item[\texttt{GRID}] - a coordinate frame in which the first pixel in the NDF is
@@ -539,7 +542,7 @@ model. The history was, by design, not expected to be parseable by
 application software; applications such as SURF
 \citep{1998ASPC..145..216J} did nonetheless use the history to determine whether a
 particular application had been run on the data, so that the user could be
-informed if they have missed a mandatory step in the processing.
+informed if they had missed a mandatory step in the processing.
 
 {\small
 \begin{verbatim}
@@ -662,17 +665,33 @@ disable masks by name.
 Above and beyond the core data model, the NDF library provides some
 additional features that can simplify application development. The
 library uses an object-oriented interface, despite being
-developed in Fortran and the python interface, \texttt{pyndf}, provides a full object
+developed in Fortran, and the python interface, \texttt{pyndf}, provides a full object
 interface whereby an NDF object can have methods invoked upon it and
 provides direct access to object attributes such as dimensionality and
 data label.
 
 \subsubsection{Component Propagation}
 
-The default behavior of the NDF library encourages the convention
-that all applications should copy any unrecognised extensions
-unchanged from input to output. Applications are free to modify this
-default behaviour, but in general do not do so.
+The NDF library allows output NDFs to be constructed from scratch, but
+it also recognises that many applications build their output dataset(s)
+using one of the input datasets, termed the ``primary'' input, as a
+template. In this case, much of the primary input data may need to be
+propagated to the output unchanged, with the application attending only
+to those components affected by the processing it performs. For example,
+scaling an image would not affect coordinate data, nor many other
+aspects of an NDF. Alternatively, an application might not support
+processing of certain NDF components and would then need to suppress
+their propagation to avoid creating invalid or inconsistent output.
+
+These requirements are accommodated through use of a component
+propagation list that specifies which of the input NDF components should
+be propagated directly to the output. A default propagation list is
+provided which applications can easily tailor to their specific needs.
+This helps to ensure uniformity in application behaviour. The default
+behaviour of the propagation list also encourages the convention that
+applications should copy any unrecognised extensions unchanged from
+primary input to output. Applications are again free to modify this
+behaviour, but in general do not do so.
 
 \subsubsection{Data Sections}
 
@@ -860,7 +879,7 @@ the adoption of hierarchy has been an important part of the NDF
 experience, and application programmers quickly began to realise the power of
 being able to relocate or modify parts of a data file,
 to change the organization, or to copy related sections to a new file.
-NDF extensions contain NDF structures, allowing
+NDF extensions may contain other NDF structures, allowing
 software packages to extract those NDFs, or simply focus on them,
 without regard to the enclosing data module; this becomes very intuitive and
 obvious once it is learned. A flat layout would require additional
@@ -1015,7 +1034,7 @@ proved to be very useful and eased adoption of the format. The NDF
 library uses this feature to scan for NDF structures within an NDF or
 an HDS container. For example, the \gaia\ visualization tool \citep{2009ASPC..411..575D}
 will scan an HDS file for all such NDF structures and make them
-available for display. The data type of the structure, what maybe
+available for display. The data type of the structure, what may be
 thought of as the class name, is not used by the library when
 determining whether a structure is an NDF.
 
@@ -1250,7 +1269,7 @@ applications such as \smurf\ \citep{2013MNRAS.430.2545C},
 It has also been used as a raw data-acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
 Telescope, and NDF-format data are available from
-from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
+the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 \citep{2008ASPC..394..450E,P01_adassxxiii}. The shift from arbitrary
 use of hierarchical structures to a data model enforced by a library
 and API is extremely important.
@@ -1524,7 +1543,7 @@ from one NDF to another.
 \item A string identifying the command that created the NDF.
 \item History information. For the root node, this is just a 4-byte hash code
 that represents the contents of the main NDF's History component. This hash
-code is subsequently to identify the same history information within other
+code is subsequently used to identify the same history information within other
 NDFs. For non-root nodes, the history information contains any history
 records read from the corresponding ancestor NDF that were not also present
 in any of the ancestors direct parents\footnote{This is done to avoid unnecessary
