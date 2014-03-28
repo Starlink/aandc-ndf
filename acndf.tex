@@ -274,7 +274,7 @@ Some key features of the HDS design are as follows.
 \item Data managers can delete, copy or rename structures within a file.
 \item It supports automatic byte swapping whilst retaining the native byte order
   for output files.
-\item VAX and IEEE floating point formats are supported.
+\item VAX and IEEE floating-point formats are supported.
 \item Automatic type conversion allows a programmer to request that,
   say, a data array of 32-bit integers is mapped as 64-bit floating
   point numbers.
@@ -290,7 +290,7 @@ addition of a 64-bit integer data type \citep{P82_adassxxiii}.
 \caption{HDS basic data types. The unsigned types did not correspond
   to standard Fortran~77 data types and were included for
   compatibility with astronomy instrumentation. HDS supports both VAX
-  and IEEE floating point formats.}
+  and IEEE floating-point formats.}
 \label{tab:hdstypes}
 \begin{center}
 \begin{tabular}{lll}
@@ -334,7 +334,7 @@ serious interoperability issues when moving files between applications
 that nominally could read HDS files. Within the Starlink ecosystem
 there were at least three prominent attempts at providing data
 models, and these are discussed in detail in \ref{app:chaos}. The
-models were: Wright-Giddings, \emph{IMAGE}, \figaro\ DST and \asterix.
+models were: Wright-Giddings \emph{IMAGE}, \figaro\ DST and \asterix.
 The result was chaos.
 
 Given the situation with competing schemes for using the hierarchy, it
@@ -416,10 +416,10 @@ in the variance array to a magic value when the data are mapped into
 memory. Unlike the \emph{IMAGE} scheme
 or FITS, which allow the magic (or blank) value to be specified per
 data array, NDF specifies the magic value to be used for each data type
-covering both floating point and integer representations, inheriting
+covering both floating-point and integer representations, inheriting
 the definition from the underlying HDS definition. Indeed,
-\texttt{NaN} (defined by the IEEE floating point model) is not explicitly part of the standard and it is usually
-best to convert \texttt{NaN} elements to the corresponding floating point magic
+\texttt{NaN} (defined by the IEEE floating-point model) is not explicitly part of the standard and it is usually
+best to convert \texttt{NaN} elements to the corresponding floating-point magic
 value before further processing is applied. A single definition of the
 magic value for each data type simplifies applications programming and
 removes the need for the additional overhead of providing a value for
@@ -441,7 +441,7 @@ rather different representations of missing data simultaneously.
 \subsubsection{Data compression}
 
 The original NDF standard included the \emph{SCALED} data compression
-variant, which is commonly required when representing floating point numbers in
+variant, which is commonly required when representing floating-point numbers in
 integer form; this is equivalent to \texttt{BSCALE} and \texttt{BZERO} in
 FITS, although this variant was not implemented in the NDF library
 until 2006 \citep{2008ASPC..394..650C}. In 2010 a lossless delta
@@ -739,17 +739,17 @@ in sections that are contiguous in memory for maximum efficiency
 whereas blocking allows spatially related pixel data to be returned at
 the expense of performance for reordering the data array.
 
-\subsubsection{Foreign Format Conversion}
+\subsubsection{Foreign-Format Conversion}
 
 The NDF format has always been one format amongst many formats in astronomy and much work has been
 expended on providing facilities to convert NDF files into FITS and
 IRAF format and convert from those formats into NDF \citep{SUN55}. In
 many cases an astronomer would like to use a particular NDF
 application on a FITS file without realising that the application does
-not natively support FITS. If foreign format conversion is enabled the
+not natively support FITS. If foreign-format conversion is enabled the
 NDF library will run the appropriate conversion utility based on the
 file suffix and present the temporary file to the application. If the
-user specifies an output file with a particular foreign format suffix
+user specifies an output file with a particular foreign-format suffix
 the NDF library will create a temporary NDF for the output and convert
 it when the file is closed.
 
@@ -782,7 +782,7 @@ adopted with the release of the ORAC system \citep{2000SPIE.4009..227B}.
 The James Clerk Maxwell Telescope (JCMT) initially used a proposed
 submillimeter standard format known as the Global Section Datafile
 \citep[GSD;][formerly General Single Dish Data]{sun229}. In 1996 SCUBA
-\citep{1999MNRAS.303..659H} was delivered using the NDF format and a
+\citep{1999MNRAS.303..659H} was delivered using the NDF format, and a
 unified NDF raw data format was adopted for ACSIS
 \citep{2009MNRAS.399.1026B} from 2006 and SCUBA-2
 \citep{2013MNRAS.430.2513H} from 2009.
