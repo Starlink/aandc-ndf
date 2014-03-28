@@ -362,7 +362,7 @@ is covered by the model and what is deliberately left out of the
 model. For more details on NDF please see the detailed NDF design
 document \citep[SGP/38;][]{SGP38} and library documentation \citep[SUN/33;][]{SUN33}.
 
-\subsection{Data Arrays}
+\subsection{Data arrays}
 
 NDF supports the concept of a primary data array and an associated
 variance array and quality mask. Variance was selected as the error
@@ -452,13 +452,13 @@ algorithm\footnote{\url{http://sourceforge.net/projects/slimdata/}}
 developed for the Atacama Cosmology Telescope
 \citep{2004SPIE.5498....1F}.
 
-\subsection{Character Attributes}
+\subsection{Character attributes}
 
 Each NDF has three character attributes that can be specified: a
 title, a data label and a data unit. These values can be accessed
 through the library API without resorting to a FITS-style extension.
 
-\subsection{Axes and World Coordinate Systems (WCS)}
+\subsection{Axes and world coordinate systems (WCS)}
 
 Axis information was initially specified using an \texttt{AXIS} array
 structure with an element for each dimension of the primary data
@@ -650,7 +650,7 @@ storage as raw HDS was replaced by an optimised bespoke binary format
 packed into an array of integers (the provenance model is outlined in
 \ref{app:prov}).
 
-\subsubsection{Quality Labels}
+\subsubsection{Quality labels}
 
 Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
@@ -660,7 +660,7 @@ extension associating names with bits. \KAPPA\ tasks \citep{SUN95} were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
-\subsection{Library Features}
+\subsection{Library features}
 
 Above and beyond the core data model, the NDF library provides some
 additional features that can simplify application development. The
@@ -670,7 +670,7 @@ interface whereby an NDF object can have methods invoked upon it and
 provides direct access to object attributes such as dimensionality and
 data label.
 
-\subsubsection{Component Propagation}
+\subsubsection{Component propagation}
 
 The NDF library allows output NDFs to be constructed from scratch, but
 it also recognises that many applications build their output dataset(s)
@@ -693,7 +693,7 @@ applications should copy any unrecognised extensions unchanged from
 primary input to output. Applications are again free to modify this
 behaviour, but in general do not do so.
 
-\subsubsection{Data Sections}
+\subsubsection{Data sections}
 
 The NDF library allows a subset of the array to be selected using a
 slicing syntax that can work with variety of coordinate systems. The
@@ -725,7 +725,7 @@ range. If the WCS axes are not aligned with the pixel axes, then the
 section of the pixel array actually used is the smallest box that
 encloses the specified WCS limits.
 
-\subsubsection{Chunking \& Blocking}
+\subsubsection{Chunking \& blocking}
 
 Mapping large data arrays into memory can use considerable resources
 and astronomical data always seem to be growing at a rate slightly
@@ -739,7 +739,7 @@ in sections that are contiguous in memory for maximum efficiency
 whereas blocking allows spatially related pixel data to be returned at
 the expense of performance for reordering the data array.
 
-\subsubsection{Foreign-Format Conversion}
+\subsubsection{Foreign-format conversion}
 
 The NDF format has always been one format amongst many formats in astronomy and much work has been
 expended on providing facilities to convert NDF files into FITS and
@@ -753,21 +753,21 @@ user specifies an output file with a particular foreign-format suffix
 the NDF library will create a temporary NDF for the output and convert
 it when the file is closed.
 
-\subsubsection{Automated History}
+\subsubsection{Automated history}
 
 The library API was designed to make history updating as easy
 as possible: by default, if the history structure exists the NDF
 library automatically adds a new entry when a file is written
 to, and if the history structure is missing no entry is recorded.
 
-\subsubsection{Event Triggers}
+\subsubsection{Event triggers}
 
 Callback routines can be registered to be called in response to files
 being read from, written to, opened or closed. This facility is used
 by the NDG library \citep{SUN2} to enable provenance handling
 as a plugin without requiring direct changes to the NDF library itself.
 
-\section{Data Acquisition}
+\section{Data acquisition}
 \label{sec:daq}
 
 \figaro\ had a strong influence on the infrared spectroscopy community
@@ -793,7 +793,7 @@ the DST format for instruments such as UCLES
 use both DST and NDF format, whereas 2DF \citep{2002MNRAS.333..279L}
 used NDF.
 
-\section{Lessons Learned}
+\section{Lessons learned}
 \label{sec:lessons}
 
 For a variety of reasons, the Starlink software, and hence the NDF
@@ -806,7 +806,7 @@ from data processing environments. Perhaps the ultimate lesson learnt
 is that data formats are adopted and retained for sociological reasons
 as much as for technical reasons.
 
-\subsection{Key Successes}
+\subsection{Key successes}
 \label{sec:success}
 
 NDF is a successful data model: it achieves its goal of supporting
@@ -930,7 +930,7 @@ the software in the NDF community.
 This is especially true if the core concepts of the data
 model are simple enough that the learning curve is small.
 
-\subsection{Other Good Features}
+\subsection{Other good features}
 
 In addition to the key successes there were a number of
 other lessons learned while using the format over the years.
@@ -972,7 +972,7 @@ header from an NDF so this causes few problems and simplifies the NDF
 organization, allowing an application to understand new FITS header
 conventions simply by upgrading the AST library.
 
-\subsubsection{Duck Typing}
+\subsubsection{Duck typing}
 
 \begin{figure*}[t]
 \begin{minipage}{\textwidth}
@@ -1209,7 +1209,7 @@ characters with either normalised versions of characters outside the
 ASCII character set (for example, dropping accents) or whitespace. A new API
 would be provided for reading and writing Unicode strings.
 
-\subsubsection{Provenance Growth}
+\subsubsection{Provenance growth}
 
 Whilst the provenance handling works extremely well and is very useful
 for tracking what processing has gone into making a data product, the
@@ -1327,7 +1327,7 @@ The source code for the NDF library and the Starlink software
 
 \appendix
 
-\section{Early HDS-based Data Models}
+\section{Early HDS-based data models}
 \label{app:chaos}
 
 This section provides an overview of the HDS-based data models
