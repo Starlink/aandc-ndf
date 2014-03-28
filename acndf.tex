@@ -1147,7 +1147,7 @@ The \texttt{\_CHAR} data type in HDS uses an 8-bit character type,
 assumed to be ASCII. It was designed long before Unicode came to exist
 and has no support for accented characters or non-ASCII character
 sets. Multi-byte Unicode should be supported in any modern format to
-allow metadata to be represented properly. HDS can not support the
+allow metadata to be represented properly. HDS cannot support the
 storage of common astronomical units such as $\upmu$m or \AA.
 It may be possible to use the automatic type conversion concept
 already in use for numeric data types
@@ -1550,7 +1550,7 @@ the NDF will not be included as an ancestor when provenance is copied
 from one NDF to another.
 \item A string identifying the command that created the NDF.
 \item History information. For the root node, this is just a 4-byte hash code
-that represents the contents of the main NDF's History component. This hash
+that represents the contents of the main NDF's \texttt{HISTORY} component. This hash
 code is subsequently used to identify the same history information within other
 NDFs. For non-root nodes, the history information contains any history
 records read from the corresponding ancestor NDF that were not also present
@@ -1584,7 +1584,7 @@ an appliction to handle the reading and writing of provenance trees
 itself.
 
 It is possible that a single input NDF may be used many times in the
-creaton of an output NDF. For instance, if NDF \emph{A} is added to NDF
+creation of an output NDF. For instance, if NDF \emph{A} is added to NDF
 \emph{B} to create NDF \emph{C}, and \emph{A} is then added to \emph{C} to create
 \emph{D}, then \emph{A} (and all its ancestors) would appear twice in the
 provenance tree of \emph{D}. To avoid this, whenever a new parent is added to
