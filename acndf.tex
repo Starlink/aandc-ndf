@@ -338,7 +338,7 @@ models, and these are discussed in detail in \ref{app:chaos}. The
 models were: Wright-Giddings \emph{IMAGE} \citep{WrightGiddings1983}, \figaro\
 \citep[][\ascl{1203.013}]{1993ASPC...52..219S} DST
 and \asterix\
-\citep{1987JBIS...40..185P}.
+\citep[][\ascl{1403.023}]{1987JBIS...40..185P}.
 The result was chaos.
 
 Given the situation with competing schemes for using the hierarchy, it
@@ -546,7 +546,7 @@ description. The structure was first developed for the
 \asterix\ package and adopted directly into the NDF data
 model. The history was, by design, not expected to be parseable by
 application software; applications such as \surf\
-\citep{1998ASPC..145..216J} did nonetheless use the history to determine whether a
+\citep[][\ascl{1403.008}]{1998ASPC..145..216J} did nonetheless use the history to determine whether a
 particular application had been run on the data, so that the user could be
 informed if they had missed a mandatory step in the processing.
 
@@ -662,7 +662,7 @@ Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
 \iras\ package \citep{SUN165} which added a \texttt{QUALITY\_NAMES}
-extension associating names with bits. \KAPPA\ tasks \citep{SUN95} were then
+extension associating names with bits. \KAPPA\ tasks \citep[][\ascl{1403.022}]{SUN95} were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
 
@@ -1038,7 +1038,7 @@ that it didn't understand. This ``duck typing''\footnote{See for
   example \url{http://en.wikipedia.org/wiki/Duck_typing}} approach
 proved to be very useful and eased adoption of the format. The NDF
 library uses this feature to scan for NDF structures within an NDF or
-an HDS container. For example, the \gaia\ visualization tool \citep{2009ASPC..411..575D}
+an HDS container. For example, the \gaia\ visualization tool \citep[][\ascl{1403.024}]{2009ASPC..411..575D}
 will scan an HDS file for all such NDF structures and make them
 available for display. The data type of the structure, what may be
 thought of as the class name, is not used by the library when
@@ -1221,7 +1221,7 @@ applications processing data from disparate instrumentation.
 From its beginnings in the mid-1980s the NDF data model has been used
 throughout the Starlink software collection within diverse
 applications such as \smurf\ \citep{2013MNRAS.430.2545C},
-\ccdpack\ \citep{1993ESOC...47...39W,SUN139}, \gaia\ and \KAPPA.
+\ccdpack\ \citep[][\ascl{1403.021}]{1993ESOC...47...39W,SUN139}, \gaia\ and \KAPPA.
 It has also been used as a raw data-acquisition format at the
 Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
 Telescope, and NDF-format data are available from
@@ -1414,7 +1414,7 @@ files.
 \label{app:asterix}
 
 The \asterix\ X-ray data reduction package
-\citep{1987JBIS...40..185P,SUN98,1992STARB...9....3S} used the HDS
+\citep[][\ascl{1403.023}]{1987JBIS...40..185P,SUN98,1992STARB...9....3S} used the HDS
 format exclusively until the introduction of an abstract data access
 interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \asterix\ defined many data models designed for
