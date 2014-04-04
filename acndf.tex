@@ -1133,46 +1133,19 @@ algorithms for handling special types of error propagation.
 
 \subsubsection{Extension complexity}
 
-\citet{SGP38} and \citet{1988STARB...2...11C} provided an algorithm
-for designing simple elemental building blocks that could be reused.
-However, many extensions created in the early years of NDF became more complex
-than was strictly necessary by ignoring the design decisions of NDF and
-using highly complex HDS structures.  The lack of a standard table
-structure was only partly to blame.  In many cases it would have been
-beneficial to use NDF structures in the extensions, which would have
-allowed the NDF library to read the data (by giving the full path to
-the structure) without resorting to low-level HDS API calls. The NDF
-structures would also have been visible to general-purpose tools for
-visualization.  Future designers should not expect their respective
+\citet{SGP38} provided an algorithm for designing simple elemental
+building blocks that could be reused. However, many extensions created
+in the early years of NDF became more complex than was strictly
+necessary by ignoring the design decisions of NDF and using highly
+complex HDS structures.  The lack of a standard table structure was
+only partly to blame.  In many cases it would have been beneficial to
+use NDF structures in the extensions, which would have allowed the NDF
+library to read the data (by giving the full path to the structure)
+without resorting to low-level HDS API calls.  The NDF structures
+would also have been visible to general-purpose tools for
+visualization. Future designers should not expect their respective
 community to design any elemental structures or the API to support
 them.
-
-\subsubsection{Name versus type}
-
-Extension implementors often ignored or misunderstood another
-fundamental precept of standard structures, the difference between the
-name and type of a structure.  They relied on the structure name,
-often omitting to define a type.  The data type defines the content,
-semantics, and processing rules.  The name is just an instance of the
-particular structure.  This approach could lead to name clashes, or
-restrict to only one instance within a given structure.  Software
-other than the originator's encountering the structure would not know
-the meanings and how to handle the structure's contents.  Note that
-this happened at a time when object-oriented concepts were not widely
-known.  Again more oversight would have helped.
-
-The same confusion is evident in FITS extensions where there is no
-standard header to record the extension's type,\footnote{This type
-is not to be confused with the extension type (\texttt{XTENSION})
-which defines how the data are stored rather than what they
-represent.} perhaps borne of FITS's lack of semantics, although Wells
-had added the extension keywords partly with Starlink hierarchical
-data in mind.  Keyword \texttt{EXTNAME} is often used to attribute
-meaning.  Reserving \texttt{EXTNAME} for the NDF component path, and
-adding an \texttt{EXTTYPE} header permitted a round trip between NDF
-and FITS (see \secref{sec:roundtrip}),
-although \texttt{EXTTYPE}, discussed in the early 1990s \citep{1993OGIPMIN},
-was never adopted into the FITS standard.
 
 \subsubsection{Data checksums}
 
