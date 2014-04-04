@@ -942,7 +942,7 @@ In addition to the key successes there were a number of
 other lessons learned while using the format over the years.
 
 \subsubsection{Round-tripping to other data formats}
-\label{sec:roundtrip}
+\label{sec:round_trip}
 
 For a new format to be used it must be possible to
 convert to and from existing formats in a safe and reliable manner
@@ -1146,6 +1146,33 @@ would also have been visible to general-purpose tools for
 visualization. Future designers should not expect their respective
 community to design any elemental structures or the API to support
 them.
+
+\subsubsection{Name versus type}
+
+Extension implementors often ignored or misunderstood another
+fundamental precept of standard structures, the difference between the
+name and type of a structure.  They relied on the structure name,
+often omitting to define a type.  The data type defines the content,
+semantics, and processing rules.  The name is just an instance of the
+particular structure.  This approach could lead to name clashes, or
+restrict to only one instance within a given structure.  Software
+other than the originator's encountering the structure would not know
+the meanings and how to handle the structure's contents.  Note that
+this happened at a time when object-oriented concepts were not widely
+known.  Again more oversight would have helped.
+
+The same confusion is evident in FITS extensions where there is no
+standard header to record the extension's type,\footnote{This type is
+not to be confused with the extension type (\texttt{XTENSION}) which
+defines how the data are stored rather than what they represent.}
+perhaps borne of FITS's lack of semantics, although Wells had added
+the extension keywords partly with Starlink hierarchical data in mind.
+Keyword \texttt{EXTNAME} is often used to attribute meaning.
+Reserving \texttt{EXTNAME} for the NDF component path, and adding an
+\texttt{EXTTYPE} header permitted a round trip between NDF and FITS
+(see \secref{sec:round_trip}).  \texttt{EXTTYPE}, proposed in 1993 by
+George on the fitsbits mail exploder, was never adopted into the FITS
+standard.
 
 \subsubsection{Data checksums}
 
