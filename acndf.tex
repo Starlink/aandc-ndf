@@ -369,7 +369,7 @@ document \citep[SGP/38;][]{SGP38} and library documentation \citep[SUN/33;][]{SU
 \subsection{Data arrays}
 
 NDF supports the concept of a primary data array and an associated
-variance array and quality mask. All the HDS data types are available
+variance array and quality mask. All the HDS numerical data types are available
 but there is also support for complex numbers for the data and
 variance components. Variance was selected as the error
 component to reduce the computational overhead when propagating errors
@@ -702,7 +702,7 @@ behaviour, but in general do not do so.
 \subsubsection{Data sections}
 
 The NDF library allows a subset of the array to be selected using a
-slicing syntax that can work with variety of coordinate systems. The
+slicing syntax that can work with a variety of coordinate systems. The
 user can specify the section in pixel coordinates (where the pixel
 origin is taken into account) or in world coordinates, either in the
 legacy \texttt{AXIS} scheme or using full WCS support. The section can
