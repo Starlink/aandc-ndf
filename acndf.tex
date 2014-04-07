@@ -1184,7 +1184,7 @@ HDS.
 \subsubsection{Character encodings}
 
 The \texttt{\_CHAR} data type in HDS uses an 8-bit character type,
-assumed to be ASCII. It was designed long before Unicode came to exist
+assumed to contain only ASCII. It was designed long before Unicode came to exist
 and has no support for accented characters or non-ASCII character
 sets. Multi-byte Unicode should be supported in any modern format to
 allow metadata to be represented properly. HDS cannot support the
@@ -1256,8 +1256,7 @@ throughout the Starlink software collection within diverse
 applications such as \smurf\ \citep{2013MNRAS.430.2545C},
 \ccdpack\ \citep[][\ascl{1403.021}]{1993ESOC...47...39W,SUN139}, \gaia\ and \KAPPA.
 It has also been used as a raw data-acquisition format at the
-Anglo-Australian Observatory, the James Clerk Maxwell Telescope and the United Kingdom Infrared
-Telescope, and NDF-format data are available from
+AAO, the JCMT and the UKIRT, and NDF-format data are available from
 the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 \citep{2008ASPC..394..450E,P01_adassxxiii}. The shift from arbitrary
 use of hierarchical structures to a data model enforced by a library
