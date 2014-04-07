@@ -343,7 +343,7 @@ The result was chaos.
 
 Given the situation with competing schemes for using the hierarchy, it
 became clear that a unified data model was required. A working group
-was formed to analyze the competing models and come up with a standard, this work
+was formed to analyze the competing models and come up with a standard; this work
 was completed in the late 1980s \citep{1988STARB...2...11C,SGP38}.
 After much debate it was decided to develop a data model that included
 the minimum structures to be useful for the general astronomer without
@@ -353,7 +353,7 @@ extensible \emph{N}-Dimensional Data Format (NDF).  NDF combined some
 features of the \emph{IMAGE} scheme, such as the use of
 \texttt{DATA\_ARRAY}, and some features adopted from \asterix, from
 which the \texttt{HISTORY} structure was adopted complete.  The
-decision to recognize NDF structures based on the presence of a
+decision to recognize NDF structures  based solely on the presence of a
 \texttt{DATA\_ARRAY} array was an important compromise as it allowed
 data in the \emph{IMAGE} format, which indirectly included data in
 Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}
@@ -597,11 +597,11 @@ cannot be moved out of the extension component.
 \subsubsection{FITS headers}
 
 FITS headers, consisting of 80-character header cards, are extremely
-common and to simplify interoperability with FITS files and to
-minimize structure overhead, as was found from experience with DST,
+common.  To simplify interoperability with FITS files and to
+minimize structure overhead -- as was found from experience with DST --
 it became commonplace to store the header \emph{as is}
 as an array of 80-character strings matching the FITS
-convention rather than attempting to parse the contents and expand
+convention, rather than attempting to parse the contents and expand
 into structures.
 
 \subsubsection{Provenance}
@@ -742,14 +742,14 @@ concept of blocking is also used to allow a subset of the image to be
 mapped in chunks of a specified dimension. The distinction between
 chunking and blocking is significant in that chunking returns the data
 in sections that are contiguous in memory for maximum efficiency
-whereas blocking allows spatially related pixel data to be returned at
-the expense of performance for reordering the data array.
+whereas blocking allows spatially related pixel data to be returned, at
+the expense of a performance loss in reordering the data array.
 
 \subsubsection{Foreign-format conversion}
 
 The NDF format has always been one format amongst many formats in astronomy and much work has been
 expended on providing facilities to convert NDF files into FITS and
-IRAF format and convert from those formats into NDF \citep{SUN55}. In
+IRAF format, and \textit{vice versa} \citep{SUN55}. In
 many cases an astronomer would like to use a particular NDF
 application on a FITS file without realising that the application does
 not natively support FITS. If foreign-format conversion is enabled the
@@ -906,7 +906,7 @@ application-specific data using any of the available HDS structures
 (\secref{sec:hds}).  Some applications treated this as a black box;
 others documented what they did here, making it an extended part of
 the application interface, so that their `private' data were effectively
-public, and was largely standardised in practice without the long
+public, and were largely standardised in practice without the long
 drawn-out involvement of a formal standards process.  Thus, different
 elements of the data within an NDF file were painlessly standardised
 by different entities, on different timescales and in response to
@@ -1032,7 +1032,7 @@ not quite conform to the standard and new files were being created by
 existing applications that did not use the main NDF library but
 nontheless modified their structures to emulate an NDF (see for
 example Fig.\ \ref{fig:duck}). The core NDF library thereby took an
-inclusive approach to finding NDF structures with the only requirement
+inclusive approach to finding NDF structures, with the only requirement
 being the existence of a \texttt{DATA\_ARRAY} item. If other compliant
 structures were found, the NDF library would use them and ignore items
 that it didn't understand. This ``duck typing''\footnote{See for
@@ -1041,8 +1041,8 @@ proved to be very useful and eased adoption of the format. The NDF
 library uses this feature to scan for NDF structures within an NDF or
 an HDS container. For example, the \gaia\ visualization tool \citep[][\ascl{1403.024}]{2009ASPC..411..575D}
 will scan an HDS file for all such NDF structures and make them
-available for display. The data type of the structure, what may be
-thought of as the class name, is not used by the library when
+available for display. The data type of the structure -- which may be
+thought of as the class name -- is not used by the library when
 determining whether a structure is an NDF.
 
 \subsubsection{Extensible model}
