@@ -156,7 +156,7 @@ Ryde, NSW 2113, Australia}
 The extensible \emph{N}-Dimensional Data Format (NDF) was designed and
 developed in the late 1980s to provide a data model suitable for use
 in a variety of astronomy data processing applications supported by
-Starlink. Starlink applications were used extensively, primarily in
+the UK Starlink Project. Starlink applications were used extensively, primarily in
 the UK astronomical community, and form the basis of a number of
 advanced data reduction pipelines today. This paper provides an
 overview of the historical drivers for the development of NDF and the
@@ -244,7 +244,7 @@ provide examples of data models developed in the mid-1980s.
 \label{sec:hds}
 
 The Starlink Project, created in 1980
-\citep{1980IrAJ...14..197E,1982MmSAI..53...55T}, was set up
+\citep{1980IrAJ...14..197E,1982MmSAI..53...55T,1982QJRAS..23..485D}, was set up
 primarily to provide data reduction software and facilities to United
 Kingdom astronomers. FITS
 \citep{1979ipia.coll..445W,1981A&AS...44..363W} had recently been
@@ -536,7 +536,7 @@ collection of WCS frames
 within an NDF, and re-creates them using the current state of the NDF
 when returning a collection of WCS frames for an NDF. This allows the
 user to modify the \texttt{AXIS} and pixel origin information in the
-NDF without having to also remember to update the WCS information.
+NDF without having also to remember to update the WCS information.
 
 \subsection{History}
 
@@ -568,7 +568,7 @@ HISTORY        <HISTORY>      {structure}
 \end{verbatim}
 }
 
-Comparing the above trace to that shown in Fig.~\ref{fig:asterix},
+Comparing the above trace with that shown in Fig.~\ref{fig:asterix},
 the only change involves the increase in resolution of the time
 stamp to support milliseconds. This was required as computers have
 become faster over the years and many processing steps can occur
@@ -616,7 +616,7 @@ into structures.
 \end{figure}
 
 In the late 1980s disk space and processing power were more highly
-constrained than they are now. At the time therefore, it
+constrained than they are now. At the time, therefore, it
 seemed prudent to limit history propagation to a single ``primary''
 parent.  As a consequence the NDF library ensures that each application
 copies history information from a single primary parent NDF to each
@@ -659,7 +659,7 @@ packed into an array of integers (the provenance model is outlined in
 \subsubsection{Quality labels}
 
 Individual bits in the quality mask can be addressed using the
-\texttt{BADBITS} attribute but the NDF standard did not allow for
+\texttt{BADBITS} attribute, but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
 \iras\ package \citep{SUN165} which added a \texttt{QUALITY\_NAMES}
 extension associating names with bits. \KAPPA\ tasks \citep[][\ascl{1403.022}]{SUN95} were then
@@ -839,7 +839,7 @@ applications without relying on detailed documentation.
 The NDF model is strongly \emph{hierarchical}.  This both makes it
 easy to find and manipulate data elements, and makes it easy for
 applications to \emph{extend the model}, by providing a space for
-private data, which does not interfere with the sharability or
+private data, which does not interfere with the shareability or
 intelligibility of the dataset as a whole.
 
 The Starlink Project translated these insights into the XML world in
@@ -850,7 +850,7 @@ it into wider circulation.
 \subsubsection{Do not try to do everything}
 
 There are two incompatible approaches to designing a data model. One
-extreme aims (to try) to think of everything that is needed for
+extreme aspires to think of everything that is needed for
 all of astronomy, and to design a model where all metadata are
 described and everything has its place. This is the approach taken by
 the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
@@ -1064,7 +1064,7 @@ through a reference implementation library and API and many of the NDF
 features were directly integrated into the reference NDF library without being
 specified in the core data model.  This yielded great flexibility
 regarding exactly how the data are stored and greatly simplified
-future enhancemants (and general future-proofing) because changes to
+future enhancements (and general future-proofing) because changes to
 the data format and how data are accessed could all be hidden from
 applications by changes made in one place. However, care needs to be taken
 when rolling out updates: software linked with old versions
@@ -1082,13 +1082,13 @@ should be made.
 \subsubsection{Quality masking}
 
 The initial design for the quality mask used a single unsigned byte
-allowing 8 different quality assignments in a single data file. The
+allowing eight different quality assignments in a single data file. The
 design did not allow for the possibility of supporting larger unsigned
 integer data types. This restriction should be raised to allow more
 assignments. The SMURF map-maker
 \citep[][\ascl{1310.007}]{2013MNRAS.430.2545C} already makes use of more
-than 8 internally and uses an unsigned short. When the results are
-written out mask types have to be combined if more than 8 were present
+than eight internally and uses an unsigned short. When the results are
+written out mask types have to be combined if more than eight were present
 in the output data file.
 
 \subsubsection{Table support}
@@ -1235,7 +1235,7 @@ the transition to 64-bit counters.
 Whilst the HDS library is written entirely in ANSI C, the NDF and
 related ARY \citep{SUN11} and NDG \citep{SUN2} libraries are written
 mainly in Fortran.
-This can cause a reticence to adoption from people outside the Starlink community and
+This puts off people outside the Starlink community and
 adds complications when providing interfaces to higher-level languages
 such as Python, Perl and Java. Indeed a subset of the NDF model  was
 written as a Java layer on top of the C HDS library, precisely to
@@ -1603,7 +1603,7 @@ NDF.
 
 The full tree of nodes is stored on disk in an extension named
 \texttt{PROVENANCE} within the main NDF, and is encoded into an array of
-integers in order to avoid the overhead of reading and writing complex
+integers in order to avoid the overhead of reading and writing complicated
 HDS structures.
 
 Each application will normally first create a basic tree for each output
