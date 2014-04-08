@@ -354,7 +354,7 @@ features of the \emph{IMAGE} scheme, such as the use of
 \texttt{DATA\_ARRAY}, and some features adopted from \asterix, from
 which the \texttt{HISTORY} structure was adopted complete.  The
 decision to recognize NDF structures  based solely on the presence of a
-\texttt{DATA\_ARRAY} array was an important compromise as it allowed
+\texttt{DATA\_ARRAY} array was an important compromize as it allowed
 data in the \emph{IMAGE} format, which indirectly included data in
 Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}
 format that had been converted previously, to be used immediately
@@ -497,7 +497,7 @@ an axis, for example when changing from wavelength to frequency or from
 ICRS to Galactic. A more general solution was required and this
 prompted the development of the AST library
 \citep{1998ASPC..145...41W} with an object-oriented approach to
-generalised coordinate frames. AST support was added to the NDF
+generalized coordinate frames. AST support was added to the NDF
 standard in spring 1998 \citep{2001ASPC..238..129B} by adding a new top-level
 \texttt{WCS} structure to NDF.
 
@@ -581,7 +581,7 @@ on the timestamp field.
 
 The NDF standard included a special place, named \texttt{MORE}, for local extensions to the
 model. This allowed instruments and applications to track additional
-information without requiring standardisation. The only rule was that
+information without requiring standardization. The only rule was that
 each extension should be given a reserved name (registered informally within the
   small contemporary community) and that the data type
 would define the specific data model of an extension.
@@ -652,7 +652,7 @@ family tree was stored as a fully hierarchical structure within an NDF
 extension, using raw HDS. However, given the possibility for
 exponential growth in the number of ancestors, the cost of navigating
 such a complex structure quickly became prohibitive. Therefore,
-storage as raw HDS was replaced by an optimised bespoke binary format
+storage as raw HDS was replaced by an optimized bespoke binary format
 packed into an array of integers (the provenance model is outlined in
 \ref{app:prov}).
 
@@ -679,7 +679,7 @@ data label.
 \subsubsection{Component propagation}
 
 The NDF library allows output NDFs to be constructed from scratch, but
-it also recognises that many applications build their output dataset(s)
+it also recognizes that many applications build their output dataset(s)
 using one of the input datasets, termed the ``primary'' input, as a
 template. In this case, much of the primary input data may need to be
 propagated to the output unchanged, with the application attending only
@@ -695,7 +695,7 @@ be propagated directly to the output. A default propagation list is
 provided which applications can easily tailor to their specific needs.
 This helps to ensure uniformity in application behaviour. The default
 behaviour of the propagation list also encourages the convention that
-applications should copy any unrecognised extensions unchanged from
+applications should copy any unrecognized extensions unchanged from
 primary input to output. Applications are again free to modify this
 behaviour, but in general do not do so.
 
@@ -751,7 +751,7 @@ The NDF format has always been one format amongst many formats in astronomy and 
 expended on providing facilities to convert NDF files into FITS and
 IRAF format, and \textit{vice versa} \citep{SUN55}. In
 many cases an astronomer would like to use a particular NDF
-application on a FITS file without realising that the application does
+application on a FITS file without realizing that the application does
 not natively support FITS. If foreign-format conversion is enabled the
 NDF library will run the appropriate conversion utility based on the
 file suffix and present the temporary file to the application. If the
@@ -821,7 +821,7 @@ pipeline and between pipelines, across multiple wavelengths, and
 across time.  It did this without inhibiting applications from
 including any and all of the application- or instrument-specific
 features they needed to preserve.  Below, we try to tease apart some
-separately important strands of this design, but summarise the key
+separately important strands of this design, but summarize the key
 points here.
 
 Despite much detailed discussion and inventiveness at the time the
@@ -855,7 +855,7 @@ all of astronomy, and to design a model where all metadata are
 described and everything has its place. This is the approach taken by
 the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
 intelligible and worthy goal and it is clear that
-much can be gained if these data models can be utilised, especially if
+much can be gained if these data models can be utilized, especially if
 related models (spectrum and image when combined into a data cube)
 share common ground.  In our experience, however, this approach leads to long and
 heated discussions that generate data models that are never quite
@@ -882,7 +882,7 @@ Initially it was very hard to convince people that hierarchical data
 structures were at all useful. This can be seen in the Wright-Giddings
 layout of a simple astronomical image file using HDS. Over the years
 the adoption of hierarchy has been an important part of the NDF
-experience, and application programmers quickly began to realise the power of
+experience, and application programmers quickly began to realize the power of
 being able to relocate or modify parts of a data file,
 to change the organization, or to copy related sections to a new file.
 NDF extensions may contain other NDF structures, allowing
@@ -906,9 +906,9 @@ application-specific data using any of the available HDS structures
 (\secref{sec:hds}).  Some applications treated this as a black box;
 others documented what they did here, making it an extended part of
 the application interface, so that their `private' data were effectively
-public, and were largely standardised in practice without the long
+public, and were largely standardized in practice without the long
 drawn-out involvement of a formal standards process.  Thus, different
-elements of the data within an NDF file were painlessly standardised
+elements of the data within an NDF file were painlessly standardized
 by different entities, on different timescales and in response to
 direct community demands.
 
@@ -920,7 +920,7 @@ informally, but if this were being designed now, then a simple
 namespacing mechanism (using perhaps a reversed-domain-name system)
 would be obvious good practice.
 
-\subsubsection{Standardised features aid application writers}
+\subsubsection{Standardized features aid application writers}
 
 Once application writers understand that there is a standard place for
 error information, quality masks and other features of the standard
@@ -963,7 +963,7 @@ arrays of keyword structures where each structure would contain the
 value, the comment and the unit. Alternatively simply drop the unit
 and comment and just use keyword/value pairs. These approaches turned
 out to be extremely slow and space inefficient so a pragmatic solution
-was taken to standardise on an array of characters formatted
+was taken to standardize on an array of characters formatted
 identically to a FITS header. The initial NDF standard did not include
 this approach and parsing of a FITS header is left up to the user
 rather than being integral to the NDF library. This approach also allows the FITS to NDF conversion
@@ -1075,7 +1075,7 @@ know about it and report the problem.
 
 \subsection{Areas for improvement}
 
-As the NDF data model has been used we have come to realise that some
+As the NDF data model has been used we have come to realize that some
 parts of the standard could do with adjustment and other enhancements
 should be made.
 
@@ -1096,7 +1096,7 @@ in the output data file.
 Tables were added to FITS \citep{1988A&AS...73..365H} during the
 initial development of NDF and the need for tables was considered a
 lower priority in the
-drive for a standardised image format.  Table support was never added
+drive for a standardized image format.  Table support was never added
 to NDF.  The omission of a table format was belatedly addressed in the
 early 1990s from outside Starlink.  Giaretta proposed and demonstrated
 that HDS could be used to store tables, being especially suited to
@@ -1194,7 +1194,7 @@ already in use for numeric data types
 to allow Unicode to be added to NDF without forcing every application
 to be rewritten. If an application uses the standard API for reading character
 components they will get ASCII even if that involves replacing Unicode
-characters with either normalised versions of characters outside the
+characters with either normalized versions of characters outside the
 ASCII character set (for example, dropping accents) or whitespace. A new API
 would be provided for reading and writing Unicode strings.
 
