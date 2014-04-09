@@ -265,6 +265,7 @@ benefits more explicit. HDS itself was in common usage within Starlink by 1986
 \citep{1986BICDS..30...13L}. It was originally written in the BLISS
 programming language on a VAX/VMS system and later rewritten in C and
 ported to Unix.
+It was, however, designed to be only callable from FORTRAN at this point.
 
 Some key features of the HDS design are as follows.
 \begin{itemize}
@@ -281,11 +282,12 @@ Some key features of the HDS design are as follows.
   point numbers.
 \end{itemize}
 
-More recently HDS has been extended to support 64-bit file offsets so
-that larger files can be written\footnote{Support for individual data
-arrays containing more elements than can be counted in a 32-bit
-integer is not yet possible.}, and also the
-addition of a 64-bit integer data type \citep{P82_adassxxiii}.
+More recently HDS has been extended to support 64-bit file
+offsets so that modern data can be processed\footnote{Support for
+  individual data  arrays containing more elements than can be counted
+  in a 32-bit integer is not yet possible.}, and also the addition of
+a native C-language interface and a 64-bit integer data type
+\citep{P82_adassxxiii}.
 
 \begin{table}
 \caption{HDS basic data types. The unsigned types did not correspond
