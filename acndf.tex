@@ -415,11 +415,11 @@ QUALITY        <QUALITY>       {structure}
 \end{verbatim}
 }
 
-For applications that do not wish to support explicit quality tracking
-the NDF library supports the ability to automatically mask the data
-and variance arrays based on the mask, setting the corresponding value
-in the variance array to a magic value when the data are mapped into
-memory. Unlike the \emph{IMAGE} scheme
+For applications that do not wish to support explicit quality
+tracking, the NDF library supports automatic masking of the data and
+variance arrays; this uses the quality mask in the input NDF, and sets
+the corresponding value in the variance array to a magic value when
+the data are mapped into memory. Unlike the \emph{IMAGE} scheme
 or FITS, which allow the magic (or blank) value to be specified per
 data array, NDF specifies the magic value to be used for each data type
 covering both floating-point and integer representations, inheriting
