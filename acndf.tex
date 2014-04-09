@@ -497,9 +497,60 @@ an axis, for example when changing from wavelength to frequency or from
 ICRS to Galactic. A more general solution was required and this
 prompted the development of the AST library
 \citep{1998ASPC..145...41W} with an object-oriented approach to
-generalized coordinate frames. AST support was added to the NDF
-standard in spring 1998 \citep{2001ASPC..238..129B} by adding a new top-level
-\texttt{WCS} structure to NDF.
+generalized coordinate frames.
+
+A full description of the data model used by AST is outside the scope of
+this paper, but in outline AST uses three basic classes - ``Frame'',
+``Mapping'' and ``FrameSet'':
+
+\begin{description}
+
+\item[\texttt{Frame}] - describes a set of related axes that are used to
+specify positions within some physical or notional domain, such as ``the
+sky'', ``the electro-magnetic spectrum'', ``time'', a ``pixel array'', a
+``focal plane''. In general, each such domain can be described using
+several different coordinate systems. For instance, positions in the
+electro-magnetic spectrum can be described using wavelength, frequency or
+various types of velocity; position on the sky can be described using
+various types of equatorial, ecliptic or galactic coordinates. A Frame
+describes positions within its domain using a specified coordinate
+system, but also encapsulates the information needed to determine the
+transformation from that coordinate system to any of the other
+coordinate systems supported by the domain. It should be noted that a
+Frame does not include any information that relates to a different
+domain. For instance, a SkyFrame has no concept of ``pixel size''.
+
+Several Frames can be joined together to form a compound Frame describing
+a coordinate system of higher dimensionality.
+
+\item[\texttt{Mapping}] -  describes a numerical recipe for transforming
+an input vector into an output vector\footnote{Most Mappings also describe the
+inverse transformation.}. Most importantly, a Mapping makes
+no assumptions about the coordinate system to which the input or output
+vector relates. AST contains many different sub-classes of Mapping that
+implement different type of mathematical transformations, including all
+the spherical projections included in the FITS WCS standard. Several
+Mappings may be joined together, either in series or in parallel, to form
+a more complex compound Mapping.
+
+\item[\texttt{FrameSet}] - encapulates a collection of Frames, together
+with Mappings that transform positions from one Frame to another. These
+are stored in the form of a tree structure in which each node is a Frame
+and each link is a Mapping. Within the context of an NDF, the root node
+always describes pixel positions in the form of ``GRID'' coordinates (see
+below). Each other node represents a coordinate system into which pixels
+positions may be transformed, and will often include celestial or
+spectral coordinate systems. Facilities of the FrameSet class include the
+ability to transform given positions between any two nominated Frames, and
+to adjust the Mapping between two Frames automatically if either of the
+Frames are changed to represent a different coordinate system.
+
+\end{description}
+
+AST support was added to the NDF standard in spring 1998
+\citep{2001ASPC..238..129B} by adding a new top-level \texttt{WCS} structure
+to NDF. This holds a FrameSet that describes an arbitrary set of coordinate
+systems, together with the Mappings that relate them to pixel coordinates.
 
 {\small
 \begin{verbatim}
@@ -511,30 +562,30 @@ WCS        <WCS>    {structure}
 
 AST objects were stored simply as an array of strings using their native
 ASCII representation, which is more general and flexible
-than adopting a FITS-WCS serialisation. The NDF library API was modified to support routines
-for reading and writing AST objects without the library user knowing
-how the object is represented in the hierarchical model.
+than adopting a FITS-WCS serialisation. The NDF library API was modified
+to support routines for reading and writing the WCS FrameSet without the
+library user knowing how the FrameSet is represented in the hierarchical
+model.
 
-The NDF library manages a number of WCS frames specifically intended to
+The NDF library manages a number of WCS Frames specifically intended to
 describe coordinate systems defined by the NDF library itself:
 
 \begin{description}
-\item[\texttt{GRID}] - a coordinate frame in which the first pixel in the NDF is
-centered at coordinate (1,1). This is the same as the ``pixel coordinate
+\item[\texttt{GRID}] - a coordinate system in which the first pixel in the NDF
+is centered at coordinate (1,1). This is the same as the ``pixel coordinate
 system'' in FITS.
-\item[\texttt{PIXEL}] - a coordinate frame in which (0,0) corresponds to
+\item[\texttt{PIXEL}] - a coordinate system in which (0,0) corresponds to
 the pixel origin of the NDF. The transformation between \texttt{PIXEL}
 and \texttt{GRID} is a simple shift of origin.
-\item[\texttt{AXIS}] - a coordinate frame that corresponds to AXIS
+\item[\texttt{AXIS}] - a coordinate system that corresponds to the AXIS
 structures (if any) stored in the NDF.
-\item[\texttt{FRACTION}] - a coordinate frame in which the NDF spans a
+\item[\texttt{FRACTION}] - a coordinate system in which the NDF spans a
 unit box on all pixel axes.
 \end{description}
 
-The NDF library always removes the above frames when storing the
-collection of WCS frames
-within an NDF, and re-creates them using the current state of the NDF
-when returning a collection of WCS frames for an NDF. This allows the
+The NDF library always removes the above Frames when storing the
+WCS FrameSet within an NDF, and re-creates them using the current state
+of the NDF when returning the WCS FrameSet for an NDF. This allows the
 user to modify the \texttt{AXIS} and pixel origin information in the
 NDF without having also to remember to update the WCS information.
 
@@ -704,10 +755,14 @@ behaviour, but in general do not do so.
 The NDF library allows a subset of the array to be selected using a
 slicing syntax that can work with a variety of coordinate systems. The
 user can specify the section in pixel coordinates (where the pixel
-origin is taken into account) or in world coordinates, either in the
-legacy \texttt{AXIS} scheme or using full WCS support. The section can
-either be specified using bounds or a center coordinate and
-extent. Example sections are
+origin is taken into account) or in world coordinates, in which case the
+supplied WCS values are transformed into pixel coordinates using the
+transformations defined either by the legacy \texttt{AXIS} scheme or
+the full AST-based WCS scheme, as described in section \ref{sec:wcs}.
+The section can either be specified using bounds or a center coordinate
+and extent. If the section is specified using WCS values, the section of
+the pixel array actually used is the smallest box that encloses the
+specified WCS limits. Example sections are
 \begin{verbatim}
 myimage(12h59m49s~4.5m,27.5d:28d29.8m)
 \end{verbatim}
@@ -728,9 +783,7 @@ mycube(55:63,75~10,-100.0:250.0)
 \end{verbatim}
 where a subset of a cube is extracted where the first two coordinates
 specify pixel bounds and the third coordinate is a world coordinate
-range. If the WCS axes are not aligned with the pixel axes, then the
-section of the pixel array actually used is the smallest box that
-encloses the specified WCS limits.
+range.
 
 \subsubsection{Chunking \& blocking}
 
