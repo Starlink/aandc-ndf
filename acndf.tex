@@ -492,10 +492,12 @@ Contents of AXIS(1)
 }
 
 The \texttt{AXIS} formalism worked well for spectral coordinates but
-it did not solve the general problem of coupled coordinates such as
-Right Ascension and Declination or how to change the representation of
-an axis, for example when changing from wavelength to frequency or from
-ICRS to Galactic. A more general solution was required and this
+it was not suitable for cases where the world coordinate axes are not
+parallel to the pixel axes, such as is often the case with Right
+Ascension and Declination. Nor did it provide the meta-data needed to
+allow the axis values to be transformed into other coordinate systems,
+for example when changing a spectral axis from frequency to velocity or
+sky axes from ICRS to Galactic. A more general solution was required and this
 prompted the development of the AST library
 \citep{1998ASPC..145...41W} with an object-oriented approach to
 generalized coordinate frames.
