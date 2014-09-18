@@ -386,7 +386,16 @@ variance components. Variance was selected as the error
 component to reduce the computational overhead when propagating errors
 during processing. All three components share the same
 basic \texttt{ARRAY} structure which defines the dimensionality of the
-array and allows for the concept of a pixel origin. The
+array and allows for the concept of a pixel origin. The pixel origin
+is used to specify where the NDF sits relative to a larger pixel
+coordinate system by specifying the coordinates of the bottom left
+pixel. For example, when extracting a subset of data from
+a bigger image, the pixel origin will record where the subset came
+from. Also, when images are registered for mosaicking they are
+resampled such that their origins share a common coordinate frame
+resulting in the final mosaic being a simple pixel-by-pixel
+combination. See \secref{sec:wcs} for a discussion on how the pixel
+origin relates to other coordinate systems. The
 \texttt{BAD\_PIXEL} flag is intended as a hint to application
 software to allow simpler and faster algorithms to be used if it is known
 that no bad values are present in the data array. Additionally, the flag
