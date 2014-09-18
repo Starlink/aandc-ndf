@@ -444,7 +444,7 @@ or FITS, which allow the magic (or blank) value to be specified per
 data array, NDF specifies the magic value to be used for each data type
 covering both floating-point and integer representations, inheriting
 the definition from the underlying HDS definition. Indeed,
-\texttt{NaN} (defined by the IEEE floating-point model) is not explicitly part of the standard and it is usually
+\texttt{NaN} (defined by the IEEE floating-point model \citep{1985-754IEEE}) is not explicitly part of the standard and it is usually
 best to convert \texttt{NaN} elements to the corresponding floating-point magic
 value before further processing is applied. A single definition of the
 magic value for each data type simplifies applications programming and
