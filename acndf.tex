@@ -662,7 +662,7 @@ would define the specific data model of an extension.
 Some
 applications, for example, went so far as to include covariance
 information in extensions to overcome limitations in the default error
-propagation model for NDF \citep[for example \specdre;][]{SUN140}.
+propagation model for NDF \citep[for example \specdre;][\ascl{1407.003}]{SUN140}.
 
 Three extensions proved so popular that they are now effectively part of the NDF
 standard, but for backwards compatibility with existing usage they
@@ -735,7 +735,7 @@ packed into an array of integers (the provenance model is outlined in
 Individual bits in the quality mask can be addressed using the
 \texttt{BADBITS} attribute, but the NDF standard did not allow for
 these bits to be labeled. This confusion was solved first in the
-\iras\ package \citep{SUN165} which added a \texttt{QUALITY\_NAMES}
+\iras\ package \citep[][\ascl{1406.014}]{SUN165} which added a \texttt{QUALITY\_NAMES}
 extension associating names with bits. \KAPPA\ tasks \citep[][\ascl{1403.022}]{SUN95} were then
 modified to understand this convention and allow users to enable and
 disable masks by name.
