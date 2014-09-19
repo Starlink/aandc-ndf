@@ -804,11 +804,14 @@ mycube(12h34m56.7s,-41d52m09s,-100.0:250.0)
 where a spectrum is extracted from a cube at a particular location and
 also truncated; and
 \begin{verbatim}
-mycube(55:63,75~10,-100.0:250.0)
+mycube(55:63,75~11,-100.0:250.0)
 \end{verbatim}
 where a subset of a cube is extracted where the first two coordinates
 specify pixel bounds and the third coordinate is a world coordinate
-range.
+range. In all these examples a colon indicates a range, and a tilde
+indicates an extent, so in the final example \texttt{55:63} means
+pixels 55 to 63 inclusive, and \verb|75~10| means 11 pixels centred
+on pixel 75.
 
 \subsubsection{Chunking \& blocking}
 
