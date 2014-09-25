@@ -1442,36 +1442,51 @@ An example of part of such a structure is shown in
 Fig.\,\ref{fig:hdstable}.
 
 \begin{figure*}[t]
-\begin{minipage}{\textwidth}
+\begin{minipage}{0.5\textwidth}
 \begin{quote}
 \small
 \begin{verbatim}
-      FITS_EXT_1     <TABLE>         {structure}
-         NROWS          <_INTEGER>      4
-         COLUMNS        <COLUMNS>       {structure}
-            SPORDER        <COLUMN>        {structure}
-               COMMENT        <_CHAR*19>      'Spectrum order'
-               DATA(4)        <_WORD>         1,2,3,5
-               FORMAT         <_CHAR*3>       'I11'
+FITS_EXT_1   <TABLE>       {structure}
+  NROWS        <_INTEGER>    4
+  COLUMNS      <COLUMNS>     {structure}
+    SPORDER      <COLUMN>      {structure}
+      COMMENT      <_CHAR*19>    'Spectrum order'
+      DATA(4)      <_WORD>       1,2,3,5
+      FORMAT       <_CHAR*3>     'I11'
 
-            NELEM          <COLUMN>        {structure}
-               COMMENT        <_CHAR*19>      'Number of elements'
-               DATA(4)        <_WORD>         1024,1024,1024,1024
-               FORMAT         <_CHAR*3>       'I11'
+    NELEM        <COLUMN>      {structure}
+      COMMENT      <_CHAR*19>    'Number of elements'
+      DATA(4)      <_WORD>       1024,1024,1024,1024
+      FORMAT       <_CHAR*3>     'I11'
 
-            WAVELENGTH     <COLUMN>        {structure}
-               COMMENT        <_CHAR*19>      'Wavelengths of elements'
-               DATA(1024,4)   <_DOUBLE>       2897.6015206853,
-                                              ... 5707.2796545742
-               UNITS          <_CHAR*9>       'Angstroms'
-               FORMAT         <_CHAR*6>       'G25.16'
+    WAVELENGTH   <COLUMN>      {structure}
+      COMMENT      <_CHAR*19>    'Wavelengths of elements'
+      DATA(1024,4) <_DOUBLE>     2897.6015206853,
+                                 ... 5707.2796545742
+      UNITS        <_CHAR*9>     'Angstroms'
+      FORMAT       <_CHAR*6>     'G25.16'
 \end{verbatim}
 \end{quote}
-\caption{Partial dump of the structure of a \texttt{TABLE} structure
-within an NDF extension.  The name of the NDF extension can be specified
-or take the generic form as above, where the digit counts the extensions.}
-\label{fig:hdstable}
 \end{minipage}
+\begin{minipage}[t]{0.48\textwidth}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{model-table}
+\end{center}
+\end{minipage}
+\caption{On the left is a partial dump of the structure of a \texttt{TABLE} structure
+within an NDF extension. This structure trace is done with the generic
+\texttt{hdstrace} command that lists the content of an arbitrary HDS
+structure (similar to the HDF5 \texttt{h5ls} command).
+ The name of the NDF extension, in this case \texttt{FITS\_EXT\_1}, can be specified
+or take the generic form as above, where the digit counts the
+extensions. This example specifies that the table has four rows and 3
+columns (\texttt{SPORDER}, \texttt{NELEM} and \texttt{WAVELENGTH}). Note
+how the structure type (indicated by the angle brackets) indicates how
+an application should interpret the contents; in this case the
+important types are \texttt{TABLE}, \texttt{COLUMNS} and
+\texttt{COLUMN}. On the right is a schematic representing the
+structure hierarchy.}
+\label{fig:hdstable}
 \end{figure*}
 
 
