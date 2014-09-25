@@ -249,26 +249,6 @@ the development of which motivated the development of NDF
 and also directly influenced the NDF design. A timeline describing the
 key developments relating to NDF is shown in table \ref{tab:timeline}.
 
-\begin{table}
-\caption{Time line for developments relating to NDF.}
-\label{tab:timeline}
-\begin{tabular}{|l|l|}
-\hline
-1981 & HDS proposed. \\
-1982 & HDS version 1 ready for testing. \\
-1983 & \texttt{IMAGE} model proposed. \\
-1988 & NDF  standard data structures (SGP/38) released.\\
-1991 & HDS ported to Sun OS.\\
-2005 & Support files larger than 2GB (HDSv4).\\
-2005 & Add official C interface to HDS.\\
-2007 & Provenance added to NDF as extension.\\
-2013 & 64-bit integer type added to HDS.\\
-\hline
-\end{tabular}
-\begin{center}
-\end{center}
-\end{table}
-
 \section{Hierarchical Data System}
 \label{sec:hds}
 
@@ -310,6 +290,34 @@ Some key features of the HDS design are as follows.
   say, a data array of 32-bit integers is mapped as 64-bit floating
   point numbers.
 \end{itemize}
+
+\begin{table}
+\caption{Time line for developments relating to NDF. Other
+  developments in file format development are interspersed
+  for reference.}
+\label{tab:timeline}
+\begin{tabular}{|l|l|}
+\hline
+1979 & \emph{Flexible Image Transport System announced.}\\
+1981 & HDS proposed. \\
+1982 & HDS version 1 ready for testing. \\
+1983 & \texttt{IMAGE} model proposed. \\
+1988 & \emph{NCSA release the Hirearchical Data Format.}\\
+1988 & \emph{FITS tables standard.}\\
+1988 & NDF  standard data structures (SGP/38) released.\\
+1991 & HDS ported to Sun OS.\\
+2001 & \emph{Definition of FITS standard.}\\
+2002 & \emph{HDFv5 is released.}\\
+2005 & Support files larger than 2GB (HDS version 4).\\
+2005 & Add official C interface to HDS.\\
+2007 & Provenance added to NDF as extension.\\
+2010 & \emph{Version 3 of the FITS standard.}\\
+2013 & 64-bit integer type added to HDS.\\
+\hline
+\end{tabular}
+\begin{center}
+\end{center}
+\end{table}
 
 More recently HDS has been extended to support 64-bit file
 offsets so that modern data can be processed\footnote{Support for
