@@ -1350,22 +1350,14 @@ items for pre-computed data minimum and maximum, as well as a value for
 an array-specific blank value (similar to the FITS \texttt{BLANK}
 header keyword). Errors were represented as standard
 deviations and stored in \texttt{DATA\_ERROR} and bad-pixel masks were
-stored in \texttt{DATA\_QUALITY}. An example trace is given in Fig.~\ref{fig:image}.
+stored in \texttt{DATA\_QUALITY}. An example layout is given in Fig.~\ref{fig:image}.
 
 \begin{figure}[t]
-\small
-\begin{verbatim}
-HORSEHEAD  <IMAGE>
-  DATA_ARRAY(384,512)  <_REAL>   100.5,102.6,110.1,
-                                  ... 123.1,117.3
-  TITLE          <_CHAR*72>      'KAPPA - Flip'
-  DATA_MIN       <_REAL>         28.513
-  DATA_MAX       <_REAL>         255.94
-  AXIS1_DATA     <_REAL>         1,2,3,4,5,6,7,8,
-                                 ... 383, 384
-  AXIS1_LABEL    <_CHAR*5>       'XAXIS'
-\end{verbatim}
-\caption{Example trace of a Wright-Giddings \emph{IMAGE} file.}
+\begin{center}
+\includegraphics[width=0.5\columnwidth]{model-image}
+\end{center}
+\caption{Example components of a Wright-Giddings \emph{IMAGE}
+  file.  Italicized text indicates the components that are shared with NDF.}
 \label{fig:image}
 \end{figure}
 
@@ -1385,47 +1377,15 @@ flat and heavily influenced by FITS and BDF.
 \subsection{Figaro DST}
 \label{app:figaro}
 
-\begin{figure*}[t]
-\begin{minipage}{\textwidth}
-\begin{quote}
-\small
-\begin{verbatim}
-OUT  <FIGARO>
-   Z              <IMAGE>         {structure}
-      DATA(310,19)   <_REAL>         1655.552,1376.111,1385.559,1746.966,
-                                     ... 1513.654,1465.343,1446.902,*,*,*,*,*
-      UNITS          <_CHAR*32>      'A/D numbers per exposure'
-      LABEL          <_CHAR*32>      'OBJECT - DARK'
-      ERRORS(310,19)  <_REAL>        9.330093,4.624712,1.043125,3.801913,
-                                     ... 16.92331,11.49692,10.9114,*,*,*,*,*
-
-   OBS            <OBS>           {structure}
-      OBJECT         <_CHAR*32>      'krypton singlet'
-
-   X              <AXIS>          {structure}
-      DATA(310)      <_REAL>         1.85115,1.852412,1.853675,1.854938,
-                                     ... 2.237606,2.238869,2.240132,2.241395
-      LABEL          <_CHAR*32>      'Estimated wavelength'
-      UNITS          <_CHAR*32>      'microns'
-
-   Y              <AXIS>          {structure}
-      DATA(19)       <_REAL>         0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,
-                                     ... 12.5,13.5,14.5,15.5,16.5,17.5,18.5
-
-   FITS           <FITS>          {structure}
-      INSTRUME       <_CHAR*8>       'CGS4'
-      TELESCOP       <_CHAR*8>       'UKIRT'
-      SOFTWARE       <_CHAR*8>       'CF v1.0'
-\end{verbatim}
-\end{quote}
-\caption{Partial dump of the structure of a DST file. Structures make
+\begin{figure}[t]
+\begin{center}
+\includegraphics[width=0.6\columnwidth]{model-dst}
+\end{center}
+\caption{Partial model representing the structure of a DST file. Structures make
   use of a hierarchy and reuse concepts in the data array and axis
-  definition. This example is from a CGS4 observation from January
-  1991. The \texttt{$<$~$>$} notation indicates the data type.  An
-  asterisk in the data values denotes an undefined or bad value.}
+  definition.  Italicized text indicates the components that are shared with NDF.}
 \label{fig:dst}
-\end{minipage}
-\end{figure*}
+\end{figure}
 
 The \figaro\ data reduction package
 \citep[][\ascl{1203.013}]{1988igbo.conf..448C,1993ASPC...52..219S}
@@ -1447,7 +1407,7 @@ keywords were held in a similar structure labelled
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
-example trace can be found in Fig.~\ref{fig:dst}.
+example layout can be found in Fig.~\ref{fig:dst}.
 
 Around 1990, the code used by \figaro\ to access the DST format was
 reworked to handle both DST and NDF format files
@@ -1469,7 +1429,7 @@ format exclusively until the introduction of an abstract data access
 interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \asterix\ defined many data models designed for
 the specific uses of X-ray astronomy, with a particular focus on
-photon event lists. A trace of an alignment file is shown in
+photon event lists. An example layout of an alignment file is shown in
 Fig.\,\ref{fig:asterix}. The \asterix\ data models were not competing directly with \emph{IMAGE} or
 DST formats but this experience fed directly into the design of NDF.
 For example, the \texttt{HISTORY} structure was adopted without change. Once
@@ -1478,55 +1438,14 @@ NDF such as adopting the \texttt{DATA\_ARRAY} label (see
 Fig.~\ref{fig:duck} for an example).
 
 \begin{figure*}[t]
-\begin{minipage}{\textwidth}
-\begin{quote}
-\small
-\begin{verbatim}
-WFC_MASTER_CAL  <TOP_LEVEL>
-
-   ALIGN          <HIST>          {structure}
-      DATA_UNITS     <_CHAR*10>      'Radians'
-      ROSAT_TO_WFC   <ALIGN_REC>     {structure}
-         MJD_ARRAY(1)   <_DOUBLE>       47430
-         DATA_RECORD(1)  <STRUCTURE>    {structure}
-            DATE_MJD       <_DOUBLE>       47430
-            EULER(3)       <_REAL>         0,0,0
-            ERROR(3)       <_REAL>         2.4000001E-5,2.4000001E-5,
-                                           2.4000001E-5
-            CAL_TYPE       <_CHAR*32>      'TEST_DATA'
-      HISTORY        <HISTORY>       {structure}
-         VARIANT        <_CHAR*80>      'SIMPLE'
-         CREATED        <_CHAR*32>      '9-JUL-1990-11:54:12.50'
-         EXTEND_SIZE    <_INTEGER>      1
-         CURRENT_RECORD  <_INTEGER>     1
-         RECORDS(1)     <HIST_REC>      {structure}
-            VARIANT        <_CHAR*80>      'SIMPLE'
-            DATE           <_CHAR*32>      '9-JUL-1990-11:54:12.50'
-            COMMAND        <_CHAR*12>      'CAL_UPDATE'
-            TEXT(1)        <_CHAR*80>      'WFC alignment data'
-
-   INTERFACE      <_INTEGER>      2
-   ON_AXIS_AREA   <HIST>          {structure}
-      HIST_LABEL     <_CHAR*80>      'WFC on axis collecting area'
-      AXIS1_UNITS    <_CHAR*10>      'eV'
-      AXIS1_LABEL    <_CHAR*10>      'Energy eV'
-      AREA(8,2)      <STRUCTURE>     {array of structures}
-
-      Contents of AREA(1,1)
-         DATA_RECORD(1)  <STRUCTURE>    {structure}
-            DATA_ARRAY(991)  <_DOUBLE>     1.57868994267912D-12,
-                                           ... 0.0001629192789743
-            AXIS_ARRAY(991)  <_REAL>       10,11,12,13,14,15,16,17,18,19,
-                                           ... 994,995,996,997,998,999,1000
-
-         MJD_ARRAY(1)   <_DOUBLE>       47430
-\end{verbatim}
-\end{quote}
-\caption{Partial dump of the structure of an \asterix\ HDS
+\begin{center}
+\includegraphics[width=0.7\textwidth]{model-asterix}
+\end{center}
+\caption{Example model of the structure of an \asterix\ HDS
   file. Extensive use is made of hierarchy and the \texttt{HISTORY}
-  structure is identical to the NDF standard version.}
+  structure is identical to the NDF standard version. Italicized text
+  indicates the components that are shared with NDF.}
 \label{fig:asterix}
-\end{minipage}
 \end{figure*}
 
 \subsection{HDS TABLE structure used by FITS2NDF}
