@@ -765,18 +765,15 @@ in sections that are contiguous in memory for maximum efficiency
 whereas blocking allows spatially related pixel data to be returned, at
 the expense of a performance loss in reordering the data array.
 
-\subsubsection{Foreign-format conversion}
+\subsubsection{Automated Foreign-format conversion}
 
-The NDF format has always been one format amongst many formats in astronomy and much work has been
-expended on providing facilities to convert NDF files into FITS and
-IRAF format, and \textit{vice versa} \citep{SUN55}. In
-many cases an astronomer would like to use a particular NDF
+In many cases an astronomer would like to use a particular NDF
 application on a FITS file without realizing that the application does
 not natively support FITS. If foreign-format conversion is enabled the
 NDF library will run the appropriate conversion utility based on the
-file suffix and present the temporary file to the application. If the
+file suffix and present the temporary, NDF, file to the application. If the
 user specifies an output file with a particular foreign-format suffix
-the NDF library will create a temporary NDF for the output and convert
+the NDF library will then create a temporary NDF for the output and convert
 it when the file is closed.
 
 \subsubsection{Automated history}
@@ -964,17 +961,17 @@ other lessons learned while using the format over the years.
 \subsubsection{Round-tripping to other data formats}
 \label{sec:round_trip}
 
-For a new format to be used it must be possible to
-convert to and from existing formats in a safe and reliable manner
-without losing information.
-Significant effort was spent in developing conversion software that
-would allow conversion to and from NDF
-\citep{SUN55,1997STARB..19...14C}. In particular, special code was
-used to recognize specific data models present in FITS files to enable
-a more accurate conversion of scientific information into the NDF
-form. Support was also added for the \emph{multispec} format in IRAF
-\citep{1993ASPC...52..467V} to ensure that wavelength scales were not
-lost.
+For a new format to be used it must be possible to convert to and from
+existing formats in a safe and reliable manner without losing
+information.  The NDF format has always been one format amongst many
+formats in astronomy and much work has been expended on providing
+facilities to convert NDF files into FITS and IRAF format, and
+\textit{vice versa} \citep{SUN55,1997STARB..19...14C}.  In particular,
+special code was used to recognize specific data models present in
+FITS files to enable a more accurate conversion of scientific
+information into the NDF form. Support was also added for the
+\emph{multispec} format in IRAF \citep{1993ASPC...52..467V} to ensure
+that wavelength scales were not lost.
 
 \subsubsection{Adoption of FITS header}
 
