@@ -250,6 +250,19 @@ mid-1980s, the development of which motivated the development of NDF
 and also directly influenced the NDF design. A timeline describing the
 key developments relating to NDF is shown in table \ref{tab:timeline}.
 
+In this paper the term ``data model'' refers to the organization,
+naming and semantic meaning of components in a hierarchy. The term
+``data format'' usually means how the bytes are arranged on disk and
+in this context refers to the use of the Hierarchical Data System
+(HDS; see the next section). Historically, NDF, as implied by the use
+of ``Format'' in the name itself, uses the term ``format'' to refer to
+the data model in conjunction with HDS itself.  This overloading of
+the term ``format'' is unfortunate as the key thing about NDF is the
+adoption of a specific data model, and the fact that the NDF data
+model can be serialised to a FITS file (\secref{sec:round_trip})
+undermines the common usage.  In this paper we use try to use
+consistent terminology although in some cases there can be ambiguity.
+
 \section{Hierarchical Data System}
 \label{sec:hds}
 
