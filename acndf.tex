@@ -238,15 +238,15 @@ Data Format (NDF) developed by the Starlink Project
 of data models that were being adopted by applications using the Starlink
 hierarchical file format.
 
-In \secref{sec:hds} we discuss the genesis and features of the Starlink
-file format. The NDF data model itself is
-discussed in \secref{sec:ndf} and its usage in data acquisition
-systems is covered in \secref{sec:daq}. We finish in
-\secref{sec:lessons} by discussing the positive lessons learned from
-developing NDF and the areas where NDF could be improved, expanding on
-some earlier work \citep{P91_adassxxiii}. In \ref{app:chaos} we
-provide examples of data models developed in the mid-1980s,
-the development of which motivated the development of NDF
+In \secref{sec:hds} we discuss the genesis and features of the
+Starlink file format, with the NDF data model itself being discussed
+in \secref{sec:ndf}.  In \secref{sec:lessons} we discuss the positive
+lessons learned from developing NDF and the areas where NDF could be
+improved, expanding on some earlier work \citep{P91_adassxxiii}. This
+is followed in \secref{sec:social} where we address the social,
+political and economic considerations of data formats and models. In
+\secref{app:chaos} we provide examples of data models developed in the
+mid-1980s, the development of which motivated the development of NDF
 and also directly influenced the NDF design. A timeline describing the
 key developments relating to NDF is shown in table \ref{tab:timeline}.
 
@@ -821,32 +821,6 @@ being read from, written to, opened or closed. This facility is used
 by the NDG library \citep{SUN2} to enable provenance handling
 as a plugin without requiring direct changes to the NDF library itself.
 
-\section{Data acquisition}
-\label{sec:daq}
-
-\figaro\ had a strong influence on the infrared spectroscopy community
-in the United Kingdom and the United Kingdom Infrared Telescope
-(UKIRT) adopted the DST format for CGS3 and CGS4 \citep{1993SPIE.1946..547W}. NDF was adopted in
-1995 although each instrument had a slightly different flavor of
-metadata and handling of multiple exposures involved distinct data
-files. A unified UKIRT NDF format for all instruments, involving HDS
-containers of NDF structures to handle multiple exposures, was
-adopted with the release of the ORAC system \citep{2000SPIE.4009..227B}.
-
-The James Clerk Maxwell Telescope (JCMT) initially used a proposed
-submillimeter standard format known as the Global Section Datafile
-\citep[GSD;][formerly General Single Dish Data]{sun229}. In 1996 SCUBA
-\citep{1999MNRAS.303..659H} was delivered using the NDF format, and a
-unified NDF raw data format was adopted for ACSIS
-\citep{2009MNRAS.399.1026B} from 2006 and SCUBA-2
-\citep{2013MNRAS.430.2513H} from 2009.
-
-The Anglo-Australian Observatory (AAO) adopted HDS and initially used
-the DST format for instruments such as UCLES
-\citep{1990SPIE.1235..562D}. IRIS \citep{1993PASAu..10..298A} could
-use both DST and NDF format, whereas 2DF \citep{2002MNRAS.333..279L}
-used NDF.
-
 \section{Lessons learned}
 \label{sec:lessons}
 
@@ -1259,6 +1233,7 @@ avoid the added dependency to the Fortran runtime library.
 Ideally NDF would be rewritten in C and be made thread-safe.
 
 \section{Social, Political and Economic Considerations}
+\label{sec:social}
 
 We draw attention in this paper to many technical aspects of the NDF
 design that remain relevant today. However, the data format has its
@@ -1486,20 +1461,41 @@ way if openess and extensibility are fully embraced.
 \label{sec:conclusion}
 
 The NDF data model did bring order to the chaos of arbitrary
-hierarchical structures and succeeded in the
-promise of providing a base specification that can be adopted by many
-applications processing data from disparate instrumentation.
+hierarchical structures and succeeded in the promise of providing a
+base specification that can be adopted by many applications processing
+data from disparate instrumentation.  The shift from arbitrary use of
+hierarchical structures to a data model enforced by a library and API
+was extremely important and allowed application developers to know
+what to expect in data files.
 
 From its beginnings in the mid-1980s the NDF data model has been used
 throughout the Starlink software collection within diverse
-applications such as \smurf\ \citep{2013MNRAS.430.2545C},
-\ccdpack\ \citep[][\ascl{1403.021}]{1993ESOC...47...39W,SUN139}, \gaia\ and \KAPPA.
-It has also been used as a raw data-acquisition format at the
-AAO, the JCMT and the UKIRT, and NDF-format data are available from
-the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
-\citep{2008ASPC..394..450E,P01_adassxxiii,2014Economou}. The shift from arbitrary
-use of hierarchical structures to a data model enforced by a library
-and API is extremely important.
+applications such as \smurf\ \citep{2013MNRAS.430.2545C}, \ccdpack\
+\citep[][\ascl{1403.021}]{1993ESOC...47...39W,SUN139}, \gaia\ and
+\KAPPA.
+
+NDF was also adopted by UK-operated observatories.  \figaro\ had a
+strong influence on the infrared spectroscopy community in the United
+Kingdom and the United Kingdom Infrared Telescope (UKIRT) initially
+adopted the DST format (\secref{app:figaro}) for CGS3 and CGS4
+\citep{1993SPIE.1946..547W}. NDF was adopted at UKIRT in 1995 although
+a unified UKIRT NDF-based data model for all instruments, involving
+HDS containers of NDF structures to handle multiple exposures, was not
+adopted until the release of the ORAC system
+\citep{2000SPIE.4009..227B}. The James Clerk Maxwell Telescope (JCMT)
+initially used a proposed submillimeter standard format known as the
+Global Section Datafile \citep[GSD;][formerly General Single Dish
+Data]{sun229}. In 1996 SCUBA \citep{1999MNRAS.303..659H} was delivered
+using NDF, and a unified NDF raw data model was adopted for ACSIS
+\citep{2009MNRAS.399.1026B} from 2006 and SCUBA-2
+\citep{2013MNRAS.430.2513H} from 2009. NDF data files are available
+from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
+\citep{2008ASPC..394..450E,P01_adassxxiii,2014Economou}.  The
+Anglo-Australian Observatory (AAO) adopted HDS and initially used the
+DST format for instruments such as UCLES
+\citep{1990SPIE.1235..562D}. IRIS \citep{1993PASAu..10..298A} could
+use both DST and NDF format, whereas 2DF \citep{2002MNRAS.333..279L}
+used NDF.
 
 The NDF data model also supported a number of data-structuring
 experiments.
