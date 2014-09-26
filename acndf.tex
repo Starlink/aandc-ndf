@@ -868,6 +868,21 @@ features they needed to preserve.  Below, we try to tease apart some
 separately important strands of this design, but summarize the key
 points here.
 
+\subsubsection{Do not try to do everything}
+
+There are two incompatible approaches to designing a data model. One
+extreme aspires to think of everything that is needed for
+all of astronomy, and to design a model where all metadata are
+described and everything has its place. This is the approach taken by
+the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
+intelligible and worthy goal and it is clear that
+much can be gained if such data models can be utilized, especially if
+related models (spectrum and image when combined into a data cube)
+share common ground.  In our experience, however, this approach leads to long and
+heated discussions that generate data models that are never quite
+perfect and continually need to be tweaked as new instrumentation and
+metadata are developed.
+
 Despite much detailed discussion and inventiveness at the time the
 model was devised, the NDF model remains modest: \emph{NDF does not
   try to do everything}, but instead adds a bare minimum of useful
@@ -880,32 +895,6 @@ information that is necessary for high-level understanding of a
 dataset, and a large fraction of what is readily interoperable between
 applications without relying on detailed documentation.
 
-The NDF model is strongly \emph{hierarchical}.  This both makes it
-easy to find and manipulate data elements, and makes it easy for
-applications to \emph{extend the model}, by providing a space for
-private data, which does not interfere with the shareability or
-intelligibility of the dataset as a whole.
-
-The Starlink Project translated these insights into XML in
-the early-2000s NDX project (\secref{sec:ndx}).  We believe this was a
-successful and illuminating experiment, but the results did not make
-it into wider circulation.
-
-\subsubsection{Do not try to do everything}
-
-There are two incompatible approaches to designing a data model. One
-extreme aspires to think of everything that is needed for
-all of astronomy, and to design a model where all metadata are
-described and everything has its place. This is the approach taken by
-the IVOA \citep[see e.g.][]{2012arXiv1204.3055M}. This is an
-intelligible and worthy goal and it is clear that
-much can be gained if these data models can be utilized, especially if
-related models (spectrum and image when combined into a data cube)
-share common ground.  In our experience, however, this approach leads to long and
-heated discussions that generate data models that are never quite
-perfect and continually need to be tweaked as new instrumentation and
-metadata are developed.
-
 For NDF there was a need to generate a usable model quickly that took
 concepts that were generically useful, leaving instrumental details to
 extensions. These extensions were ignored by generic software packages
@@ -914,7 +903,8 @@ propagated. This approach allowed for NDF to grow without
 requiring the model or the NDF library to understand the
 contents of extensions.
 
-This approach has been very successful, not only in enabling new
+This approach of being flexible and not attempting to solve everything
+at the first attempt has been very successful, not only in enabling new
 features to be added to NDF once the need became obvious, but also
 in so far that wavelength regimes not initially involved in the
 discussion can make use of NDF without requiring that the core data
@@ -938,11 +928,17 @@ is neatly handled by a simple hierarchy.
 
 \subsubsection{Allow `private' data (namespaces)}
 
+The NDF model is strongly \emph{hierarchical}.  This both makes it
+easy to find and manipulate data elements, and makes it easy for
+applications to \emph{extend the model}, by providing a space for
+private data, which does not interfere with the shareability or
+intelligibility of the dataset as a whole.
+
 The NDF model, by design, supports only a subset of the information
 associated with a realistic dataset; it trivially follows that most
 data providers will want to include data that are not described within
-the NDF model, and if the model could not accommodate these extra data,
-it would be doomed to be no more than a `quick-look' format.
+the NDF model, and if the model could not accommodate these extra
+data, it would be doomed to be no more than a `quick-look' format.
 
 As described above (\secref{sec:more}), the NDF model includes a
 \texttt{MORE} tree, where particular applications can store
