@@ -1256,6 +1256,229 @@ avoid the added dependency to the Fortran runtime library.
 
 Ideally NDF would be rewritten in C and be made thread-safe.
 
+\section{Social, Political and Economic Considerations}
+
+We draw attention in this paper to many technical aspects of the NDF
+design that remain relevant today. However, the data format has its
+roots in the social, political, economic and, indeed, technological
+circumstances of the late 1980s. So it is relevant to examine what
+effect these had, how they have changed, and how they affect data
+format choices being made today. We also discuss briefly some of the
+political and economic issues that data format developers need to
+address when promoting their products.
+
+\subsection{Historical Perspective}
+
+In the period when the NDF was being designed, the Starlink Project
+was funded to support the computing needs of astronomical research in
+the UK, across all wavebands. On the software side, its remit was to
+centrally provide, curate and distribute software, to foster
+collaboration between UK software development projects, and to develop
+standards for their use. Together with central purchasing of computer
+hardware, good networking and a centrally-managed team of system
+administrators located around the UK, the project was an innovation
+that attracted much interest.
+
+Some, however, saw an element of socialism in this arrangement and
+argued that, in a more free-market approach, individual research
+groups should develop software (and by implication data formats)
+independently and that the fittest should survive and be used by other
+groups. That, indeed, was the default situation in most countries. In
+the UK, however, two key objections trumped this argument. One was
+that the quality, reliability, maintainability and suitability for
+long-term re-use of software and standards produced in this way was
+inadequate, essentially because those embarking on such projects,
+while being talented scientists, typically lacked software engineering
+skills. The second was that resources for astronomy are limited and
+that funding multiple similar projects in order to later discard most
+of the work in favour of just one is wasteful. Consequently, UK-wide
+collaborative development of software and standards, including data
+formats, was the option that received funding.
+
+The broad range of astronomy to be supported by Starlink and the
+consequent diverse data requirements was a severe challenge and
+exposed the Project to many issues that other groups had to face only
+later on. As we have described, the problem was made more tractable by
+using a single very flexible and extensible data format, rather than a
+set of individual ad-hoc solutions for each branch of astronomy. So
+the motivation for developing the NDF format was, in essence,
+economic. It was cheaper to take that route.
+
+Starlink's success was sometimes judged by international
+take-up\footnote{At one time the Starlink Software Collection was
+  being distributed to {\color{red}??} sites worldwide.}  of its
+software and standards, but its funding was primarily in support of UK
+astronomy, so software promotion and support activities outside the UK
+only took place on a best-efforts basis. While widespread adoption of
+the NDF format outside of UK projects would have been a bonus, it was
+not the primary goal and, indeed, the Project took few steps even to
+monitor it.
+
+A key consequence of this ``funding boundary'' was that Starlink staff
+would not be involved in discussions about data handling for new
+projects unless there was direct UK involvement. Such early
+discussions are typically crucial in securing ``buy-in'' from potential
+new users of software. They allow the software's capabilities and the
+costs and benefits of using it to be explored and provide a timely
+opportunity to add features that may be of special interest to that
+project. By restricting this activity to UK projects, usage of
+Starlink's NDF data format inevitably became much more widespread
+within the UK and its overseas observatories than elsewhere.
+
+\subsection{Current Environment}
+
+Nevertheless, widespread international adoption will be uppermost in
+the mind of anyone contemplating a new data format today. This paper's
+authors have been reflecting on the relevant issues over many years,
+but unfortunately we cannot offer a simple winning formula. Even the
+most seasoned of standards organisations will struggle to reconcile
+the vested interests of particular groups with the wider interests of
+their community and to inspire the confidence needed for widespread
+adoption of a standard. Perhaps the best that can be said is that
+designing a standard requires a great deal of discussion and
+consultation. This can be lengthy and needs robust processes and good
+leadership, but it is something that has to be done and should not be
+rushed. Time spent getting it right is repaid later by extending the
+lifetime and uptake of the standard when in service.
+
+While we have no silver bullet, it is perhaps relevant to ask how we
+might start out again now, if embarking on a new data format project
+with widespread international adoption in today's environment as a
+goal. It turns out that many of the problems we faced in the 1980s
+have now been addressed by developments in other areas and that if we
+seek out current best practice in software development the number of
+difficult choices is fairly small.
+
+Despite its successes, it is unlikely that we would take the FITS
+route and define a file format without also implementing accompanying
+software. This is because it requires the software to be written
+independently, which means (inevitably) by different groups - and it
+all needs to inter-operate. Specifying not just the bit-patterns but
+also the semantic interpretation of data in sufficient detail for
+widespread inter-operability is extremely difficult. If one examines,
+say, the HTML standards [reference to W3C website], they are very
+lengthy and require a huge effort to produce, yet still
+inter-operability often fails in practice. Astronomical data formats
+have the potential to become much more complex than this.
+
+One must also avoid designing a data format that cannot easily be
+implemented in software. This may be because the algorithmic details
+are not apparent but turn out to be complex or ambiguous, or because
+of the ubiquitous tendency to over-design and to be wildly
+over-optimistic about the resources needed for implementation.
+
+For these reasons we would probably consider developing any new data
+format alongside a reference software implementation. This is a
+procedure used by most participants in international software
+standards discussions in order to guide and inform their negotiations
+and to ensure that they have a working product as soon as the standard
+is complete. It ensures that the standard and the implementation never
+diverge too far and that the data semantics and their implications are
+fully understood (these details being difficult to capture other than
+in software). In an astronomy context it should be unnecessary for
+each participant to develop their own separate software. Rather, a
+single collaboratively-developed software project might provide a
+suitable nucleus for the whole enterprise.
+
+When developing the NDF format, the discussion surrounding its design
+was open, inclusive and collaborative, but the development of software
+to implement it occurred later and (despite eventually being released
+under an open-source licence) followed what would now be recognised as
+"closed source" development practices . We did not then have the
+benefit of modern collaborative software development tools, but the
+success of the free open-source software (FOSS) movement has shown the
+power of the open-source development model and some of its features
+would certainly have been very attractive.
+
+There are, of course, many open-source software tools, environments
+and development processes in use in different FOSS projects. However,
+the relevant features found in most cases are: i) frequent builds, so
+that a functioning development version of the software is always
+available, ii) anyone can participate in discussions and iii) anyone
+can contribute code (possibly subject to review by others). Such a
+system would seem to meet many of the requirements for developing a
+data format specification alongside a reference software
+implementation while simultaneously stimulating informed discussion,
+feedback and, of course, attracting coding contributions which are
+always the scarcest commodity in such an undertaking. One should
+perhaps add that good management would also be essential and that
+fundamental choices like implementation language, software
+dependencies, etc., can be critically important.
+
+\subsection{Thoughts on the data format business}
+
+A crucial issue for a project developing or maintaining an
+astronomical data format is to ensure that it can continually gain new
+users, something that tends to become easier as the project grows and
+becomes more capable and better-known. This principally means that it
+must work to be adopted by new instrumentation groups that will be
+producing important astronomical data in future. This, in turn, means
+winning the arguments for and against adopting a particular data
+format within these groups.
+
+Although general-purpose application software suites are also big
+players in the data format game, new ones start up relatively
+infrequently and may take decades to mature. Their capabilities also
+tend to lag behind the demands of new instrumentation. They therefore
+present less of an opportunity for promoting a new data format. Having
+a major software suite on board is definitely worthwhile, but an
+existing well-entrenched data format in a major application suite
+presents a huge barrier to entry that can only really be addressed by
+implementing a transparent compatibility layer (and/or automated
+conversion) so that changes to existing applications are
+unnecessary. This is more of a technical challenge than a political
+one and we will asume that such a layer will always be put in place,
+so that access to existing applications is not an issue in deciding to
+adopt a data format.
+
+The problems that then arise in discussions with instrumentation
+groups vary, but often economic factors enter. Such a group is most
+likely to adopt a format that already closely matches their
+requirements, so that they minimise their work. But this only applies
+if the software is open, in the sense that they can make any changes
+themselves. If changes need to be implemented (or integrated) by a
+different data format project, it can be a serious disincentive unless
+the data format project commits to making the changes well in advance
+and enjoys a significant level of trust. With an open-source data
+format development project, however, the openess is built-in and this
+barrier should be much reduced. Nevertheless, any changes would still
+need to avoid regression in the software that already
+exists.\footnote{The alternative is to fork the project, but there
+  will be reluctance to do this because support for the code that
+  already exists will be lost.}  This, in itself, can be a serious
+obstacle if the system is already complex, as most data format
+software is. If the data format is designed to be extensible, however,
+this burden is greatly reduced because extending the system consists
+largely of making additions and not changing what already exists.
+
+Different problems can arise if a new instrumentation group is large
+and/or particularly well-funded. Such groups may have little incentive
+to collaborate for economic reasons and might be tempted to start from
+scratch themselves producing, in effect, a rival project. This is
+arguably how most data formats arise in the first
+place. Unfortunately, the result may have limited applicability
+outside the originating project. Political arguments may sway the
+decision and these will be easier to make if the proposed data format
+already enjoys wide use. The argument becomes much easier to win,
+however, if the data format offering is intrinsically extensible,
+because this pretty much guarantees that the work involved in building
+on what exists will be substantially less than starting from
+scratch. Moreover, it need not involve any compromise to the
+instrumentation group's goals because there is no constraint on what
+can be added.
+
+If major new instrumentation projects could be harnessed to contribute
+to a collaborative open-source data format project with worldwide
+adoption as a goal, then major benefits might accrue. Perhaps the most
+significant would be that instead of new incompatible formats
+regularly arising they could instead be new compatible additions to a
+single format of increasing capability. There are many examples where
+well-funded initiatives build on an existing FOSS project for their
+own purposes and the new developments are then fed back into the main
+trunk for all to benefit. There seems to be little reason why
+astronomical data formats couldn't develop in a similar, evolutionary
+way if openess and extensibility are fully embraced.
+
 \section{Conclusions}
 \label{sec:conclusion}
 
