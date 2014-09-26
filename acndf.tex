@@ -259,7 +259,7 @@ of ``Format'' in the name itself, uses the term ``format'' to refer to
 the data model in conjunction with HDS itself.  This overloading of
 the term ``format'' is unfortunate as the key thing about NDF is the
 adoption of a specific data model, and the fact that the NDF data
-model can be serialised to a FITS file (\secref{sec:round_trip})
+model can be serialized to a FITS file (\secref{sec:round_trip})
 undermines the common usage.  In this paper we use try to use
 consistent terminology although in some cases there can be ambiguity,
 and in \secref{sec:social} we use ``format'' to mean all-encompassing
@@ -318,7 +318,7 @@ Some key features of the HDS design are as follows.
 1981 & HDS proposed. \\
 1982 & HDS version 1 ready for testing. \\
 1983 & \texttt{IMAGE} model proposed. \\
-1988 & \emph{NCSA release the Hirearchical Data Format.}\\
+1988 & \emph{NCSA release the Hierarchical Data Format.}\\
 1988 & \emph{FITS tables standard.}\\
 1988 & NDF  standard data structures (SGP/38) released.\\
 1991 & HDS ported to Sun OS (HDS version 3).\\
@@ -407,7 +407,7 @@ to the written specification, SGP/38, developed by the working group
 in collaboration with Starlink, and also the NDF library
 that enforces the specification. Currently there is no standards body
 working on the NDF specification and enhancements are added as
-required through discussion on the developmer mailing list and
+required through discussion on the developer mailing list and
  the existence of a single reference NDF library.} this work
 was completed in the late 1980s \citep{1988STARB...2...11C,SGP38}.
 After much debate it was decided to develop a data model that included
@@ -419,7 +419,7 @@ features of the \emph{IMAGE} scheme, such as the use of
 \texttt{DATA\_ARRAY}, and some features adopted from \asterix, from
 which the \texttt{HISTORY} structure was adopted complete.  The
 decision to recognize NDF structures  based solely on the presence of a
-\texttt{DATA\_ARRAY} array was an important compromize as it allowed
+\texttt{DATA\_ARRAY} array was an important compromise as it allowed
 data using the \emph{IMAGE} data model, which indirectly included data in the
 Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}
 format that had been converted previously, to be used immediately
@@ -571,7 +571,7 @@ the spherical projections included in the FITS WCS standard. Several
 Mappings may be joined together, either in series or in parallel, to form
 a more complex compound Mapping.
 
-\item[\texttt{FrameSet}] - encapulates a collection of Frames, together
+\item[\texttt{FrameSet}] - encapsulates a collection of Frames, together
 with Mappings that transform positions from one Frame to another. These
 are stored in the form of a tree structure in which each node is a Frame
 and each link is a Mapping. Within the context of an NDF, the root node
@@ -592,7 +592,7 @@ systems, together with the Mappings that relate them to pixel coordinates.
 
 AST objects were stored simply as an array of strings using their native
 ASCII representation, which is more general and flexible
-than adopting a FITS-WCS serialisation. The NDF library API was modified
+than adopting a FITS-WCS serialization. The NDF library API was modified
 to support routines for reading and writing the WCS FrameSet without the
 library user knowing how the FrameSet is represented in the hierarchical
 model.
@@ -693,7 +693,7 @@ network of applications, then each resulting output NDF will, in
 general, contain only a subset of the history needed to determine all
 the NDFs and applications that were used to create the NDF. It would
 of course be possible to gather this information by back-tracking
-through all the intermediate NDFs, analysing the history component of
+through all the intermediate NDFs, analyzing the history component of
 each one, but this depends on the intermediate NDFs still being
 available, which is often not the case.
 
@@ -760,11 +760,11 @@ These requirements are accommodated through use of a component
 propagation list that specifies which of the input NDF components should
 be propagated directly to the output. A default propagation list is
 provided which applications can easily tailor to their specific needs.
-This helps to ensure uniformity in application behaviour. The default
-behaviour of the propagation list also encourages the convention that
+This helps to ensure uniformity in application behavior. The default
+behavior of the propagation list also encourages the convention that
 applications should copy any unrecognized extensions unchanged from
 primary input to output. Applications are again free to modify this
-behaviour, but in general do not do so.
+behavior, but in general do not do so.
 
 \subsubsection{Data sections}
 
@@ -801,7 +801,7 @@ where a subset of a cube is extracted where the first two coordinates
 specify pixel bounds and the third coordinate is a world coordinate
 range. In all these examples a colon indicates a range, and a tilde
 indicates an extent, so in the final example \texttt{55:63} means
-pixels 55 to 63 inclusive, and \verb|75~10| means 11 pixels centred
+pixels 55 to 63 inclusive, and \verb|75~10| means 11 pixels centered
 on pixel 75.
 
 \subsubsection{Chunking \& blocking}
@@ -1037,7 +1037,7 @@ conventions simply by upgrading the AST library.
 In the early years of NDF there were many files in existence that did
 not quite conform to the standard and new files were being created by
 existing applications that did not use the main NDF library but
-nontheless modified their structures to emulate an NDF (see for
+nonetheless modified their structures to emulate an NDF (see for
 example Fig.\ \ref{fig:duck}). The core NDF library thereby took an
 inclusive approach to finding NDF structures, with the only requirement
 being the existence of a \texttt{DATA\_ARRAY} item. If other compliant
@@ -1297,7 +1297,7 @@ inadequate, essentially because those embarking on such projects,
 while being talented scientists, at that time typically lacked software engineering
 skills. The second was that resources for astronomy are limited and
 that funding multiple similar projects in order to later discard most
-of the work in favour of just one is wasteful. Consequently, UK-wide
+of the work in favor of just one is wasteful. Consequently, UK-wide
 collaborative development of software and standards, including data
 formats, was the option that received funding.
 
@@ -1390,7 +1390,7 @@ suitable nucleus for the whole enterprise.
 When developing NDF, the discussion surrounding its design
 was open, inclusive and collaborative, but the development of software
 to implement it occurred later and (despite eventually being released
-under an open-source licence) followed what would now be recognised as
+under an open-source licence) followed what would now be recognized as
 ``closed source'' development practices. We did not then have the
 benefit of modern collaborative software development tools, but the
 success of the free open-source software (FOSS) movement has shown the
@@ -1447,7 +1447,7 @@ themselves. If changes need to be implemented (or integrated) by a
 different data format project, it can be a serious disincentive unless
 the data format project commits to making the changes well in advance
 and enjoys a significant level of trust. With an open-source data
-format development project, however, the openess is built-in and this
+format development project, however, the openness is built-in and this
 barrier should be much reduced. Nevertheless, any changes would still
 need to avoid regression in the software that already
 exists.\footnote{The alternative is to fork the project, but there
@@ -1484,7 +1484,7 @@ well-funded initiatives build on an existing FOSS project for their
 own purposes and the new developments are then fed back into the main
 trunk for all to benefit. There seems to be little reason why
 astronomical data formats couldn't develop in a similar, evolutionary
-way if openess and extensibility are fully embraced.
+way if openness and extensibility are fully embraced.
 
 \section{Conclusions}
 \label{sec:conclusion}
@@ -1540,7 +1540,7 @@ turn used to develop Starlink's NDX framework,\label{sec:ndx} which allowed FITS
 files to be viewed and manipulated using the concepts from NDF.
 The NDX experiment was an attempt to directly apply the
 lessons of the long NDF/HDS experience -- namely that a small amount of
-structure, overlaid on conceptually separate bitbuckets, can very
+structure, overlaid on conceptually separate bit buckets, can very
 promptly bring order out of chaos.
 However, there was no take up in the community outside of the Starlink Java applications
 such as \treeview\ \citep{2003ASPC..295..445B} and
@@ -1644,7 +1644,7 @@ standard deviations for errors. Axis information was stored in
 structures labeled X and Y, and the main image/spectral data were
 stored in a structure labeled Z. The main data array was
 \texttt{Z.DATA}\footnote{where the `\texttt{.}' indicates a
-  parent-child relationship analagous to a directory separator in the
+  parent-child relationship analogous to a directory separator in the
   file system.}. FITS-style keyword/value pairs were encoded
 explicitly in a structure called \texttt{FITS} but using scalar
 components for each header item. Any comments associated with the FITS
@@ -1817,7 +1817,7 @@ then needs to be made to an application to enable basic provenance tracking is f
 application to add two calls to mark the start and end of a ``provenance
 recording context''. Alternatively, to achieve finer control of which
 input NDFs are recorded as parents of each output NDF, it is possible for
-an appliction to handle the reading and writing of provenance trees
+an application to handle the reading and writing of provenance trees
 itself.
 
 It is possible that a single input NDF may be used many times in the
