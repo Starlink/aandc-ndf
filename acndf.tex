@@ -1084,13 +1084,13 @@ version number and can read earlier versions of the data format, but if a
 newer version is encountered than supported by the library HDS will
 know about it and report the problem.
 
-\subsection{Areas for improvement}
+\section{Areas for improvement}
 
 As the NDF data model has been used we have come to realize that some
 parts of the standard could do with adjustment and other enhancements
 should be made.
 
-\subsubsection{Quality masking}
+\subsection{Quality masking}
 
 The initial design for the quality mask used a single unsigned byte
 allowing eight different quality assignments in a single data file. The
@@ -1102,7 +1102,7 @@ than eight internally and uses an unsigned short. When the results are
 written out mask types have to be combined if more than eight were present
 in the output data file.
 
-\subsubsection{Table support}
+\subsection{Table support}
 
 Tables were added to FITS \citep{1988A&AS...73..365H} during the
 initial development of NDF and the need for tables was considered a
@@ -1131,7 +1131,7 @@ JCMT raw data format instead uses individual 1-dimensional data arrays
 to store time-series data but this is inefficient and adds programming
 overhead.
 
-\subsubsection{Flexible variance definitions}
+\subsection{Flexible variance definitions}
 
 The adoption of variance as a standard part of NDF was an important
 motivator for application writers to add support for error propagation and
@@ -1142,7 +1142,7 @@ e.g.][]{1991STARB...8...19M} but is a very difficult problem to solve
 in the general case and may involve having to support pluggable
 algorithms for handling special types of error propagation.
 
-\subsubsection{Extension complexity}
+\subsection{Extension complexity}
 
 \citet{SGP38} provided an algorithm for designing simple elemental
 building blocks that could be reused. However, many extensions created
@@ -1158,7 +1158,7 @@ visualization. Future designers should not expect their respective
 community to design any elemental structures or the API to support
 them.
 
-\subsubsection{Name versus type}
+\subsection{Name versus type}
 
 Extension implementors often ignored or misunderstood another
 fundamental precept of standard structures, the difference between the
@@ -1185,14 +1185,14 @@ Reserving \texttt{EXTNAME} for the NDF component path, and adding an
 \citet{1993EXTKEYWORDS}, was never adopted into the FITS standard
 \citep{1993OGIPMIN}.
 
-\subsubsection{Data checksums}
+\subsection{Data checksums}
 
 The FITS \texttt{DATASUM} facility \citep{2012arXiv1201.1345S} is very useful and NDF should support
 it. Ideally it should be possible to generate a reference checksum for
 a structure. It may be that this has to be done in conjunction with
 HDS.
 
-\subsubsection{Character encodings}
+\subsection{Character encodings}
 
 The \texttt{\_CHAR} data type in HDS uses an 8-bit character type,
 assumed to contain only ASCII. It was designed long before Unicode came to exist
@@ -1209,7 +1209,7 @@ characters with either normalized versions of characters outside the
 ASCII character set (for example, dropping accents) or whitespace. A new API
 would be provided for reading and writing Unicode strings.
 
-\subsubsection{Provenance growth}
+\subsection{Provenance growth}
 
 Whilst the provenance handling works extremely well and is very useful
 for tracking what processing has gone into making a data product, the
@@ -1226,7 +1226,7 @@ and the file is to be exported. It would be fairly straightforward to
 modify the NDG library to use the Core Provenance Library
 \citep{Macko:2012:GPL:2342875.2342881}.
 
-\subsubsection{Library limitations}
+\subsection{Library limitations}
 
 Whilst there are many advantages to having a single library
 providing the access layer to an NDF, there is also a related problem
