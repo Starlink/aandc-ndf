@@ -411,7 +411,7 @@ features of the \emph{IMAGE} scheme, such as the use of
 which the \texttt{HISTORY} structure was adopted complete.  The
 decision to recognize NDF structures  based solely on the presence of a
 \texttt{DATA\_ARRAY} array was an important compromize as it allowed
-data in the \emph{IMAGE} format, which indirectly included data in the
+data using the \emph{IMAGE} data model, which indirectly included data in the
 Bulk Data Frame \citep[BDF;][]{1980SPIE..264...70P,SUN4}
 format that had been converted previously, to be used immediately
 in applications that had been ported to use the NDF library.
@@ -837,14 +837,14 @@ as a plugin without requiring direct changes to the NDF library itself.
 \section{Lessons learned}
 \label{sec:lessons}
 
-For a variety of reasons, the Starlink software, and hence the NDF
-format, did not achieve much traction outside the UK and UK-affiliated
+For a variety of reasons, the Starlink software, and hence NDF,
+did not achieve much traction outside the UK and UK-affiliated
 observatories, particularly in
 the US astronomical community that closely adhered to FITS until the
 advent of HDF. This is regrettable as NDF proved to be a rich and
-flexible data format that has aged well against mounting requirements
+flexible data model that has aged well against mounting requirements
 from data processing environments. Perhaps the ultimate lesson learnt
-is that data formats are adopted and retained for sociological reasons
+is that data formats and models are adopted and retained for sociological reasons
 as much as for technical reasons.
 
 \subsection{Key successes}
@@ -901,8 +901,8 @@ For NDF there was a need to generate a usable model quickly that took
 concepts that were generically useful, leaving instrumental details to
 extensions. These extensions were ignored by generic software packages
 although clear rules were made regarding how extensions should be
-propagated. This approach allowed for the format to grow without
-requiring the format or the NDF library to understand the
+propagated. This approach allowed for NDF to grow without
+requiring the model or the NDF library to understand the
 contents of extensions.
 
 This approach has been very successful, not only in enabling new
@@ -974,14 +974,14 @@ model are simple enough that the learning curve is small.
 \subsection{Other good features}
 
 In addition to the key successes there were a number of
-other lessons learned while using the format over the years.
+other lessons learned while using the data model over the years.
 
 \subsubsection{Round-tripping to other data formats}
 \label{sec:round_trip}
 
 For a new format to be used it must be possible to convert to and from
 existing formats in a safe and reliable manner without losing
-information.  The NDF format has always been one format amongst many
+information.  The NDF model on HDS format files has always been one format amongst many
 formats in astronomy and much work has been expended on providing
 facilities to convert NDF files into FITS and IRAF format, and
 \textit{vice versa} \citep{SUN55,1997STARB..19...14C}.  In particular,
@@ -1039,7 +1039,7 @@ being the existence of a \texttt{DATA\_ARRAY} item. If other compliant
 structures were found, the NDF library would use them and ignore items
 that it didn't understand. This ``duck typing''\footnote{See for
   example \url{http://en.wikipedia.org/wiki/Duck_typing}} approach
-proved to be very useful and eased adoption of the format. The NDF
+proved to be very useful and eased adoption of NDF. The NDF
 library uses this feature to scan for NDF structures within an NDF or
 an HDS container. For example, the \gaia\ visualization tool \citep[][\ascl{1403.024}]{2009ASPC..411..575D}
 will scan an HDS file for all such NDF structures and make them
@@ -1098,8 +1098,8 @@ in the output data file.
 Tables were added to FITS \citep{1988A&AS...73..365H} during the
 initial development of NDF and the need for tables was considered a
 lower priority in the
-drive for a standardized image format.  Table support was never added
-to NDF.  The omission of a table format was belatedly addressed in the
+drive for a standardized image model and table support was never added
+to NDF.  The omission of a table model was belatedly addressed in the
 early 1990s from outside Starlink.  Giaretta proposed and demonstrated
 that HDS could be used to store tables, being especially suited to
 column-oriented operations.  Such a \texttt{TABLE} data structure was
@@ -1107,7 +1107,7 @@ later interfaced through the CHI subroutine library \citep{SUN119} for
 the \catpac\ package \citep{SUN120}.  This initiative failed, however,
 due to a lack of documentation and promotion.  The effort was not
 completely wasted.  The \fitstondf\ conversion tool \citep{SUN55}
-creates an extended form of the \texttt{TABLE} format (see
+creates an extended form of the \texttt{TABLE} model (see
 \ref{app:hdstable}) to encapsulate within an NDF the ancillary FITS
 tables associated with image data.
 
@@ -1249,7 +1249,8 @@ Ideally NDF would be rewritten in C and be made thread-safe.
 \label{sec:social}
 
 We draw attention in this paper to many technical aspects of the NDF
-design that remain relevant today. However, the data format has its
+design that remain relevant today. However, the data format and
+associated model has its
 roots in the social, political, economic and, indeed, technological
 circumstances of the late 1980s. So it is relevant to examine what
 effect these had, how they have changed, and how they affect data
@@ -1271,7 +1272,7 @@ that attracted much interest.
 
 Some, however, saw an element of socialism in this arrangement and
 argued that, in a more free-market approach, individual research
-groups should develop software (and by implication data formats)
+groups should develop software (and by implication data formats and models)
 independently and that the fittest should survive and be used by other
 groups. That, indeed, was the default situation in most countries. In
 the UK, however, two key objections trumped this argument. One was
@@ -1291,7 +1292,7 @@ exposed the Project to many issues that other groups had to face only
 later on. As we have described, the problem was made more tractable by
 using a single very flexible and extensible data format, rather than a
 set of individual ad-hoc solutions for each branch of astronomy. So
-the motivation for developing the NDF format was, in essence,
+the motivation for developing NDF was, in essence,
 economic. It was cheaper to take that route.
 
 Starlink's success was sometimes judged by international
@@ -1301,7 +1302,7 @@ take-up\footnote{At one time overseas users accounted for about
 software and standards, but its funding was primarily in support of UK
 astronomy, so software promotion and support activities outside the UK
 only took place on a best-efforts basis. While widespread adoption of
-the NDF format outside of UK projects would have been a bonus, it was
+NDF outside of UK projects would have been a bonus, it was
 not the primary goal and, indeed, the Project took few steps even to
 monitor it.
 
@@ -1313,7 +1314,7 @@ new users of software. They allow the software's capabilities and the
 costs and benefits of using it to be explored and provide a timely
 opportunity to add features that may be of special interest to that
 project. By restricting this activity to UK projects, usage of
-Starlink's NDF data format inevitably became much more widespread
+Starlink's NDF inevitably became much more widespread
 within the UK and its overseas observatories than elsewhere.
 
 \subsection{Current Environment}
@@ -1349,17 +1350,17 @@ also the semantic interpretation of data in sufficient detail for
 widespread inter-operability is extremely difficult. If one examines,
 say, the HTML standards \citep{w3chtml5}, they are very
 lengthy and require a huge effort to produce, yet still
-inter-operability often fails in practice. Astronomical data formats
+inter-operability often fails in practice. Astronomical data models
 have the potential to become much more complex than this.
 
-One must also avoid designing a data format that cannot easily be
+One must also avoid designing a data model that cannot easily be
 implemented in software. This may be because the algorithmic details
 are not apparent but turn out to be complex or ambiguous, or because
 of the ubiquitous tendency to over-design and to be wildly
 over-optimistic about the resources needed for implementation.
 
 For these reasons we would probably consider developing any new data
-format alongside a reference software implementation. This is a
+model alongside a reference software implementation. This is a
 procedure used by most participants in international software
 standards discussions in order to guide and inform their negotiations
 and to ensure that they have a working product as soon as the standard
@@ -1371,7 +1372,7 @@ each participant to develop their own separate software. Rather, a
 single collaboratively-developed software project might provide a
 suitable nucleus for the whole enterprise.
 
-When developing the NDF format, the discussion surrounding its design
+When developing NDF, the discussion surrounding its design
 was open, inclusive and collaborative, but the development of software
 to implement it occurred later and (despite eventually being released
 under an open-source licence) followed what would now be recognised as
@@ -1388,7 +1389,7 @@ that a functioning development version of the software is always
 available, ii) anyone can participate in discussions and iii) anyone
 can contribute code (possibly subject to review by others). Such a
 system would seem to meet many of the requirements for developing a
-data format specification alongside a reference software
+data format and model specification alongside a reference software
 implementation while simultaneously stimulating informed discussion,
 feedback and, of course, attracting coding contributions which are
 always the scarcest commodity in such an undertaking. One should
@@ -1490,7 +1491,7 @@ applications such as \smurf\ \citep{2013MNRAS.430.2545C}, \ccdpack\
 NDF was also adopted by UK-operated observatories.  \figaro\ had a
 strong influence on the infrared spectroscopy community in the United
 Kingdom and the United Kingdom Infrared Telescope (UKIRT) initially
-adopted the DST format (\secref{app:figaro}) for CGS3 and CGS4
+adopted DST (\secref{app:figaro}) for CGS3 and CGS4
 \citep{1993SPIE.1946..547W}. NDF was adopted at UKIRT in 1995 although
 a unified UKIRT NDF-based data model for all instruments, involving
 HDS containers of NDF structures to handle multiple exposures, was not
@@ -1504,10 +1505,10 @@ using NDF, and a unified NDF raw data model was adopted for ACSIS
 \citep{2013MNRAS.430.2513H} from 2009. NDF data files are available
 from the UKIRT and JCMT archives at the Canadian Astronomy Data Centre
 \citep{2008ASPC..394..450E,P01_adassxxiii,2014Economou}.  The
-Anglo-Australian Observatory (AAO) adopted HDS and initially used the
-DST format for instruments such as UCLES
+Anglo-Australian Observatory (AAO) adopted HDS and initially used
+DST for instruments such as UCLES
 \citep{1990SPIE.1235..562D}. IRIS \citep{1993PASAu..10..298A} could
-use both DST and NDF format, whereas 2DF \citep{2002MNRAS.333..279L}
+use both DST and NDF, whereas 2DF \citep{2002MNRAS.333..279L}
 used NDF.
 
 The NDF data model also supported a number of data-structuring
@@ -1520,8 +1521,8 @@ The HDX framework \citep{2003ASPC..295..221G} was developed around 2002 as a fle
 way of layering high-level data structures, presented as a virtual XML
 DOM, atop otherwise unstructured external data stores.  This was in
 turn used to develop Starlink's NDX framework,\label{sec:ndx} which allowed FITS
-files to be viewed and manipulated using the concepts of the NDF
-format.  The NDX experiment was an attempt to directly apply the
+files to be viewed and manipulated using the concepts from NDF.
+The NDX experiment was an attempt to directly apply the
 lessons of the long NDF/HDS experience -- namely that a small amount of
 structure, overlaid on conceptually separate bitbuckets, can very
 promptly bring order out of chaos.
@@ -1597,7 +1598,7 @@ of its \emph{INTERIM} software environment.  BDF was heavily influenced
 by FITS and used many of the same conventions.  Software was provided
 to convert BDF format files to HDS using the \emph{IMAGE} model
 \citep{SUN96}, and
-the \emph{IMAGE} format became reasonably popular, because of its
+the \emph{IMAGE} model became reasonably popular, because of its
 simplicity, and because of the many BDF files that existed at the time.
 There were however
 a number of shortcomings with the \emph{IMAGE} design, not the least of which was
@@ -1620,7 +1621,7 @@ flat and heavily influenced by FITS and BDF.
 The \figaro\ data reduction package
 \citep[][\ascl{1203.013}]{1988igbo.conf..448C,1993ASPC...52..219S}
 independently adopted a hierarchical design based on HDS. This DST
-format\footnote{The reason for the name has been lost in the mists of
+data model\footnote{The reason for the name has been lost in the mists of
   time but our best guess is that it stood for \emph{\textbf{D}ata
     \textbf{ST}ructures}.} made good use of structures and supported
 standard deviations for errors. Axis information was stored in
@@ -1639,16 +1640,15 @@ support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
 example layout can be found in Fig.~\ref{fig:dst}.
 
-Around 1990, the code used by \figaro\ to access the DST format was
-reworked to handle both DST and NDF format files
+Around 1990, the code used by \figaro\ to access DST files was
+reworked to handle both DST and NDF files
 \citep{1990STARB...6...18S}. Support for NDF did
 not use the actual NDF library; instead it used direct HDS calls for
-both formats, but would use different names for the HDS items it
-accessed depending on the format of the file. This involved a
+both models, but would use different names for the HDS items it
+accessed depending on the data model used in the file. This involved a
 significant reworking of the \figaro\ code, but maintained compatibility
-with existing DST format files. However, it has failed to keep up with
-recent changes to the NDF format such as support for 64-bit data
-files.
+with existing DST files. However, it has failed to keep up with
+recent changes to NDF, such as support for 64-bit data.
 
 \subsection{Asterix}
 \label{app:asterix}
@@ -1661,7 +1661,7 @@ and FITS format files. \asterix\ defined many data models designed for
 the specific uses of X-ray astronomy, with a particular focus on
 photon event lists. An example layout of an alignment file is shown in
 Fig.\,\ref{fig:asterix}. The \asterix\ data models were not competing directly with \emph{IMAGE} or
-DST formats but this experience fed directly into the design of NDF.
+DST but this experience fed directly into the design of NDF.
 For example, the \texttt{HISTORY} structure was adopted without change. Once
 NDF was available some data models were modified to use features from
 NDF such as adopting the \texttt{DATA\_ARRAY} label (see
