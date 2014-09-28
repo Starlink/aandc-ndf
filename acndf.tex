@@ -1828,7 +1828,7 @@ creation of an output NDF. For instance, if NDF \emph{A} is added to NDF
 \emph{B} to create NDF \emph{C}, and \emph{A} is then added to \emph{C} to create
 \emph{D}, then \emph{A} (and all its ancestors) would appear twice in the
 provenance tree of \emph{D}. To avoid this, whenever a new parent is added to
-the root node, each node within the tree of the new parent is compared to
+the root node, each node within the tree of the new parent is compared with
 each node already in the tree. If they match, the tree of the new parent
 is ``snipped'' at that point to exclude the duplicated node (and all its
 parent nodes). This comparison needs to be done carefully since it is
