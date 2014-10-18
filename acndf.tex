@@ -215,6 +215,7 @@ Starlink
 \newcommand{\treeview}{\textsc{treeview}}
 \newcommand{\splat}{\textsc{splat}}
 \newcommand{\catpac}{\textsc{catpac}}
+\newcommand{\CFITSIO}{\textsc{cfitsio}}
 \newcommand{\fitstondf}{\textsc{fits}{\footnotesize{2}}\textsc{ndf}}
 
 %% Links
@@ -661,6 +662,7 @@ covered FITS headers, provenance tracking and data labels and are
 described in the following sections.
 
 \subsubsection{FITS headers}
+\label{sec:FITSheaders}
 
 FITS headers, consisting of 80-character header cards, are extremely
 common.  To simplify interoperability with FITS files and to
@@ -1846,7 +1848,84 @@ this reason, the comparison two nodes are considered equal if:
 The third requirement above means that two nodes will never be considered
 equal if any of the ancestors of the two nodes differ.
 
+\section{NDF structure serialization into FITS}
+\label{app:ndf2fits}
 
+The generalized extensions \citep{1988A&AS...73..359G} addition to the
+FITS standard made provision for hierarchical data through three
+keywords: EXTNAME, EXTVER, and EXTLEVEL.  Indeed EXTLEVEL was added by
+Don Wells specifically with Starlink HDS in mind.  However, there were
+two concepts missing from these to preserve an NDF structure.  First
+and more important is the type of a structure.  Type defines the
+semantics and processing rules of an NDF structure.  In
+object-oriented parlance it is the class.  Therefore we introduced an
+additional keyword EXTTYPE to preserve this information.  Note that
+the definition of EXTNAME was somewhat terse and vague in
+\citet{1988A&AS...73..359G} being just the 'name', and some FITS
+writers have in effect used it as the type.  The second missing
+feature was a means to record the shape of a structure.
+
+To map from the hierarchical NDF structure to the flat FITS
+serialization array components such as VARIANCE and QUALITY are
+written to IMAGE extensions, whose headers retain information
+stored in other top-level components such as WCS and LABEL.  Specially
+formatted headers may be written to record the HISTORY, which if not
+edited, can be read back into NDF HISTORY records.  This is not as
+robust as we would like, and a recent formatting change to
+\CFITSIO\ \citep[][\ascl{1010.001}]{1999ASPC..172..487P}
+temporarily prevented recovery of some records.  Likewise provenance
+information, if present, is stored via five keywords, PRV[CDIMP]$n$
+for the $n$th NDF. This limits the maximum number of NDFs in the
+provenance tree to 9999.  Existing FITS-like headers within the NDF
+(Section~\ref{sec:FITSheaders}) are merged, but with NDF information
+such as the array shape or WCS superseding the original keyword
+values.
+
+NDF extension structures become binary tables when in FITS form.  Each
+primitive component within a structure becomes a column in the table
+with the appropriate data type and dimension.  Each element of an
+array of structures becomes a separate binary table.  A more-compact
+storage would be create a single table for the array structure,
+forming a superset of columns, then writing a row for each structure
+element, using null values where necessary.  However, the adopted
+structure significantly simplified the recursive code.  Also in practice
+array structures are small and usually 1-dimensional.
+
+The following headers are set to enable recovery of the hierarchical
+structure.
+
+\begin{description}
+
+\item [EXTNAME]
+Within an IMAGE extension this is the name of an array component, since
+these are in well-defined locations within the NDF. Within a binary
+table, which could record arbitrary NDF structures, EXTNAME stores the
+dot-separated path within the hierarchical structure.
+The path may also include indices to the elements of an array of
+structures, written as comma-separated list between parentheses.
+
+A common issue especially for NDF extensions is that the path name is
+too long for the 68 characters in a FITS header EXTNAME is set to a
+special string \texttt{'@EXTNAMEF'} that can never be in the component
+path.  The full path is written as a long string to keyword EXTNAMEF
+using the HEASARC long-string CONTINUE
+convention.\footnote{\texttt{http://fits.gsfc.nasa.gov/registry/continue\_keyword.html}}
+
+\item [EXTTYPE]
+The non-primitive data type of the NDF extension or structure.
+
+\item [EXTSHAPE]
+This records the shape of the NDF extension as a comma-separated list.
+
+\item [HDUCLAS1]
+Set to \texttt{'NDF'}.
+
+\item [HDUCLAS2]
+The name of the NDF array component.
+
+\end{description}
+
+Full details of the conversion is available in \citet{SUN55}.
 
 
 %% References
