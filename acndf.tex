@@ -92,8 +92,10 @@
 \usepackage{upgreek}
 
 % Aim to be consistent, and correct, about how we refer to sections
+% tables, and figures.
 \newcommand*\secref[1]{Sect.~\ref{#1}}
-\newcommand*\appref[1]{\ref{#1}}
+\newcommand*\figref[1]{Fig.~\ref{#1}}
+\newcommand*\tabref[1]{Table~\ref{#1}}
 
 \begin{document}
 
@@ -246,10 +248,10 @@ by \citet{P91_adassxxiii}) and we follow that in \secref{sec:improve},
 by discussing the areas where NDF could be improved. This
 is followed in \secref{sec:social} where we address the social,
 political and economic considerations of data formats and models. In
-\secref{app:chaos} we provide examples of data models developed in the
+\ref{app:chaos} we provide examples of data models developed in the
 mid-1980s, the development of which motivated the development of NDF
 and also directly influenced the NDF design. A timeline describing the
-key developments relating to NDF is shown in Table~\ref{tab:timeline}.
+key developments relating to NDF is shown in \tabref{tab:timeline}.
 
 In this paper the term ``data model'' refers to the organization,
 naming and semantic meaning of components in a hierarchy. The term
@@ -341,7 +343,7 @@ offsets so that modern data can be processed\footnote{Support for
   in a 32-bit integer is not yet possible.}, and also the addition of
 a native C-language interface and a 64-bit integer data type
 \citep{P82_adassxxiii}. The primitive data types supported by HDS are
-listed in Table~\ref{tab:hdstypes}.
+listed in \tabref{tab:hdstypes}.
 
 \begin{table}
 \caption{HDS basic data types. The unsigned types did not correspond
@@ -428,7 +430,7 @@ In the following sections we describe the core components of the NDF
 data model to provide an overview of the NDF approach concerning what
 is covered by the model and what is deliberately left out of the
 model. An overview of the components of an NDF and how they relate to
-each other is shown in Fig.\ \ref{fig:ndf-structure}. For more details
+each other is shown in \figref{fig:ndf-structure}. For more details
 on NDF please see the detailed NDF design document
 \citep[SGP/38;][]{SGP38} and library documentation
 \citep[SUN/33;][]{SUN33}.
@@ -630,7 +632,8 @@ application software; applications such as \surf\
 particular application had been run on the data, so that the user could be
 informed if a mandatory step in the processing had been missed.
 
-Comparing the history structure of Fig.~\ref{fig:ndf-structure} with that shown in Fig.~\ref{fig:asterix}
+Comparing the history structure of \figref{fig:ndf-structure} with
+that shown in \figref{fig:asterix}
 shows that the components are identical apart from the addition of
 some additional fields to the NDF form (user, host and dataset).
 The only other change involved the relatively recent addition to increase in resolution the time
@@ -710,7 +713,7 @@ time at which it was created, and its immediate parent nodes. Each
 node also allows arbitrary extra information to be associated with the
 ancestor NDF. Care is taken to merge nodes -- possibly inherited from
 different input NDFs -- that refer to the same ancestor. A simple
-provenance tree is shown in Fig.~\ref{fig:prov}.
+provenance tree is shown in \figref{fig:prov}.
 
 For reasons of backward compatibility, it was decided to retain the
 original NDF History mechanism, and add this new ``family tree''
@@ -774,7 +777,7 @@ user can specify the section in pixel coordinates (where the pixel
 origin is taken into account) or in world coordinates, in which case the
 supplied WCS values are transformed into pixel coordinates using the
 transformations defined either by the legacy \texttt{AXIS} scheme or
-the full AST-based WCS scheme, as described in Section~\ref{sec:wcs}.
+the full AST-based WCS scheme, as described in \secref{sec:wcs}.
 The section can either be specified using bounds or a center coordinate
 and extent. If the section is specified using WCS values, the section of
 the pixel array actually used is the smallest box that encloses the
@@ -1040,7 +1043,7 @@ In the early years of NDF there were many files in existence that did
 not quite conform to the standard and new files were being created by
 existing applications that did not use the main NDF library but
 nonetheless modified their structures to emulate an NDF (see for
-example Fig.\ \ref{fig:duck}). The core NDF library thereby took an
+example \figref{fig:duck}). The core NDF library thereby took an
 inclusive approach to finding NDF structures, with the only requirement
 being the existence of a \texttt{DATA\_ARRAY} item. If other compliant
 structures were found, the NDF library would use them and ignore items
@@ -1603,7 +1606,7 @@ items for pre-computed data minimum and maximum, as well as a value for
 an array-specific blank value (similar to the FITS \texttt{BLANK}
 header keyword). Errors were represented as standard
 deviations and stored in \texttt{DATA\_ERROR} and bad-pixel masks were
-stored in \texttt{DATA\_QUALITY}. An example layout is given in Fig.~\ref{fig:image}.
+stored in \texttt{DATA\_QUALITY}. An example layout is given in \figref{fig:image}.
 
 \begin{figure}[t]
 \begin{center}
@@ -1660,7 +1663,7 @@ keywords were held in a similar structure labelled
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
 labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
-example layout can be found in Fig.~\ref{fig:dst}.
+example layout can be found in \figref{fig:dst}.
 
 Around 1990, the code used by \figaro\ to access DST files was
 reworked to handle both DST and NDF files
@@ -1682,12 +1685,12 @@ interface \citep{1995ASPC...77..199A} which allowed for the use of HDS
 and FITS format files. \asterix\ defined many data models designed for
 the specific uses of X-ray astronomy, with a particular focus on
 photon event lists. An example layout of an alignment file is shown in
-Fig.\,\ref{fig:asterix}. The \asterix\ data models were not competing directly with \emph{IMAGE} or
+\figref{fig:asterix}. The \asterix\ data models were not competing directly with \emph{IMAGE} or
 DST but this experience fed directly into the design of NDF.
 For example, the \texttt{HISTORY} structure was adopted without change. Once
 NDF was available some data models were modified to use features from
 NDF such as adopting the \texttt{DATA\_ARRAY} label (see
-Fig.~\ref{fig:duck} for an example).
+\figref{fig:duck} for an example).
 
 \begin{figure*}[t]
 \begin{center}
@@ -1721,8 +1724,7 @@ of \texttt{DATA}, including expansion of scaled form.  Components to
 store the original format, the \texttt{TTYPE$n$} comment, and units
 may also be present.
 
-An example of part of such a structure is shown in
-Fig.\,\ref{fig:hdstable}.
+An example of part of such a structure is shown in \figref{fig:hdstable}.
 
 \begin{figure*}[t]
 \begin{minipage}{0.5\textwidth}
