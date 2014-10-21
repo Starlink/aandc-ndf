@@ -1889,13 +1889,13 @@ NDF extension structures become binary tables when in FITS form.  Each
 primitive component within a structure becomes a column in the table
 with the appropriate data type and dimension.  Each element of an
 array of structures becomes a separate binary table.  A more-compact
-storage would be create a single table for the array structure,
+storage would be to create a single table for the array structure,
 forming a superset of columns, then writing a row for each structure
 element, using null values where necessary.  However, the adopted
 structure significantly simplified the recursive code.  Also in practice
 array structures are small and usually 1-dimensional.
 
-The following headers are set to enable recovery of the hierarchical
+The following header items are set to enable recovery of the hierarchical
 structure.
 
 \begin{description}
@@ -1929,7 +1929,7 @@ The name of the NDF array component.
 
 \end{description}
 
-Full details of the conversion is available in \citet{SUN55}.
+Full details of the conversion are available in \citet{SUN55}.
 
 %% References
 %%
