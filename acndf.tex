@@ -230,12 +230,12 @@ There is a renewed interest in file-format choices for astronomy
 with discussions on the future of FITS
 \citep{P90_adassxxiii,2014Thomas}, projects adopting or considering
 HDF5 \citep{2012ASPC..461..283A,jenness_spie2014} and investigations into
-non-scientific formats such as JPEG2000 \citep{2014Kitaeff}. These
+general purpose image formats such as JPEG2000 \citep{2014Kitaeff}. These
 discussions have provided an opportunity to consider existing
 astronomy file formats that are not as widely known in the community
 as FITS. Here we discuss the extensible \emph{N}-Dimensional
 Data Format (NDF) developed by the Starlink Project
-\citep{1982MmSAI..53...55T,2000ASSL..250...93W} in the late 1980s
+\citep{2000ASSL..250...93W} in the late 1980s
 \citep{1988STARB...2...11C,SGP38} to bring order to the proliferation
 of data models that were being adopted by applications using the Starlink
 hierarchical file format.
@@ -254,7 +254,7 @@ and also directly influenced the NDF design. A timeline describing the
 key developments relating to NDF is shown in \tabref{tab:timeline}.
 
 In this paper the term ``data model'' refers to the organization,
-naming and semantic meaning of components in a hierarchy. The term
+naming and semantics of components in a hierarchy. The term
 ``file format'' means how the bytes are arranged on disk and
 in this context refers to the use of the Hierarchical Data System
 (HDS; see the next section). Historically, NDF, as implied by the use
@@ -389,7 +389,7 @@ despite platform-specific details of byte-order and floating-point format.
 
 HDS files allowed people to arrange their data in the files however
 they pleased and placed no constraints on the organization of the
-structures or the semantic meaning of the content. This resulted in
+structures or the semantics of the content. This resulted in
 serious interoperability issues when moving files between applications
 that nominally could read HDS files. Within the Starlink ecosystem
 there were at least three prominent attempts at providing data
@@ -851,7 +851,7 @@ as a plugin without requiring direct changes to the NDF library itself.
 
 For a variety of reasons, the Starlink software, and hence NDF,
 did not achieve much traction outside the UK and UK-affiliated
-observatories, particularly in
+observatories. In particular
 the US astronomical community that closely adhered to FITS until the
 advent of HDF. This is regrettable as NDF proved to be a rich and
 flexible data model that has aged well against mounting requirements
@@ -997,7 +997,7 @@ facilities to convert NDF files into FITS and IRAF format, and
 special code was used to recognize specific data models present in
 FITS files to enable a more accurate conversion of scientific
 information into the NDF form. Support was also added for the
-\emph{multispec} format in IRAF \citep{1993ASPC...52..467V} to ensure
+\emph{multispec} data model in IRAF \citep{1993ASPC...52..467V} to ensure
 that wavelength scales were not lost. A description of how NDF maps to
 FITS is given in \ref{app:ndf2fits}.
 
@@ -1005,14 +1005,13 @@ FITS is given in \ref{app:ndf2fits}.
 
 Given hierarchical structures the default assumption might be to use
 arrays of keyword structures where each structure would contain the
-value, the comment and the unit. Alternatively simply drop the unit
+value, the comment and the unit. Alternatively, one might simply drop the unit
 and comment and just use keyword/value pairs. These approaches turned
-out to be extremely slow and space inefficient so a pragmatic solution
-was taken to standardize on an array of characters formatted
-identically to a FITS header. The initial NDF standard did not include
-this approach and parsing of a FITS header is left up to the user
-rather than being integral to the NDF library. This approach also allows the FITS to NDF conversion
-software to ignore new FITS header conventions as they are developed,
+out to be extremely slow and space inefficient so the project took the  pragmatic approach
+of standardizing on an array of characters formatted
+identically to a FITS header.
+This allowed the FITS to NDF conversion
+software to ignore new FITS header conventions as they were developed,
 deferring this to the application writer who can decide whether a
 particular convention is important. Without this pragmatic approach
 the user would have to re-convert the files whenever a new convention
@@ -1079,7 +1078,7 @@ regarding exactly how the data are stored and greatly simplified
 future enhancements (and general future-proofing) because changes to
 the data format and how data are accessed could all be hidden from
 applications by changes made in one place. However, care needs to be taken
-when rolling out updates: software linked with old versions
+when rolling out updates: software linked with old library versions
 may not be able to read newer data. Indeed, HDS includes an internal
 version number and can read earlier versions of the data format, but if a
 newer version is encountered than supported by the library HDS will
@@ -1325,11 +1324,11 @@ software and standards, but its funding was primarily in support of UK
 astronomy, so software promotion and support activities outside the UK
 only took place on a best-efforts basis. While widespread adoption of
 NDF outside of UK projects would have been a bonus, it was
-not the primary goal and, indeed, the Project took few steps even to
+not a funded goal and, indeed, the Project took few steps even to
 monitor it.
 
 A key consequence of this ``funding boundary'' was that Starlink staff
-would not be involved in discussions about data handling for new
+were not involved in discussions about data handling for new
 projects unless there was direct UK involvement. Such early
 discussions are typically crucial in securing ``buy-in'' from potential
 new users of software. They allow the software's capabilities and the
@@ -1416,8 +1415,8 @@ implementation while simultaneously stimulating informed discussion,
 feedback and, of course, attracting coding contributions which are
 always the scarcest commodity in such an undertaking. One should
 perhaps add that good management would also be essential and that
-fundamental choices like implementation language, software
-dependencies, etc., can be critically important.
+fundamental choices such as implementation language and software
+dependencies can be critically important.
 
 \subsection{Thoughts on the data format business}
 
@@ -1553,7 +1552,7 @@ The experiment successfully demonstrated the viability and power of
 the approach, and was used in some Starlink Java applications
 (including \treeview\ \citep{2003ASPC..295..445B} and \splat\
 \citep[][\ascl{1402.007}]{2005ASPC..347...22D,2014Skoda}); however it
-lost out to the more mainstream approach adopted by other actors
+lost out to the more mainstream approach adopted by others
 within the VO, and was not more widely adopted.
 
 For the future we are considering the possibility of replacing the HDS
@@ -1576,8 +1575,7 @@ remapped into a flatter layout, maybe with numbered components in an
 
 This research has made use of NASA's Astrophysics Data System.
 The Starlink software is currently maintained by the Joint Astronomy
-Centre, Hawaii with support from the UK Science and Technology
-Facilities Council. We thank Jim Peden and Trevor Ponman for providing
+Centre, Hawaii. We thank Jim Peden and Trevor Ponman for providing
 comments on the manuscript regarding the early days of HDS and the
 development of \asterix. We also thank to the two anonymous referees
 for their useful comments.
@@ -1792,7 +1790,7 @@ associated NDF:
 \item The path to the NDF within the local file system. This is a blank
 string for the root node, since the main NDF may be moved to a new location.
 \item The UTC date and time at which the NDF was created.
-\item A boolean flag indicating if the NDF is ``hidden'' - meaning that
+\item A boolean flag indicating if the NDF is ``hidden'' -- meaning that
 the NDF will not be included as an ancestor when provenance is copied
 from one NDF to another.
 \item A string identifying the command that created the NDF.
