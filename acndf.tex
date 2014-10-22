@@ -1107,6 +1107,7 @@ community to design any elemental structures or the API to support
 them.
 
 \subsubsection{Name versus type}
+\label{sec:name_v_type}
 
 Extension implementors often ignored or misunderstood another
 fundamental precept of standard structures, the difference between the
@@ -1857,7 +1858,8 @@ equal if any of the ancestors of the two nodes differ.
 
 The generalized extensions \citep{1988A&AS...73..359G} addition to the
 FITS standard made provision for hierarchical data through three
-keywords: \texttt{EXTNAME}, \texttt{EXTVER}, and \texttt{EXTLEVEL}.  Indeed \texttt{EXTLEVEL} was added by
+keywords: \texttt{EXTNAME}, \texttt{EXTVER}, and \texttt{EXTLEVEL}.
+Indeed \texttt{EXTLEVEL} was added by
 Don Wells specifically with Starlink HDS in mind.  However, there were
 two concepts missing from these to preserve an NDF structure.  First
 and more important is the type of a structure.  Type defines the
@@ -1866,7 +1868,8 @@ object-oriented parlance it is the class.  Therefore we introduced an
 additional keyword \texttt{EXTTYPE} to preserve this information.  Note that
 the definition of \texttt{EXTNAME} was somewhat terse and vague in
 \citet{1988A&AS...73..359G} being just the \emph{name}, and some FITS
-writers have in effect used it as the type.  The second missing
+writers have in effect used it as the type (cf.
+\secref{sec:name_v_type}).  The second missing
 feature was a means to record the shape of a structure.
 
 To map from the hierarchical NDF structure to the flat FITS
