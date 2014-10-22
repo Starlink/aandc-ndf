@@ -226,7 +226,7 @@ Starlink
 \section{Introduction}
 \label{sec:intro}
 
-There is a renewed interest in file format choices for astronomy
+There is a renewed interest in file-format choices for astronomy
 with discussions on the future of FITS
 \citep{P90_adassxxiii,2014Thomas}, projects adopting or considering
 HDF5 \citep{2012ASPC..461..283A,jenness_spie2014} and investigations into
@@ -411,9 +411,9 @@ working on the NDF specification and enhancements are added as
 required through discussion on the developer mailing list and
  the existence of a single reference NDF library.} this work
 was completed in the late 1980s \citep{1988STARB...2...11C,SGP38}.
-After much debate it was decided to develop a data model that included
+After much debate, it was decided to develop a data model that included
 the minimum structures to be useful for the general astronomer without
-attempting to be everything to everybody but designing in an extension
+attempting to be everything to everybody, but designing in an extension
 facility from the beginning. The resulting model was named the
 extensible \emph{N}-Dimensional Data Format (NDF).  NDF combined some
 features of the \emph{IMAGE} scheme, such as the use of
@@ -446,7 +446,7 @@ during processing. All three components share the same
 basic \texttt{ARRAY} structure which defines the dimensionality of the
 array and allows for the concept of a pixel origin. The pixel origin
 is used to specify where the NDF sits relative to a larger pixel
-coordinate system by specifying the coordinates of the bottom left
+coordinate system by specifying the coordinates of the bottom-left
 pixel. For example, when extracting a subset of data from
 a bigger image, the pixel origin will record where the subset came
 from. Also, when images are registered for mosaicking they are
@@ -825,7 +825,7 @@ the expense of a performance loss in reordering the data array.
 
 In many cases an astronomer would like to use a particular NDF
 application on a FITS file without realizing that the application does
-not natively support FITS. If foreign-format conversion is enabled the
+not natively support FITS. If foreign-format conversion is enabled, the
 NDF library will run the appropriate conversion utility based on the
 file suffix and present the temporary, NDF, file to the application. If the
 user specifies an output file with a particular foreign-format suffix
@@ -1332,7 +1332,7 @@ would not be involved in discussions about data handling for new
 projects unless there was direct UK involvement. Such early
 discussions are typically crucial in securing ``buy-in'' from potential
 new users of software. They allow the software's capabilities and the
-costs and benefits of using it to be explored and provide a timely
+costs and benefits of using it to be explored, and provide a timely
 opportunity to add features that may be of special interest to that
 project. By restricting this activity to UK projects, usage of
 Starlink's NDF inevitably became much more widespread
