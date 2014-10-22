@@ -349,11 +349,14 @@ listed in \tabref{tab:hdstypes}.
 \caption{HDS basic data types. The unsigned types did not correspond
   to standard Fortran~77 data types and were included for
   compatibility with astronomy instrumentation. HDS supports both VAX
-  and IEEE floating-point formats.}
+  and IEEE floating-point formats. The API code indicates the letter appended
+  to function names to indicate the type they support. This convention is
+  used for the \textsc{generic} templating system \citep{SUN7}.}
 \label{tab:hdstypes}
 \begin{center}
 \begin{tabular}{lll}
 \hline
+Name of type & API Code & Data type \\ \hline
 \texttt{\_BYTE} & b & Signed 8-bit integer \\
 \texttt{\_UBYTE} & ub & Unsigned 8-bit integer \\
 \texttt{\_WORD} & w & Signed 16-bit integer \\
