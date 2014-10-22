@@ -245,12 +245,12 @@ Starlink file format, with the NDF data model itself being discussed
 in \secref{sec:ndf}.  In \secref{sec:lessons} we discuss the positive
 lessons learned from developing NDF (expanding on some earlier work
 by \citet{P91_adassxxiii}) and we follow that in \secref{sec:improve},
-by discussing the areas where NDF could be improved. This
-is followed in \secref{sec:social} where we address the social,
+by discussing the areas where NDF could be improved.
+Following this, in \secref{sec:social} we address the social,
 political and economic considerations of data formats and models. In
 \ref{app:chaos} we provide examples of data models devised in the
 mid-1980s, the development of which motivated the creation of NDF
-and also directly influence d the NDF design. A timeline describing the
+and also directly influenced the NDF design. A timeline describing the
 key developments relating to NDF is shown in \tabref{tab:timeline}.
 
 In this paper the term ``data model'' refers to the organization,
@@ -304,7 +304,7 @@ Some key features of the HDS design are as follows.
   for newly created output files.
 \item VAX and IEEE floating-point formats are supported.
 \item Automatic type conversion allows a programmer to request that,
-  say, a data array of 32-bit integers is mapped as 64-bit floating
+  say, a data array of 32-bit integers is accessed as 64-bit floating
   point numbers.
 \end{itemize}
 
@@ -338,7 +338,7 @@ Some key features of the HDS design are as follows.
 \end{table}
 
 More recently HDS has been extended to support 64-bit file
-offsets so that modern data can be processed\footnote{Support for
+offsets so that modern large datasets can be processed\footnote{Support for
   individual data  arrays containing more elements than can be counted
   in a 32-bit integer is not yet possible.}, and also the addition of
 a native C-language interface and a 64-bit integer data type
@@ -804,7 +804,7 @@ where a subset of a cube is extracted where the first two coordinates
 specify pixel bounds and the third coordinate is a world coordinate
 range. In all these examples a colon indicates a range, and a tilde
 indicates an extent, so in the final example \texttt{55:63} means
-pixels 55 to 63 inclusive, and \verb|75~10| means 11 pixels centered
+pixels 55 to 63 inclusive, and \verb|75~11| means 11 pixels centered
 on Pixel 75.
 
 \subsubsection{Chunking \& blocking}
