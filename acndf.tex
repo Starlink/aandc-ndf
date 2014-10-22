@@ -321,7 +321,7 @@ Some key features of the HDS design are as follows.
 1983 & \texttt{IMAGE} model proposed. \\
 1988 & \emph{NCSA release the Hierarchical Data Format.}\\
 1988 & \emph{FITS tables standard.}\\
-1988 & NDF standard data structures (SGP/38) released.\\
+1988 & NDF standard data structures released.\\
 1991 & HDS ported to Sun OS (HDS Version 3).\\
 1998 & World Coordinate Objects added to NDF.\\
 2001 & \emph{Definition of FITS standard.}\\
@@ -407,7 +407,7 @@ Given the situation with competing schemes for using the hierarchy, it
 became clear that a unified data model was required. A working group
 was formed to analyze the competing models and come up with a
 standard;\footnote{Throughout this document \emph{NDF standard} refers
-to the written specification, SGP/38, developed by the working group
+to the written specification \citep{SGP38} developed by the working group
 in collaboration with Starlink, and also the NDF library
 that enforces the specification. Currently there is no standards body
 working on the NDF specification and enhancements are added as
@@ -1094,7 +1094,7 @@ particularly when extensions were involved.
 
 \subsubsection{Extension complexity}
 
-SGP/38 \citep{SGP38} provided an algorithm for designing simple elemental
+\citet{SGP38} provided an algorithm for designing simple elemental
 building blocks that could be reused. However, many extensions created
 in the early years of NDF became more complex than was strictly
 necessary by ignoring the design decisions of NDF and using highly
