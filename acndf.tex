@@ -1934,7 +1934,7 @@ The name of the NDF array component.
 \end{description}
 
 For the reverse operation, the FITS reader decides whether or not it
-knows the semantics of FITS file to map FITS extensions to NDF
+knows the semantics of the FITS file to map FITS extensions to NDF
 components. Various products from known sources are recognised from
 keyword values. In the the case of a former NDF, the reader examines
 the \texttt{HDUCLAS1} keyword.  If its value is \texttt{NDF}, the
@@ -1945,12 +1945,12 @@ order.
 For an arbitrary FITS file there is no reason to expect that its data
 model maps well to the NDF model.  The default behavior is for the
 primary HDU to map to the NDF \texttt{DATA\_ARRAY}, in which blank and
-NaN values become the NDF bad value; the WCS headers are used to form
+\texttt{NaN} values become the NDF bad value; the WCS headers are used to form
 an NDF \texttt{WCS} or \texttt{AXIS} component.  For many cases having
 the primary array and metadata is adequate for the conversion.  It's
 analogous to the early \emph{IMAGE}-model files operating as NDFs.
 However, additional FITS extensions are preserved by default too,
-being being converted to a series of NDF extensions.  The HDS type of
+being converted to a series of NDF extensions.  The HDS type of
 each NDF extension depends on the \texttt{XTENSION} keyword.  It is
 \texttt{NDF} for an IMAGE, and \texttt{TABLE} (\ref{app:hdstable}) for
 BINTABLE and TABLE.  The latter representation is often not optimal,
