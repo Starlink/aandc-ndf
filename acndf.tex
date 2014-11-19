@@ -310,7 +310,7 @@ Some key features of the HDS design are as follows.
 \end{itemize}
 
 \begin{table}
-\caption{Time line for developments relating to NDF. Other
+\caption{Timeline for developments relating to NDF. Other
   developments in file format development are interspersed
   for reference.}
 \label{tab:timeline}
@@ -386,7 +386,7 @@ despite platform-specific details of byte-order and floating-point format.
 \begin{figure}[t]
 \includegraphics[width=\columnwidth]{model-ndf}
 \caption{Schematic of the NDF hierarchy. All components are optional
-  except for \texttt{DATA\_ARRAY}. For an alternative visualisation
+  except for \texttt{DATA\_ARRAY}. For an alternative visualization
   see \citet{2002ASPC..281...20G}.}
 \label{fig:ndf-structure}
 \end{figure}
@@ -640,8 +640,8 @@ Comparing the history structure of \figref{fig:ndf-structure} with
 that shown in \figref{fig:asterix}
 shows that the components are identical apart from the addition of
 some additional fields to the NDF form (user, host and dataset).
-The only other change involved the relatively recent addition to increase in resolution the time
-stamp to support milliseconds. This was required as computers have
+The only other change involved the relatively recent addition to increase in resolution the
+timestamp to support milliseconds. This was required as computers have
 become faster over the years and many processing steps can occur
 within a single second. Provenance handling, \secref{sec:provenance},
 uses the history block to disambiguate provenance entries and relies
@@ -1050,7 +1050,7 @@ example \figref{fig:duck}). The core NDF library thereby took an
 inclusive approach to finding NDF structures, with the only requirement
 being the existence of a \texttt{DATA\_ARRAY} item. If other compliant
 structures were found, the NDF library would use them and ignore items
-that it didn't understand. This ``duck typing''\footnote{See for
+that it did not understand. This ``duck typing''\footnote{See for
   example \url{http://en.wikipedia.org/wiki/Duck_typing}} approach
 proved to be very useful and eased adoption of NDF. The NDF
 library uses this feature to scan for NDF structures within an NDF or
@@ -1348,7 +1348,7 @@ Nevertheless, widespread international adoption will be uppermost in
 the mind of anyone contemplating a new data format today. This paper's
 authors have been reflecting on the relevant issues over many years,
 but unfortunately we cannot offer a simple winning formula. Even the
-most seasoned of standards organisations will struggle to reconcile
+most seasoned of standards organizations will struggle to reconcile
 the vested interests of particular groups with the wider interests of
 their community and to inspire the confidence needed for widespread
 adoption of a standard. Perhaps the best that can be said is that
@@ -1400,7 +1400,7 @@ suitable nucleus for the whole enterprise.
 When developing NDF, the discussion surrounding its design
 was open, inclusive and collaborative, but the development of software
 to implement it occurred later and (despite eventually being released
-under an open-source licence) followed what would now be recognized as
+under an open-source license) followed what would now be recognized as
 ``closed source'' development practices. We did not then have the
 benefit of modern collaborative software development tools, but the
 success of the free open-source software (FOSS) movement has shown the
@@ -1444,14 +1444,14 @@ presents a huge barrier to entry that can only really be addressed by
 implementing a transparent compatibility layer (and/or automated
 conversion) so that changes to existing applications are
 unnecessary. This is more of a technical challenge than a political
-one and we will asume that such a layer will always be put in place,
+one and we will assume that such a layer will always be put in place,
 so that access to existing applications is not an issue in deciding to
 adopt a data format.
 
 The problems that then arise in discussions with instrumentation
 groups vary, but often economic factors enter. Such a group is most
 likely to adopt a format that already closely matches their
-requirements, so that they minimise their work. But this only applies
+requirements, so that they minimize their work. But this only applies
 if the software is open, in the sense that they can make any changes
 themselves. If changes need to be implemented (or integrated) by a
 different data format project, it can be a serious disincentive unless
@@ -1493,7 +1493,7 @@ single format of increasing capability. There are many examples where
 well-funded initiatives build on an existing FOSS project for their
 own purposes and the new developments are then fed back into the main
 trunk for all to benefit. There seems to be little reason why
-astronomical data formats couldn't develop in a similar, evolutionary
+astronomical data formats could not develop in a similar, evolutionary
 way if openness and extensibility are fully embraced.
 
 \section{Conclusions}
@@ -1661,12 +1661,12 @@ stored in a structure labeled Z. The main data array was
   file system.}. FITS-style keyword/value pairs were encoded
 explicitly in a structure called \texttt{FITS} but using scalar
 components for each header item. Any comments associated with the FITS
-keywords were held in a similar structure labelled
+keywords were held in a similar structure labeled
 \texttt{COMMENTS}. This basic structure suggests a bias towards 1- or
 2-dimensional data, but it could handle data of up to 6 dimensions;
 the \texttt{Z.DATA} array could have as many dimensions as HDS would
 support, and the axis structures for the higher dimensions were
-labelled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
+labeled -- awkwardly -- from \texttt{T} through to \texttt{W}. An
 example layout can be found in \figref{fig:dst}.
 
 Around 1990, the code used by \figaro\ to access DST files was
@@ -1936,8 +1936,8 @@ The name of the NDF array component.
 
 For the reverse operation, the FITS reader decides whether or not it
 knows the semantics of the FITS file to map FITS extensions to NDF
-components. Various products from known sources are recognised from
-keyword values. In the the case of a former NDF, the reader examines
+components. Various products from known sources are recognized from
+keyword values. In the case of a former NDF, the reader examines
 the \texttt{HDUCLAS1} keyword.  If its value is \texttt{NDF}, the
 reader endeavors to recreate the NDF components and extensions from
 the keywords listed above, working through the FITS extensions in
@@ -1948,7 +1948,7 @@ model maps well to the NDF model.  The default behavior is for the
 primary HDU to map to the NDF \texttt{DATA\_ARRAY}, in which blank and
 \texttt{NaN} values become the NDF bad value; the WCS headers are used to form
 an NDF \texttt{WCS} or \texttt{AXIS} component.  For many cases having
-the primary array and metadata is adequate for the conversion.  It's
+the primary array and metadata is adequate for the conversion.  It is
 analogous to the early \emph{IMAGE}-model files operating as NDFs.
 However, additional FITS extensions are preserved by default too,
 being converted to a series of NDF extensions.  The HDS type of
